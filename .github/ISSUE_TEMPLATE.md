@@ -41,7 +41,7 @@
 <!-- ******************* -->
 <!-- *** Enhancement *** -->
 # Enhancement
-# TODO
+## TODO
 <!--- Tell us how the enhancement should work -->
 <!--- Ideas on how to implement the addition or change -->
 <!--- If suggesting a change/improvement, explain the difference from current behavior -->
@@ -50,4 +50,4 @@
 <!-- ************************** -->
 <!-- *** Feature-Discussion *** -->
 # Feature-Discussion
-# TODO
+## TODO
