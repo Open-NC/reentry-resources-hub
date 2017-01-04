@@ -1,8 +1,9 @@
-## This is a (check all that apply):
+## This is a: <!--(put an 'x' in the box beside all that apply) -->
 
 * [ ] bug
 * [ ] enhancement
 * [ ] feature-discussion
+
  <!-- DELETE THE APPROPRIATE BUG/ENHANCEMENT/DISCUSSION SECTIONS BELOW THAT DO NOT APPLY TO THIS ISSUE -->
  
 <!--- Provide a general summary of the issue in the Title above -->
