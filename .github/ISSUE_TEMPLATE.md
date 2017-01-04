@@ -1,10 +1,13 @@
 ## This is a (check all that apply):
+
 * [ ] bug
 * [ ] enhancement
 * [ ] feature-discussion
-
+ <!-- DELETE THE APPROPRIATE BUG/ENHANCEMENT/DISCUSSION SECTIONS BELOW THAT DO NOT APPLY TO THIS ISSUE -->
+ 
 <!--- Provide a general summary of the issue in the Title above -->
 
+<!-- *** BUG *** -->
 ## Expected Behavior
 <!--- If you're describing a bug, tell us what should happen -->
 <!--- If you're suggesting a change/improvement, tell us how it should work -->
@@ -35,3 +38,13 @@
 * Environment name and version (e.g. Chrome 39, node.js 5.4):
 * Operating System and version (desktop or mobile):
 * Link to your project:
+
+<!-- ******************* -->
+<!-- *** Enhancement *** -->
+
+# TODO
+
+<!-- ************************** -->
+<!-- *** Feature-Discussion *** -->
+
+# TODO
