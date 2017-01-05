@@ -4,7 +4,7 @@
 * [ ] enhancement
 * [ ] feature-discussion
 
- <!-- DELETE THE APPROPRIATE BUG/ENHANCEMENT/DISCUSSION SECTIONS BELOW THAT DO NOT APPLY TO THIS ISSUE -->
+<!-- DELETE THE APPROPRIATE BUG/ENHANCEMENT/DISCUSSION SECTIONS BELOW THAT DO NOT APPLY TO THIS ISSUE -->
  
 <!--- Provide a general summary of the issue in the Title above -->
 
@@ -42,8 +42,10 @@
 <!-- ******************* -->
 <!-- *** Enhancement *** -->
 # Enhancement
-## TODO
-<!--- Tell us how the enhancement should work -->
+## Description
+<!--- Tell us why the the enhancement is needed and how it should work -->
+
+## Implementation
 <!--- Ideas on how to implement the addition or change -->
 <!--- If suggesting a change/improvement, explain the difference from current behavior -->
 
@@ -51,6 +53,4 @@
 <!-- ************************** -->
 <!-- *** Feature-Discussion *** -->
 # Feature-Discussion
-## TODO
-
-https://github.com/CodeForNC/reentry-resources-hub/issues/new?body=%23%23%23%20Story%20%2F%20Task%0A%0A%23%23%23%20Value%0A%0A%23%23%23%20Acceptance%20Criteria%0A%20-%20%5B%20%5D%20%0A%0A%23%23%23%20Notes
+<!-- Begin a dialog and pose questions about a path forward relating to a proposed, or existing feature -->
