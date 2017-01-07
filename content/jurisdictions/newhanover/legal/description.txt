@@ -1,0 +1,3 @@
+<p>
+  Legal: Sample Text
+</p>

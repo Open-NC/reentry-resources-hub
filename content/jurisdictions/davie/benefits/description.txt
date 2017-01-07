@@ -1,0 +1,3 @@
+<p>
+  Public Benefits: Sample Text
+</p>

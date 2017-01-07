@@ -1,0 +1,3 @@
+<p>
+  Common Public Benefits: Sample Text
+</p>
