@@ -1,4 +1,5 @@
 {
   "name": "Person",
-  "tag": "person"
+  "tag": "person",
+  "local_jurisdiction": "person"
 }

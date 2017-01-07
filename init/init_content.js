@@ -55,21 +55,21 @@ const dirBase = `${destDirectory}/content/`;
 fs.mkdirSync(dirBase);
 
 createFile(`${dirBase}/description.txt`, '<p>\n  Sample Text for North Carolina\n</p>\n');
-createFile(`${dirBase}/config.json`, '{\n  "name": "North Carolina",\n  "tag": "nc"\n}\n');
+createFile(`${dirBase}/config.json`, '{\n  "name": "North Carolina",\n  "tag": "nc",\n  "common_jurisdiction": "nc"\n}\n');
 createFile(`${dirBase}/resources_common.json`, '{\n  "resources": []\n}\n');
 createFile(`${dirBase}/resources_local.json`, resourcesTemplate);
 createFile(`${dirBase}/resources_highlighted.json`, '{\n  "resources": []\n}\n');
 
 const pages = [
-  { tag: 'home', name: 'Home'},
-  { tag: 'housing', name: 'Housing'},
-  { tag: 'jobs', name: 'Jobs'},
-  { tag: 'benefits', name: 'Public Benefits'},
-  { tag: 'health', name: 'Health Care'},
-  { tag: 'education', name: 'Education'},
-  { tag: 'legal', name: 'Legal'},
-  { tag: 'support', name: 'Support Programs'},
-  { tag: 'other', name: 'Other Resources'},
+  { tag: 'home', name: 'Home' },
+  { tag: 'housing', name: 'Housing' },
+  { tag: 'jobs', name: 'Jobs' },
+  { tag: 'benefits', name: 'Public Benefits' },
+  { tag: 'health', name: 'Health Care' },
+  { tag: 'education', name: 'Education' },
+  { tag: 'legal', name: 'Legal' },
+  { tag: 'support', name: 'Support Programs' },
+  { tag: 'other', name: 'Other Resources' },
 ];
 
 jurisdictions.forEach((name) => {
@@ -77,7 +77,7 @@ jurisdictions.forEach((name) => {
   const jdir = `${dirBase}/${nName}`;
   fs.mkdirSync(jdir);
   createFile(`${jdir}/description.txt`, `<p>\n  Sample Text for ${name} County\n</p>\n`);
-  createFile(`${jdir}/config.json`, `{\n  "name": "${name}",\n  "tag": "${nName}"\n}\n`);
+  createFile(`${jdir}/config.json`, `{\n  "name": "${name}",\n  "tag": "${nName}",\n  "local_jurisdiction": "${nName}"\n}\n`);
   createFile(`${jdir}/resources_common.json`, '{\n  "resources": []\n}\n');
   createFile(`${jdir}/resources_local.json`, '{\n  "resources": []\n}\n');
   createFile(`${jdir}/resources_highlighted.json`, '{\n  "resources": []\n}\n');
