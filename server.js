@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const compose = require('./server/compose');
 
 const app = express();
 
@@ -10,6 +11,25 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 
+app.get('/', (req, res) => {
+  compose('buncombe', 'home', (result) => {
+    res.send(result);
+  });
+});
+
+app.get('/:jurisdiction/:topic', (req, res) => {
+  compose(req.params.jurisdiction, req.params.topic, (result) => {
+    // Result is an object of the form:
+    // {
+    //   config: {Merge of all the config files} ,
+    //   common: {All the common topic info},
+    //   jurisdiction: {All the topic info for the specified jurisdiction (county)}
+    // }
+    res.send(result);
+  });
+});
+
+// this is from the original example - delete when the new admin interface is done.
 app.get('/api/food', (req, res) => {
   const param = req.query.q;
 
