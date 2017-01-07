@@ -65,7 +65,7 @@ function createFile(fileName, content) {
 // Create the main content directory and the pages and jurisdictions subdirectories
 const dirBase = `${destDirectory}/content/`;
 fs.mkdirSync(dirBase);
-createFile(`${dirBase}/config.json`, '{\n  "name": "North Carolina",\n  "tag": "nc",\n  "common_jurisdiction": "nc"\n}\n');
+createFile(`${dirBase}/config.json`, '{\n  "common_jurisdiction_name": "North Carolina",\n  "common_jurisdiction": "nc"\n}\n');
 fs.mkdirSync(`${dirBase}/jurisdictions`);
 fs.mkdirSync(`${dirBase}/pages`);
 
@@ -74,7 +74,7 @@ pages.forEach((page) => {
   const pdir = `${dirBase}/pages/${page.tag}`;
   fs.mkdirSync(pdir);
   createFile(`${pdir}/description.txt`, `<p>\n  Common ${page.name}: Sample Text\n</p>\n`);
-  createFile(`${pdir}/config.json`, `{\n  "name": "${page.name}",\n  "tag": "${page.tag}"\n}\n`);
+  createFile(`${pdir}/config.json`, `{\n  "page_name": "${page.name}",\n  "page_tag": "${page.tag}"\n}\n`);
   createFile(`${pdir}/resources_local.json`, resourcesTemplate);
   createFile(`${pdir}/resources_highlighted.json`, '{\n  "resources": []\n}\n');
 });
@@ -85,7 +85,7 @@ jurisdictions.forEach((name) => {
   const jdir = `${dirBase}/jurisdictions/${nName}`;
   fs.mkdirSync(jdir);
   createFile(`${jdir}/description.txt`, `<p>\n  Sample Text for ${name} County\n</p>\n`);
-  createFile(`${jdir}/config.json`, `{\n  "name": "${name}",\n  "tag": "${nName}",\n  "local_jurisdiction": "${nName}"\n}\n`);
+  createFile(`${jdir}/config.json`, `{\n  "local_jurisdiction_name": "${name}",\n  "local_jurisdiction": "${nName}"\n}\n`);
   createFile(`${jdir}/resources_common.json`, '{\n  "resources": []\n}\n');
   createFile(`${jdir}/resources_local.json`, '{\n  "resources": []\n}\n');
   createFile(`${jdir}/resources_highlighted.json`, '{\n  "resources": []\n}\n');
@@ -94,7 +94,7 @@ jurisdictions.forEach((name) => {
     const pdir = `${jdir}/${page.tag}`;
     fs.mkdirSync(pdir);
     createFile(`${pdir}/description.txt`, `<p>\n  ${page.name}: Sample Text\n</p>\n`);
-    createFile(`${pdir}/config.json`, `{\n  "name": "${page.name}",\n  "tag": "${page.tag}"\n}\n`);
+    createFile(`${pdir}/config.json`, `{\n  "page_name": "${page.name}",\n  "page_tag": "${page.tag}"\n}\n`);
     createFile(`${pdir}/resources_local.json`, '{\n  "resources": []\n}\n');
     createFile(`${pdir}/resources_highlighted.json`, '{\n  "resources": []\n}\n');
   });
