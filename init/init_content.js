@@ -16,6 +16,17 @@ if (args.args.length < 1) {
 const jurisictionsFile = 'jurisdictions.txt';
 const resourcesFile = 'resources_local.json';
 const destDirectory = args.args[0];
+const pages = [
+  { tag: 'home', name: 'Home' },
+  { tag: 'housing', name: 'Housing' },
+  { tag: 'jobs', name: 'Jobs' },
+  { tag: 'benefits', name: 'Public Benefits' },
+  { tag: 'health', name: 'Health Care' },
+  { tag: 'education', name: 'Education' },
+  { tag: 'legal', name: 'Legal' },
+  { tag: 'support', name: 'Support Programs' },
+  { tag: 'other', name: 'Other Resources' },
+];
 
 if (fs.existsSync(`${destDirectory}/content`)) {
   console.error('Content directory may not exist - delete first.');
@@ -51,30 +62,27 @@ function createFile(fileName, content) {
   fs.closeSync(fd);
 }
 
+// Create the main content directory and the pages and jurisdictions subdirectories
 const dirBase = `${destDirectory}/content/`;
 fs.mkdirSync(dirBase);
-
-createFile(`${dirBase}/description.txt`, '<p>\n  Sample Text for North Carolina\n</p>\n');
 createFile(`${dirBase}/config.json`, '{\n  "name": "North Carolina",\n  "tag": "nc",\n  "common_jurisdiction": "nc"\n}\n');
-createFile(`${dirBase}/resources_common.json`, '{\n  "resources": []\n}\n');
-createFile(`${dirBase}/resources_local.json`, resourcesTemplate);
-createFile(`${dirBase}/resources_highlighted.json`, '{\n  "resources": []\n}\n');
+fs.mkdirSync(`${dirBase}/jurisdictions`);
+fs.mkdirSync(`${dirBase}/pages`);
 
-const pages = [
-  { tag: 'home', name: 'Home' },
-  { tag: 'housing', name: 'Housing' },
-  { tag: 'jobs', name: 'Jobs' },
-  { tag: 'benefits', name: 'Public Benefits' },
-  { tag: 'health', name: 'Health Care' },
-  { tag: 'education', name: 'Education' },
-  { tag: 'legal', name: 'Legal' },
-  { tag: 'support', name: 'Support Programs' },
-  { tag: 'other', name: 'Other Resources' },
-];
+// Create the common pages content
+pages.forEach((page) => {
+  const pdir = `${dirBase}/pages/${page.tag}`;
+  fs.mkdirSync(pdir);
+  createFile(`${pdir}/description.txt`, `<p>\n  Common ${page.name}: Sample Text\n</p>\n`);
+  createFile(`${pdir}/config.json`, `{\n  "name": "${page.name}",\n  "tag": "${page.tag}"\n}\n`);
+  createFile(`${pdir}/resources_local.json`, resourcesTemplate);
+  createFile(`${pdir}/resources_highlighted.json`, '{\n  "resources": []\n}\n');
+});
 
+// Create the pages for all the counties
 jurisdictions.forEach((name) => {
   const nName = normalizeName(name);
-  const jdir = `${dirBase}/${nName}`;
+  const jdir = `${dirBase}/jurisdictions/${nName}`;
   fs.mkdirSync(jdir);
   createFile(`${jdir}/description.txt`, `<p>\n  Sample Text for ${name} County\n</p>\n`);
   createFile(`${jdir}/config.json`, `{\n  "name": "${name}",\n  "tag": "${nName}",\n  "local_jurisdiction": "${nName}"\n}\n`);

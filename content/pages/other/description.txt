@@ -1,0 +1,3 @@
+<p>
+  Common Other Resources: Sample Text
+</p>
