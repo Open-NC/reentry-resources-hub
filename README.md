@@ -1,7 +1,8 @@
 # Reentry Resources Hub
 
 Reentry resources site that provides information for all 100 NC counties (and, in principle, could be
-replicated for other states).
+replicated for other states). This is the follow-on effort to
+the [Buncombe County Reentry Resources Hub](http://www.buncombereentryhub.org/).
 
 If you are interested in helping, check out the tasks [here](https://github.com/CodeForNC/reentry-resources-hub/projects/1).
 
