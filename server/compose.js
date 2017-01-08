@@ -4,9 +4,12 @@ function loadConfig(path, inputConfig, callback) {
   fs.open(path, 'r', (err, fd) => {
     if (err) callback(err, null);
     else {
-      fs.readFile(fd, { encoding: 'utf8' }, (err, data) => {
-        const config = JSON.parse(data);
-        callback(null, Object.assign({}, inputConfig, config));
+      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
+        if (rfErr) callback(rfErr, null);
+        else {
+          const config = JSON.parse(data);
+          callback(null, Object.assign({}, inputConfig, config));
+        }
       });
     }
   });
@@ -16,9 +19,12 @@ function loadJsonFile(path, callback) {
   fs.open(path, 'r', (err, fd) => {
     if (err) callback(err, null);
     else {
-      fs.readFile(fd, { encoding: 'utf8' }, (err, data) => {
-        const content = JSON.parse(data);
-        callback(null, content);
+      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
+        if (rfErr) callback(rfErr, null);
+        else {
+          const content = JSON.parse(data);
+          callback(null, content);
+        }
       });
     }
   });
@@ -29,8 +35,11 @@ function loadTextFile(path, callback) {
   fs.open(path, 'r', (err, fd) => {
     if (err) callback(err, null);
     else {
-      fs.readFile(fd, { encoding: 'utf8' }, (err, data) => {
-        callback(null, data);
+      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
+        if (rfErr) callback(rfErr, null);
+        else {
+          callback(null, data);
+        }
       });
     }
   });
@@ -38,22 +47,22 @@ function loadTextFile(path, callback) {
 
 // Load and merge all the configurations
 function loadConfigurations(jurisdiction, topic, callback) {
-  let file = './content/config.json'; // site configuration
-  loadConfig(file, {}, (err, config) => {
-    if (err) callback(err, null);
+  const file1 = './content/config.json'; // site configuration
+  loadConfig(file1, {}, (lc1Err, config1) => {
+    if (lc1Err) callback(lc1Err, null);
     else {
-      file = `./content/pages/${topic}/config.json`; // site topic configuration
-      loadConfig(file, config, (err, config) => {
-        if (err) callback(err, null);
+      const file2 = `./content/pages/${topic}/config.json`; // site topic configuration
+      loadConfig(file2, config1, (lc2Err, config2) => {
+        if (lc2Err) callback(lc2Err, null);
         else {
-          file = `./content/jurisdictions/${jurisdiction}/config.json`; // local configuration
-          loadConfig(file,config, (err, config) => {
-            if (err) callback(err, null);
+          const file3 = `./content/jurisdictions/${jurisdiction}/config.json`; // local configuration
+          loadConfig(file3, config2, (lc3Err, config3) => {
+            if (lc3Err) callback(lc3Err, null);
             else {
-              file = `./content/jurisdictions/${jurisdiction}/${topic}/config.json`; // local topic configuration
-              loadConfig(file,config, (err, config) => {
-                if (err) callback(err, null);
-                else     callback(null, config);
+              const file4 = `./content/jurisdictions/${jurisdiction}/${topic}/config.json`; // local topic configuration
+              loadConfig(file4, config3, (lc4Err, config4) => {
+                if (lc4Err) callback(lc4Err, null);
+                else callback(null, config4);
               });
             }
           });
@@ -65,19 +74,19 @@ function loadConfigurations(jurisdiction, topic, callback) {
 
 function loadCommonTopic(topicName, config, callback) {
   const topic = {};
-  let file = `./content/pages/${topicName}/description.txt`;
-  loadTextFile(file, (err, description) => {
-    if (err) callback(err, null);
+  const file1 = `./content/pages/${topicName}/description.txt`;
+  loadTextFile(file1, (err1, description) => {
+    if (err1) callback(err1, null);
     else {
       topic.description = description;
-      file = `./content/pages/${topicName}/resources_highlighted.json`;
-      loadJsonFile(file, (err, highlighted) => {
-        if (err) callback(err, null);
+      const file2 = `./content/pages/${topicName}/resources_highlighted.json`;
+      loadJsonFile(file2, (err2, highlighted) => {
+        if (err2) callback(err2, null);
         else {
           topic.highlighted = highlighted;
-          file = `./content/pages/${topicName}/resources_local.json`;
-          loadJsonFile(file, (err, local) => {
-            if (err) callback(err, null);
+          const file3 = `./content/pages/${topicName}/resources_local.json`;
+          loadJsonFile(file3, (err3, local) => {
+            if (err3) callback(err3, null);
             else {
               topic.local = local;
               callback(null, topic);
@@ -91,19 +100,19 @@ function loadCommonTopic(topicName, config, callback) {
 
 function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
   const topic = {};
-  let file = `./content/jurisdictions/${jurisdiction}/${topicName}/description.txt`;
-  loadTextFile(file, (err, description) => {
-    if (err) callback(err, null);
+  const file1 = `./content/jurisdictions/${jurisdiction}/${topicName}/description.txt`;
+  loadTextFile(file1, (err1, description) => {
+    if (err1) callback(err1, null);
     else {
       topic.description = description;
-      file = `./content/jurisdictions/${jurisdiction}/${topicName}/resources_highlighted.json`;
-      loadJsonFile(file, (err, highlighted) => {
-        if (err) callback(err, null);
+      const file2 = `./content/jurisdictions/${jurisdiction}/${topicName}/resources_highlighted.json`;
+      loadJsonFile(file2, (err2, highlighted) => {
+        if (err2) callback(err2, null);
         else {
           topic.highlighted = highlighted;
-          file = `./content/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
-          loadJsonFile(file, (err, local) => {
-            if (err) callback(err, null);
+          const file3 = `./content/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
+          loadJsonFile(file3, (err3, local) => {
+            if (err3) callback(err3, null);
             else {
               topic.local = local;
               callback(null, topic);
@@ -121,14 +130,12 @@ function loadTopic(jurisdiction, topicName, config, callback) {
     common: {},
     jurisdiction: {},
   };
-  loadCommonTopic(topicName, topic, (err, commonTopic) => {
-    console.log("Did loadCommon");
-    if (err) callback(err, null);
+  loadCommonTopic(topicName, topic, (err1, commonTopic) => {
+    if (err1) callback(err1, null);
     else {
       topic.common = commonTopic;
-      loadJurisdictionTopic(jurisdiction, topicName, topic, (err, jurisdictionTopic) => {
-        console.log("Did loadJurisdiction");
-        if (err) callback(err, null);
+      loadJurisdictionTopic(jurisdiction, topicName, topic, (err2, jurisdictionTopic) => {
+        if (err2) callback(err2, null);
         else {
           topic.jurisdiction = jurisdictionTopic;
           callback(null, topic);
@@ -138,13 +145,13 @@ function loadTopic(jurisdiction, topicName, config, callback) {
   });
 }
 
-function compose (jurisdiction, topic, callback) {
-  loadConfigurations(jurisdiction, topic, (err, config) => {
-    if (err) callback(err);
+function compose(jurisdiction, topic1, callback) {
+  loadConfigurations(jurisdiction, topic1, (err1, config) => {
+    if (err1) callback(err1);
     else {
-      loadTopic(jurisdiction, topic, config, (err, topic) => {
-        if (err) callback(err);
-        else     callback(topic);
+      loadTopic(jurisdiction, topic1, config, (err2, topic2) => {
+        if (err2) callback(err2);
+        else callback(topic2);
       });
     }
   });
