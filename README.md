@@ -1,6 +1,10 @@
-# reentry-resources-hub
+# Reentry Resources Hub
 
-Reentry resources site that can be easily replicated and updated across multiple NC counties Edit
+Reentry resources site that provides information for all 100 NC counties (and, in principle, could be
+replicated for other states).
+
+If you are interested in helping, check out the tasks [here](https://github.com/CodeForNC/reentry-resources-hub/projects/1).
+
 
 ## Installation
 Make sure you have [Node](https://nodejs.org/en/) >= 4 installed (we strongly recommend using Node >= 6 and npm >= 3).
