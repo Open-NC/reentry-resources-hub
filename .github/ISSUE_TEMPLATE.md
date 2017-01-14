@@ -16,6 +16,8 @@
 
 ## Current Behavior
 <!--- Describing the bug. Give a detailed description of what happens instead of the expected behavior -->
+<!--- How has this issue affected you? What are you trying to accomplish? -->
+<!--- Providing context helps us come up with a solution that is most useful in the real world -->
 
 ## Possible Solution
 <!--- Not obligatory, but suggest a fix/reason for the bug, -->
@@ -27,10 +29,6 @@
 2.
 3.
 4.
-
-## Context
-<!--- How has this issue affected you? What are you trying to accomplish? -->
-<!--- Providing context helps us come up with a solution that is most useful in the real world -->
 
 ## Your Environment
 <!--- Include as many relevant details about the environment you experienced the bug in -->
