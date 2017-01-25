@@ -34,8 +34,6 @@ Here are some important resources:
 
 * ?
 
-The NC Reentry Resources Hub is a volunteer effort. We encourage you to pitch in!
-
 #### Testing
 
 **TODO**
@@ -44,5 +42,7 @@ The NC Reentry Resources Hub is a volunteer effort. We encourage you to pitch in
 
 **TODO**
 
+
+The NC Reentry Resources Hub is a volunteer effort. We encourage you to pitch in!
 
 The Code for NC Team
