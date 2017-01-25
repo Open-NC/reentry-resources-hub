@@ -1,4 +1,4 @@
-## How to contribute to the NC Reentry Resources Hub
+# How to contribute to the NC Reentry Resources Hub
 
 # How to contribute
 
