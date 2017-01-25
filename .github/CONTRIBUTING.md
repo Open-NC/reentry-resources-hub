@@ -34,7 +34,7 @@ Here are some important resources:
 
 * ?
 
-Ruby on Rails is a volunteer effort. We encourage you to pitch in and [join the team](http://contributors.rubyonrails.org)!
+The NC Reentry Resources Hub is a volunteer effort. We encourage you to pitch in!
 
 #### Testing
 
