@@ -1,6 +1,6 @@
 # How to contribute to the NC Reentry Resources Hub
 
-We are glad you are here, because we need volunteer developers to help this project come to fruition.
+We are glad you are here. We need volunteer developers to help this project come to fruition.
 
 Here are some important resources:
 *
