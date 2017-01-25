@@ -12,7 +12,7 @@ Here are some important resources:
 
 * **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/CodeForNC/reentry-resources-hub/issues).
 
-* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/CodeForNC/reentry-resources-hub/issues/new). Be sure to include as much information as possible in the bug section of the issue template. This includes: **Expected Behavior**, **Current Behavior**, **Possible Solution**, and **Steps to Reproduce**.
+* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/CodeForNC/reentry-resources-hub/issues/new). Be sure to include as much information as possible in the bug section of the issue template. Required information for reported bugs include: **Expected Behavior**, **Current Behavior**, **Possible Solution**, and **Steps to Reproduce**.
 
 #### **Did you write a patch that fixes a bug?**
 
