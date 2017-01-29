@@ -31,3 +31,12 @@ If you prefer to use npm, the equivalent procedure is:
 ````
 
 The application is running at http://localhost:3000/. The server is also running, but at http://localhost:3001/.
+
+## Basic architecture
+
+The server side is implemented via Express. The public site is rendered on the server, so
+client-side code for that part is minimal. The administrative front end is a React app built
+using [create-react-app](https://github.com/facebookincubator/create-react-app) and Bootstrap.
+We've integrated that with the server based
+on [this blog post](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/).
+
