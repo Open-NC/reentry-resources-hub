@@ -1,8 +1,22 @@
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
 const express = require('express');
+const expressHandlebars  = require('express-handlebars');
+const browserify = require('connect-browserify');
+
 const fs = require('fs');
 const compose = require('./server/compose');
 
 const app = express();
+app.set('views', __dirname);
+// app.engine('ejs', ejs.renderFile);
+
+app.engine('handlebars', expressHandlebars({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+require('node-jsx').install();
+
+var Home = require('./server/home.jsx');
 
 app.set('port', (process.env.PORT || 3001));
 
@@ -11,10 +25,29 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 
+app.use('/server.js', browserify({
+  entry: '',
+  transforms: ['reactify']
+}));
+
 app.get('/', (req, res) => {
-  compose('buncombe', 'home', (result) => {
-    res.send(result);
-  });
+  // compose('buncombe', 'home', (result) => {
+  //   res.send(result);
+  // });
+  var home = ReactDOMServer.renderToString(
+     <div>
+       <h1>I am rendered from the server!</h1>
+     </div>
+    //<Home />
+  );
+
+  // res.render('template', {
+  //     home: home
+  // });
+  res.send(home);
+  // res.render('./server/index.js', {
+  //     main: home
+  //   });
 });
 
 app.get('/:jurisdiction/:topic', (req, res) => {
