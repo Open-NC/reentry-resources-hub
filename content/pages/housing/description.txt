@@ -1,3 +1,0 @@
-<p>
-  Common Housing: Sample Text
-</p>

@@ -1,3 +1,0 @@
-<p>
-  Common Health Care: Sample Text
-</p>

@@ -74,7 +74,7 @@ function loadConfigurations(jurisdiction, topic, callback) {
 
 function loadCommonTopic(topicName, config, callback) {
   const topic = {};
-  const file1 = `./content/pages/${topicName}/description.txt`;
+  const file1 = `./content/pages/${topicName}/description.html`;
   loadTextFile(file1, (err1, description) => {
     if (err1) callback(err1, null);
     else {
@@ -100,7 +100,7 @@ function loadCommonTopic(topicName, config, callback) {
 
 function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
   const topic = {};
-  const file1 = `./content/jurisdictions/${jurisdiction}/${topicName}/description.txt`;
+  const file1 = `./content/jurisdictions/${jurisdiction}/${topicName}/description.html`;
   loadTextFile(file1, (err1, description) => {
     if (err1) callback(err1, null);
     else {

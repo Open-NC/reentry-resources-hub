@@ -1,3 +1,64 @@
 {
-  "resources": []
+  "resources": [
+    {
+      "name": "C3@356 Comprehensive Care Center",
+      "description": "",
+      "url": "http://www.c3356.org/",
+      "category": "Mental Health &amp; Substance Abuse"
+    },
+    {
+      "name": "Vaya Health (formerly Smoky Mountain Center)",
+      "description": "",
+      "url": "http://vayahealth.com/",
+      "category": "Mental Health &amp; Substance Abuse"
+    },
+    {
+      "name": "RHA Behavioral Health Services",
+      "description": "",
+      "url": "http://www.rhabehavioralhealth.org/",
+      "category": "Mental Health &amp; Substance Abuse"
+    },
+    {
+      "name": "FIRST at Blue Ridge, Inc.",
+      "description": "",
+      "url": "http://firstinc.org/",
+      "category": "Mental Health &amp; Substance Abuse"
+    },
+    {
+      "name": "NC Access to Recovery",
+      "description": "",
+      "url": "http://rcnc.org/recovery-supports/atr/",
+      "category": "Mental Health &amp; Substance Abuse"
+    },
+    {
+      "name": "October Road",
+      "description": "",
+      "url": "http://www.octoberroadinc.net/",
+      "category": "Mental Health &amp; Substance Abuse"
+    },
+    {
+      "name": "National Alliance on Mental Illness",
+      "description": "",
+      "url": "https://www.nami.org/",
+      "category": "Mental Health &amp; Substance Abuse"
+    },
+    {
+      "name": "Julian F. Keith Alcohol &amp; Drug Abuse Treatment Center (ADATC)",
+      "description": "",
+      "url": "https://www.ncdhhs.gov/divisions/dsohf/julian-f-keith-alcohol-and-drug-abuse-treatment-center",
+      "category": "Mental Health &amp; Substance Abuse"
+    },
+    {
+      "name": "Insight Human Services, Swain Recovery Center",
+      "description": "",
+      "url": "http://insightnc.org/",
+      "category": "Mental Health &amp; Substance Abuse"
+    },
+    {
+      "name": "Western North Carolina Aids Project",
+      "description": "",
+      "url": "http://wncap.org/",
+      "category": "HIV Aids"
+    }
+  ]
 }
