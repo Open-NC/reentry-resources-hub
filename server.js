@@ -23,12 +23,19 @@ app.get('/', (req, res) => {
 
 app.get('/:jurisdiction/:topic', (req, res) => {
   compose(req.params.jurisdiction, req.params.topic, (result) => {
-    res.send(ReactDOMServer.renderToString( <App data={result}/> ));
+    res.send(ReactDOMServer.renderToString(<App data={result} />));
     // Result is an object of the form:
     // {
     //   config: {Merge of all the config files} ,
-    //   common: {All the common topic info},
-    //   jurisdiction: {All the topic info for the specified jurisdiction (county)}
+    //   common: { // Content applicable to all counties
+    //     description: common HTML content,
+    //     common: list of resources that apply to all jurisdictions
+    //     local:  list of resources that are parameterized for local jurisdiction
+    //   },
+    //   jurisdiction: { // Content applicable to the specific jurisdiction (county)
+    //     description: jurisdiction-specific HTML content,
+    //     local: list of resources specific to the county
+    //   }
     // }
   });
 });

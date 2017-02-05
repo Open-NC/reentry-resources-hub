@@ -79,12 +79,19 @@ function loadCommonTopic(topicName, config, callback) {
     if (err1) callback(err1, null);
     else {
       topic.description = description;
-      const file2 = `./content/pages/${topicName}/resources_local.json`;
-      loadJsonFile(file2, (err2, local) => {
+      const file2 = `./content/pages/${topicName}/resources_common.json`;
+      loadJsonFile(file2, (err2, common) => {
         if (err2) callback(err2, null);
         else {
-          topic.local = local;
-          callback(null, topic);
+          topic.common = common;
+          const file3 = `./content/pages/${topicName}/resources_local.json`;
+          loadJsonFile(file3, (err3, local) => {
+            if (err3) callback(err3, null);
+            else {
+              topic.local = local;
+              callback(null, topic);
+            }
+          });
         }
       });
     }
