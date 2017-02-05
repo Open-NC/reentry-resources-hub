@@ -1,22 +1,23 @@
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const express = require('express');
-const expressHandlebars  = require('express-handlebars');
-const browserify = require('connect-browserify');
+
+//const expressHandlebars  = require('express-handlebars');
+
+require('node-jsx').install();
 
 const fs = require('fs');
 const compose = require('./server/compose');
 
 const app = express();
-app.set('views', __dirname);
-// app.engine('ejs', ejs.renderFile);
 
-app.engine('handlebars', expressHandlebars({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
 
-require('node-jsx').install();
+/**** For Handlebars ****/
+//app.set('view engine', 'handlebars');
+//app.set('views', './server/views');
+//app.engine('handlebars', expressHandlebars({defaultLayout: 'home'}));
 
-var Home = require('./server/home.jsx');
+var App = require('./server/components/App.jsx');
 
 app.set('port', (process.env.PORT || 3001));
 
@@ -25,29 +26,20 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 
-app.use('/server.js', browserify({
-  entry: '',
-  transforms: ['reactify']
-}));
-
 app.get('/', (req, res) => {
-  // compose('buncombe', 'home', (result) => {
-  //   res.send(result);
-  // });
-  var home = ReactDOMServer.renderToString(
-     <div>
-       <h1>I am rendered from the server!</h1>
-     </div>
-    //<Home />
-  );
+  compose('buncombe', 'home', (result) => {
+    res.send(result);
+    //res.send(ReactDOMServer.renderToString( <Home data={result}/> ));
+  });
 
-  // res.render('template', {
+  /**** Use this if we decide to use Handlebars ****/
+  //var home = ReactDOMServer.renderToString( <Home /> );
+  // res.render('home', {
+  //     layout: false,
   //     home: home
   // });
-  res.send(home);
-  // res.render('./server/index.js', {
-  //     main: home
-  //   });
+
+  // res.send(ReactDOMServer.renderToString( <Home /> ));
 });
 
 app.get('/:jurisdiction/:topic', (req, res) => {
@@ -58,7 +50,10 @@ app.get('/:jurisdiction/:topic', (req, res) => {
     //   common: {All the common topic info},
     //   jurisdiction: {All the topic info for the specified jurisdiction (county)}
     // }
-    res.send(result);
+    //res.send(result);
+
+    res.send(ReactDOMServer.renderToString( <App data={result}/> ));
+
   });
 });
 
