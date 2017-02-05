@@ -5,9 +5,10 @@ to the community after a period of incarceration or suffering the consequences o
 on their record. Now we are working to scale this resource to every county in North Carolina.
 We need help from developers ((Node, React) and writers.
 
-For a quick overview of the architecture, check out our [documentation page](./documentation/README.md).
-
-If you are interested in helping, check out the tasks [here](https://github.com/CodeForNC/reentry-resources-hub/projects/1).
+If you are interested in helping, check out the tasks [here](https://github.com/CodeForNC/reentry-resources-hub/projects/3).
+This is where we put tasks that don't require deep knowledge of all aspects of the project. If you are an experienced
+developer and willing to commit more effort over a longer term, check out the tasks
+on [this page](https://github.com/CodeForNC/reentry-resources-hub/projects/2).
 
 
 ## Installation
