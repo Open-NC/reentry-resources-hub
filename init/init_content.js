@@ -29,7 +29,7 @@ const pages = [
 ];
 
 if (fs.existsSync(`${destDirectory}/content`)) {
-  console.error('Content directory may not exist - delete first.');
+  console.error('Content directory should not exist - delete first.');
   process.exit(1);
 }
 
@@ -73,7 +73,7 @@ fs.mkdirSync(`${dirBase}/pages`);
 pages.forEach((page) => {
   const pdir = `${dirBase}/pages/${page.tag}`;
   fs.mkdirSync(pdir);
-  createFile(`${pdir}/description.txt`, `<p>\n  Common ${page.name}: Sample Text\n</p>\n`);
+  createFile(`${pdir}/description.html`, `<p>\n  Common ${page.name}: Sample Text\n</p>\n`);
   createFile(`${pdir}/config.json`, `{\n  "page_name": "${page.name}",\n  "page_tag": "${page.tag}"\n}\n`);
   createFile(`${pdir}/resources_local.json`, resourcesTemplate);
   createFile(`${pdir}/resources_highlighted.json`, '{\n  "resources": []\n}\n');
@@ -84,7 +84,7 @@ jurisdictions.forEach((name) => {
   const nName = normalizeName(name);
   const jdir = `${dirBase}/jurisdictions/${nName}`;
   fs.mkdirSync(jdir);
-  createFile(`${jdir}/description.txt`, `<p>\n  Sample Text for ${name} County\n</p>\n`);
+  createFile(`${jdir}/description.html`, `<p>\n  Sample Text for ${name} County\n</p>\n`);
   createFile(`${jdir}/config.json`, `{\n  "local_jurisdiction_name": "${name}",\n  "local_jurisdiction": "${nName}"\n}\n`);
   createFile(`${jdir}/resources_common.json`, '{\n  "resources": []\n}\n');
   createFile(`${jdir}/resources_local.json`, '{\n  "resources": []\n}\n');
@@ -93,7 +93,7 @@ jurisdictions.forEach((name) => {
   pages.forEach((page) => {
     const pdir = `${jdir}/${page.tag}`;
     fs.mkdirSync(pdir);
-    createFile(`${pdir}/description.txt`, `<p>\n  ${page.name}: Sample Text\n</p>\n`);
+    createFile(`${pdir}/description.html`, `<p>\n  ${page.name}: Sample Text\n</p>\n`);
     createFile(`${pdir}/config.json`, `{\n  "page_name": "${page.name}",\n  "page_tag": "${page.tag}"\n}\n`);
     createFile(`${pdir}/resources_local.json`, '{\n  "resources": []\n}\n');
     createFile(`${pdir}/resources_highlighted.json`, '{\n  "resources": []\n}\n');

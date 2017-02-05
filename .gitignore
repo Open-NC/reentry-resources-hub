@@ -2,8 +2,8 @@ cra-server-ex.graffle
 node_modules
 npm-debug.log
 
--# misc
--.DS_Store
--.env
--npm-debug.log
+# misc
+.DS_Store
+.env
+npm-debug.log
 
