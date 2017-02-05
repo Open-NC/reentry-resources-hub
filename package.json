@@ -17,12 +17,9 @@
     "babel-preset-stage-0": "6.5.0",
     "coa-command-line-args": "^1.0.1",
     "express": "4.13.3",
-    "express-handlebars": "^3.0.0",
     "fs": "0.0.2",
-    "handlebars": "^4.0.6",
     "node-jsx": "^0.13.3",
-    "react": "^15.4.1",
-    "reactify": "^1.1.1"
+    "react": "^15.4.1"
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",

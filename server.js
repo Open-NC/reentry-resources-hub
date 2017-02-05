@@ -1,23 +1,12 @@
-const React = require('react');
-const ReactDOMServer = require('react-dom/server');
-const express = require('express');
-
-//const expressHandlebars  = require('express-handlebars');
-
-require('node-jsx').install();
-
-const fs = require('fs');
-const compose = require('./server/compose');
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import express from 'express';
+import fs from 'fs';
+import compose from './server/compose';
+import App from './server/components/App.jsx';
 
 const app = express();
-
-
-/**** For Handlebars ****/
-//app.set('view engine', 'handlebars');
-//app.set('views', './server/views');
-//app.engine('handlebars', expressHandlebars({defaultLayout: 'home'}));
-
-var App = require('./server/components/App.jsx');
+require('node-jsx').install();
 
 app.set('port', (process.env.PORT || 3001));
 
@@ -29,31 +18,18 @@ if (process.env.NODE_ENV === 'production') {
 app.get('/', (req, res) => {
   compose('buncombe', 'home', (result) => {
     res.send(result);
-    //res.send(ReactDOMServer.renderToString( <Home data={result}/> ));
   });
-
-  /**** Use this if we decide to use Handlebars ****/
-  //var home = ReactDOMServer.renderToString( <Home /> );
-  // res.render('home', {
-  //     layout: false,
-  //     home: home
-  // });
-
-  // res.send(ReactDOMServer.renderToString( <Home /> ));
 });
 
 app.get('/:jurisdiction/:topic', (req, res) => {
   compose(req.params.jurisdiction, req.params.topic, (result) => {
+    res.send(ReactDOMServer.renderToString( <App data={result}/> ));
     // Result is an object of the form:
     // {
     //   config: {Merge of all the config files} ,
     //   common: {All the common topic info},
     //   jurisdiction: {All the topic info for the specified jurisdiction (county)}
     // }
-    //res.send(result);
-
-    res.send(ReactDOMServer.renderToString( <App data={result}/> ));
-
   });
 });
 
