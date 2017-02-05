@@ -1,8 +1,12 @@
-const express = require('express');
-const fs = require('fs');
-const compose = require('./server/compose');
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import express from 'express';
+import fs from 'fs';
+import compose from './server/compose';
+import App from './server/components/App.jsx';
 
 const app = express();
+require('node-jsx').install();
 
 app.set('port', (process.env.PORT || 3001));
 
@@ -19,13 +23,13 @@ app.get('/', (req, res) => {
 
 app.get('/:jurisdiction/:topic', (req, res) => {
   compose(req.params.jurisdiction, req.params.topic, (result) => {
+    res.send(ReactDOMServer.renderToString( <App data={result}/> ));
     // Result is an object of the form:
     // {
     //   config: {Merge of all the config files} ,
     //   common: {All the common topic info},
     //   jurisdiction: {All the topic info for the specified jurisdiction (county)}
     // }
-    res.send(result);
   });
 });
 
