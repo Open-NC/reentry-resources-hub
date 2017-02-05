@@ -79,19 +79,12 @@ function loadCommonTopic(topicName, config, callback) {
     if (err1) callback(err1, null);
     else {
       topic.description = description;
-      const file2 = `./content/pages/${topicName}/resources_highlighted.json`;
-      loadJsonFile(file2, (err2, highlighted) => {
+      const file2 = `./content/pages/${topicName}/resources_local.json`;
+      loadJsonFile(file2, (err2, local) => {
         if (err2) callback(err2, null);
         else {
-          topic.highlighted = highlighted;
-          const file3 = `./content/pages/${topicName}/resources_local.json`;
-          loadJsonFile(file3, (err3, local) => {
-            if (err3) callback(err3, null);
-            else {
-              topic.local = local;
-              callback(null, topic);
-            }
-          });
+          topic.local = local;
+          callback(null, topic);
         }
       });
     }
@@ -105,19 +98,12 @@ function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
     if (err1) callback(err1, null);
     else {
       topic.description = description;
-      const file2 = `./content/jurisdictions/${jurisdiction}/${topicName}/resources_highlighted.json`;
-      loadJsonFile(file2, (err2, highlighted) => {
+      const file2 = `./content/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
+      loadJsonFile(file2, (err2, local) => {
         if (err2) callback(err2, null);
         else {
-          topic.highlighted = highlighted;
-          const file3 = `./content/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
-          loadJsonFile(file3, (err3, local) => {
-            if (err3) callback(err3, null);
-            else {
-              topic.local = local;
-              callback(null, topic);
-            }
-          });
+          topic.local = local;
+          callback(null, topic);
         }
       });
     }
