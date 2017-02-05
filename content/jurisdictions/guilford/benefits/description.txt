@@ -1,3 +1,7 @@
-<p>
-  Public Benefits: Sample Text
-</p>
+<h1>Public Benefits</h1>
+
+<p>A criminal conviction does not necessarily prevent you from receiving benefits including:  food stamps, Medicaid, Medicare, Social Security, and Social Security Disability Income.</p>
+
+<p>A good place to start is the Federal Interagency Reentry Council's Rentry <a href="http://www.usich.gov/resources/uploads/asset_library/REENTRY_MYTHBUSTERS.pdf">MythBusters</a> - it helps dispel common myths about what federal benefits you may be able to access, even if you've been convicted of a felony.</p>
+
+<p>Other good resources include the <a href="http://http://www.myguilford.com/humanservices/" target="_blank">Guilford County Department of Health & Human Services site</a>, the <a href="http://www.ssa.gov" target="_blank">Social Security Administration</a>, and the "Benefits" section of <a href="blank">this presentation</a>.</p>
