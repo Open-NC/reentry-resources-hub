@@ -13,13 +13,13 @@ on [this page](https://github.com/CodeForNC/reentry-resources-hub/projects/2).
 
 ## Installation
 Make sure you have [Node](https://nodejs.org/en/) >= 4 installed (we strongly recommend using Node >= 6 and npm >= 3).
-We prefer to use the [yarn](https://yarnpkg.com/) npm client. 
+We prefer to use the [yarn](https://yarnpkg.com/) npm client.
 
 To install, clone this repository. From within the directory, run:
 
 ````
     yarn
-    cd client; yarn; cd ..
+    cd admin-client; yarn; cd ..
     yarn start
 ````
 
@@ -27,7 +27,7 @@ If you prefer to use npm, the equivalent procedure is:
 
 ````
     npm install
-    cd client; npm install; cd ..
+    cd admin-client; npm install; cd ..
     npm start
 ````
 
@@ -40,4 +40,3 @@ client-side code for that part is minimal. The administrative front end is a Rea
 using [create-react-app](https://github.com/facebookincubator/create-react-app) and Bootstrap.
 We've integrated that with the server based
 on [this blog post](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/).
-
