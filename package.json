@@ -20,7 +20,9 @@
     "fs": "0.0.2",
     "node-jsx": "^0.13.3",
     "react": "^15.4.1",
-    "react-dom": "^15.4.2"
+    "react-bootstrap": "^0.30.7",
+    "react-dom": "^15.4.2",
+    "react-render-html": "^0.1.6"
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
