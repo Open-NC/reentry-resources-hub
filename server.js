@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('/', (req, res) => {
-  compose('buncombe', 'home', (result) => {
+  compose('buncombe', 'health', (result) => {
     res.send(result);
   });
 });
