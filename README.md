@@ -40,5 +40,3 @@ client-side code for that part is minimal. The administrative front end is a Rea
 using [create-react-app](https://github.com/facebookincubator/create-react-app) and Bootstrap.
 We've integrated that with the server based
 on [this blog post](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/).
-
-And this is just a demo sentence to add.
