@@ -1,59 +1,117 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
+import { match, RouterContext } from 'react-router';
 import express from 'express';
+import handlebars from 'express-handlebars';
 import fs from 'fs';
+import { routes } from './routes';
 import compose from './server/compose';
-import App from './server/components/App.jsx';
+import App from './server/components/App';
 
 const app = express();
 require('node-jsx').install();
 
+// TODO: Research the handlebars()...
+app.engine('handlebars', handlebars());
+app.set('view engine', 'handlebars');
+
 app.set('port', (process.env.PORT || 3001));
 
 // Express only serves static assets in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-}
+//if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(__dirname + '/public'));
+//}
 
-app.get('/', (req, res) => {
-  compose('buncombe', 'health', (result) => {
-    res.send(result);
+app.get('*', (req, res) => {
+  // routes is our object of React routes defined above
+  match({ routes, location: req.url }, (err, redirectLocation, props) => {
+    if (err) {
+      // something went badly wrong, so 500 with a message
+      res.status(500).send(err.message);
+    } else if (redirectLocation) {
+      // we matched a ReactRouter redirect, so redirect from the server
+      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+    } else if (props) {
+
+      if (props.params.jurisdiction && props.params.topic) {
+        compose(props.params.jurisdiction, props.params.topic, (result) => {
+          console.log(result);
+          const markup = renderToString(<App data={result} />);
+          res.render('main', { app: markup });
+          // renderToString(<App data={result} />);
+        });
+      }
+      else {
+        const markup = renderToString(<RouterContext {...props} />);
+        console.log("else");
+        // render `index.ejs`, but pass in the markup we want it to display
+        res.render('main', { markup })
+      }
+      // console.log(props);
+      // if we got props, that means we found a valid component to render
+      // for the given route
+
+      //const markup = renderToString(<RoutingContext {...props} />);
+
+      //const markup = renderToString(<RoutingContext {...props} />);
+
+      // render `index.ejs`, but pass in the markup we want it to display
+
+      // compose(props.params.jurisdiction, props.params.topic, (result) => {
+      //   //console.log(result);
+      //   const markup = renderToString(<App data={result} />);
+      //   res.render('main', { app: markup });
+      //   // renderToString(<App data={result} />);
+      // });
+
+      // if we got props, that means we found a valid component to render
+      // for the given route
+      //const markup = renderToString(<RouterContext {...props} />);
+
+      // render `index.ejs`, but pass in the markup we want it to display
+      //res.render('main', { markup })
+      //res.render('main', { markup })
+
+      //const markup = renderToString(<App data= {...props} />);
+      // compose(props.params.jurisdiction, props.params.topic, (result) => {
+      //   res.send(renderToString(<App data={result} />));
+      // });
+
+      // render `index.ejs`, but pass in the markup we want it to display
+      //res.render('index', { markup })
+
+    } else {
+      // no route match, so 404. In a real app you might render a custom
+      // 404 view here
+      res.sendStatus(404);
+    }
   });
 });
 
-app.get('/:jurisdiction/:topic', (req, res) => {
-  compose(req.params.jurisdiction, req.params.topic, (result) => {
-    res.send(ReactDOMServer.renderToString(<App data={result} />));
-    // Result is an object of the form:
-    // {
-    //   config: {Merge of all the config files} ,
-    //   common: { // Content applicable to all counties
-    //     description: common HTML content,
-    //     common: list of resources that apply to all jurisdictions
-    //     local:  list of resources that are parameterized for local jurisdiction
-    //   },
-    //   jurisdiction: { // Content applicable to the specific jurisdiction (county)
-    //     description: jurisdiction-specific HTML content,
-    //     local: list of resources specific to the county
-    //   }
-    // }
-  });
-});
-
-// this is from the original example - delete when the new admin interface is done.
-app.get('/api/food', (req, res) => {
-  const param = req.query.q;
-
-  if (!param) {
-    res.json({
-      error: 'Missing required parameter `q`',
-    });
-    return;
-  }
-
-  res.json({title: "NC Reentry Resources Hub"});
-
-});
+// app.get('/', (req, res) => {
+//   compose('buncombe', 'health', (result) => {
+//     res.send(result);
+//   });
+// });
+//
+// app.get('/:jurisdiction/:topic', (req, res) => {
+//   compose(req.params.jurisdiction, req.params.topic, (result) => {
+//     res.send(ReactDOMServer.renderToString(<App data={result} />));
+//     // Result is an object of the form:
+//     // {
+//     //   config: {Merge of all the config files} ,
+//     //   common: { // Content applicable to all counties
+//     //     description: common HTML content,
+//     //     common: list of resources that apply to all jurisdictions
+//     //     local:  list of resources that are parameterized for local jurisdiction
+//     //   },
+//     //   jurisdiction: { // Content applicable to the specific jurisdiction (county)
+//     //     description: jurisdiction-specific HTML content,
+//     //     local: list of resources specific to the county
+//     //   }
+//     // }
+//   });
+// });
 
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console

@@ -36,29 +36,30 @@ class Content extends React.Component {
         {/* Common Description */}
         {renderHTML(this.props.data.common.description)}
 
+        <h2>Local Information</h2>
+        {/* Local Description */}
+        {renderHTML(this.props.data.jurisdiction.description)}
+
+        <h2>Resources</h2>
+        <h3>National, State, and General Resources</h3>
         {/* Common Resources */}
         <ul>
           {this.props.data.common.common.resources.map(function(resource) {
               return <li key={resource.url}><a href={url}>{resource.name}</a><p>{resource.description}</p></li>
           })}
         </ul>
+        <h3>Local and Regional Resources</h3>
+        {/* Local Resources */}
+        <ul>
+          {this._formatJurisdictionResources(this.props.data.jurisdiction.local.resources)}
+        </ul>
 
+        <h4>Local Resources from 211</h4>
         {/* Common Local Resources */}
-        {/* TODO: MAKE THE ICAROL URL DYNAMIC */}
         <ul>
           {this.props.data.common.local.resources.map(function(resource) {
               return <li key={resource.url}><a href={url}>{resource.name}</a><p>{resource.description}</p></li>
           })}
-        </ul>
-
-        {/* Local Description */}
-        {renderHTML(this.props.data.jurisdiction.description)}
-
-        <h2>Additional Resources</h2>
-        {/* Local Resources */}
-        {/* TODO: NEED TO SORT THESE RESOURCES BY CATEGORY */}
-        <ul>
-          {this._formatJurisdictionResources(this.props.data.jurisdiction.local.resources)}
         </ul>
       </div>
     );

@@ -1,0 +1,10 @@
+{
+  "resources": [
+    {
+      "name": "A job resource.",
+      "description": "A job Description",
+      "url": "https://www.job.com",
+      "category": null
+    }
+  ]
+}
