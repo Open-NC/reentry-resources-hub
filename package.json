@@ -23,7 +23,7 @@
     "webpack-dev-server": "^2.3.0"
   },
   "scripts": {
-    "start": "node_modules/.bin/webpack -p concurrently \"npm run server\" \"npm run client\"",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "startwp": "node_modules/.bin/webpack-dev-server --progress --inline --hot",
     "server": "babel-node server.js",
     "client": "babel-node start-client.js",
