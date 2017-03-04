@@ -3,10 +3,11 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import express from 'express';
 import handlebars from 'express-handlebars';
+import path from 'path';
 import fs from 'fs';
-import { routes } from './routes';
+import routes from './routes';
 import compose from './server/compose';
-import App from './server/components/App';
+import App from './components/App';
 
 const app = express();
 require('node-jsx').install();
@@ -14,12 +15,13 @@ require('node-jsx').install();
 // TODO: Research the handlebars()...
 app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, '/views'));
 
 app.set('port', (process.env.PORT || 3001));
 
 // Express only serves static assets in production
 //if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/static'));
 //}
 
 app.get('*', (req, res) => {

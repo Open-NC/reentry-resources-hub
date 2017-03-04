@@ -7,7 +7,18 @@
       "es2015",
       "stage-0",
       "react"
-    ]
+    ],
+    "env": {
+      "development": {
+        "plugins": [["react-transform", {
+          "transforms": [{
+            "transform": "react-transform-hmr",
+            "imports": ["react"],
+            "locals": ["module"]
+          }]
+        }]]
+      }
+    }
   },
   "dependencies": {
     "coa-command-line-args": "^1.0.1",
@@ -15,6 +26,7 @@
     "express-handlebars": "^3.0.0",
     "fs": "0.0.2",
     "node-jsx": "^0.13.3",
+    "path": "^0.12.7",
     "react": "^15.4.1",
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
@@ -25,8 +37,8 @@
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "startwp": "node_modules/.bin/webpack-dev-server --progress --inline --hot",
-    "server": "babel-node server.js",
-    "client": "babel-node start-client.js",
+    "server": "babel-node ./src/server.js",
+    "client": "babel-node ./src/start-client.js",
     "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1"
   },
   "devDependencies": {
@@ -43,6 +55,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.8.0",
+    "http-server": "^0.9.0",
     "webpack": "^2.2.1"
   },
   "eslintConfig": {
