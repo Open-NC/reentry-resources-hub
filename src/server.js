@@ -8,6 +8,7 @@ import fs from 'fs';
 import routes from './routes';
 import compose from './server/compose';
 import App from './components/App';
+import Layout from './components/Layout';
 
 const app = express();
 require('node-jsx').install();
@@ -24,6 +25,19 @@ app.set('port', (process.env.PORT || 3001));
   app.use(express.static(__dirname + '/static'));
 //}
 
+app.get('/api/:jurisdiction/:topic', (req, res) => {
+   compose(req.params.jurisdiction, req.params.topic, (result) => {
+     // Result is an object of the form:
+     // {
+     //   config: {Merge of all the config files} ,
+     //   common: {All the common topic info},
+     //   jurisdiction: {All the topic info for the specified jurisdiction (county)}
+     // }
+    //const data = result.json();
+    res.send(result);
+   });
+ });
+
 app.get('*', (req, res) => {
   // routes is our object of React routes defined above
   match({ routes, location: req.url }, (err, redirectLocation, props) => {
@@ -32,23 +46,29 @@ app.get('*', (req, res) => {
       res.status(500).send(err.message);
     } else if (redirectLocation) {
       // we matched a ReactRouter redirect, so redirect from the server
+      console.log("***Redirect***");
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (props) {
-
-      if (props.params.jurisdiction && props.params.topic) {
-        compose(props.params.jurisdiction, props.params.topic, (result) => {
-          console.log(result);
-          const markup = renderToString(<App data={result} />);
-          res.render('main', { app: markup });
-          // renderToString(<App data={result} />);
-        });
-      }
-      else {
+      console.log("************** I am the props on the server! ***************");
+      console.log(props);
+      console.log("************** I am the end of the props on the server! ***************");
+      // if (props.params.jurisdiction && props.params.topic) {
+      //   compose(props.params.jurisdiction, props.params.topic, (result) => {
+      //     console.log("************** I am the server side render! ***************");
+      //     console.log(result);
+      //     const markup = renderToString(<Layout data={result} />);
+      //     res.render('main', { app: markup });
+      //     console.log("************** I am the end of server side render! ***************");
+      //
+      //     // renderToString(<App data={result} />);
+      //   });
+      // }
+      // else {
         const markup = renderToString(<RouterContext {...props} />);
-        console.log("else");
+        console.log("RouterContext");
         // render `index.ejs`, but pass in the markup we want it to display
-        res.render('main', { markup })
-      }
+        res.render('main', { app: markup })
+      //}
       // console.log(props);
       // if we got props, that means we found a valid component to render
       // for the given route
@@ -85,6 +105,7 @@ app.get('*', (req, res) => {
     } else {
       // no route match, so 404. In a real app you might render a custom
       // 404 view here
+      console.log("***404***");
       res.sendStatus(404);
     }
   });

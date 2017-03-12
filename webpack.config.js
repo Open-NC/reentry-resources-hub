@@ -19,15 +19,21 @@ module.exports = {
       }]
   },
   plugins: [
+    // new webpack.DefinePlugin({
+    //   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    // }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    }),
+      'process.env': {
+        'NODE_ENV': JSON.stringify('development'),
+        'BABEL_ENV': JSON.stringify('dev')
+    }
+  }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false },
-      mangle: true,
-      sourcemap: false,
-      beautify: false,
+      mangle: false,
+      sourcemap: true,
+      beautify: true,
       dead_code: true
     })
   ]

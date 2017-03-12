@@ -2,6 +2,7 @@
   "name": "lookup-server",
   "version": "0.0.1",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "babel": {
     "presets": [
       "es2015",
@@ -10,21 +11,34 @@
     ],
     "env": {
       "development": {
-        "plugins": [["react-transform", {
-          "transforms": [{
-            "transform": "react-transform-hmr",
-            "imports": ["react"],
-            "locals": ["module"]
-          }]
-        }]]
+        "plugins": [
+          [
+            "react-transform",
+            {
+              "transforms": [
+                {
+                  "transform": "react-transform-hmr",
+                  "imports": [
+                    "react"
+                  ],
+                  "locals": [
+                    "module"
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
       }
     }
   },
   "dependencies": {
     "coa-command-line-args": "^1.0.1",
+    "es6-promise": "^4.0.5",
     "express": "4.13.3",
     "express-handlebars": "^3.0.0",
     "fs": "0.0.2",
+    "isomorphic-fetch": "^2.2.1",
     "node-jsx": "^0.13.3",
     "path": "^0.12.7",
     "react": "^15.4.1",
@@ -36,9 +50,9 @@
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "startwp": "node_modules/.bin/webpack-dev-server --progress --inline --hot",
+    "startwpdev": "concurrently \"NODE_ENV=production node_modules/.bin/babel-node --presets react,es2015 src/server.js\" \"node_modules/.bin/http-server src/static\"",
     "server": "babel-node ./src/server.js",
-    "client": "babel-node ./src/start-client.js",
+    "client": "babel-node ./src/app-client.js",
     "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1"
   },
   "devDependencies": {
