@@ -27,6 +27,11 @@ body {
   background-color: hsla(198, 95%, 38%, 0.75);
 }
 
+.content-body {
+  font-size: 2rem;
+  line-height: 1.6em;
+}
+
 .site-footer {
   font-family: Lato, sans-serif;
   padding: 2em;
