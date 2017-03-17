@@ -1,12 +1,17 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
-import Layout from './components/Layout';
-import App from './components/App';
+import Layout from './components/Layout.jsx';
+import App from './components/App.jsx';
 
-const routes = (
-  <Route path="" component={Layout}>
-    <Route path="/:jurisdiction/:topic" component={App}/>
-  </Route>
-);
+const routes = {
+  path: '',
+  component: Layout,
+  childRoutes: [
+    {
+      path: '/:jurisdiction/:topic',
+      component: App
+    }
+  ]
+}
 
-export default routes;
+export { routes };
