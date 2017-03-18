@@ -7,9 +7,7 @@ class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
-      jurisdiction: '',
-      topic: ''
+      data: null
     };
   }
 
