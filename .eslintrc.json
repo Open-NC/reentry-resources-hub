@@ -11,6 +11,7 @@
         "import"
     ],
     "rules": {
+      "no-underscore-dangle": "off",
       "arrow-body-style": [
         2,
         "as-needed"
@@ -19,6 +20,7 @@
         2,
         "always-multiline"
       ],
+      "import/extensions": 0,
       "import/imports-first": 0,
       "import/newline-after-import": 0,
       "import/no-extraneous-dependencies": 0,
@@ -48,6 +50,7 @@
       "react/jsx-no-target-blank": 0,
       "react/require-extension": 0,
       "react/self-closing-comp": 0,
-      "require-yield": 0
+      "require-yield": 0,
+      "react/prefer-stateless-function": 0
     }
 }

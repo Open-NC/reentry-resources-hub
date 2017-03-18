@@ -1,31 +1,15 @@
+/* eslint no-console: 0 */
 import React from 'react';
-require('es6-promise').polyfill();
 import fetch from 'isomorphic-fetch';
+require('es6-promise').polyfill();
 
 class Layout extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      data: null
+      data: null,
     };
-  }
-
-  _fetchContent(jurisdiction, topic) {
-    fetch(`/api/${jurisdiction}/${topic}`)
-    .then((response) => {
-        if (response.status >= 400) {
-            throw new Error("Bad response from server");
-        }
-        console.log("Layout response");
-        console.log(response);
-        return response.json();
-    })
-    .then((content) => {
-        console.log("Layout content");
-        console.log(content);
-        this.setState({ data: content });
-    });
   }
 
   componentDidMount() {
@@ -33,13 +17,12 @@ class Layout extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("Layout nextProps");
+    console.log('Layout nextProps');
     console.log(nextProps);
     if (this.props !== nextProps) {
-      if (nextProps.jurisdiction == this.props.params.jurisdiction) {
+      if (nextProps.jurisdiction === this.props.params.jurisdiction) {
         this.props.params.topic = nextProps.params.topic;
-      }
-      else {
+      } else {
         this.props.params.jurisdiction = nextProps.params.jurisdiction;
         this.props.params.topic = nextProps.params.topic;
       }
@@ -47,17 +30,32 @@ class Layout extends React.Component {
     }
   }
 
+  _fetchContent(jurisdiction, topic) {
+    fetch(`/api/${jurisdiction}/${topic}`)
+    .then((response) => {
+      if (response.status >= 400) {
+        throw new Error('Bad response from server');
+      }
+      console.log('Layout response');
+      console.log(response);
+      return response.json();
+    })
+    .then((content) => {
+      console.log('Layout content');
+      console.log(content);
+      this.setState({ data: content });
+    });
+  }
+
   render() {
     if (this.state.data) {
-      {console.log("Layout this.state.data inside render if")}
-      {console.log(this.state.data)}
-      let children = React.Children.map(this.props.children, (child) => {
-        return React.cloneElement(child, {
-          data: this.state.data
-        })
-      })
+      console.log('Layout this.state.data inside render if');
+      console.log(this.state.data);
+      const children = React.Children.map(this.props.children, child =>
+        React.cloneElement(child, { data: this.state.data })
+      );
 
-      return(
+      return (
         <div>
           <div className="app-content">{children}</div>
         </div>
@@ -65,6 +63,11 @@ class Layout extends React.Component {
     }
     return (<div>Loading...</div>);
   }
+}
+
+Layout.propTypes = {
+  params: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types,
+  children: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types,
 };
 
 module.exports = Layout;

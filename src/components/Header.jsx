@@ -1,10 +1,10 @@
 import React from 'react';
-import { Col, Navbar, Nav, NavItem, Row } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 class Header extends React.Component {
   render() {
-    return(
+    return (
       <div>
         <div className="site-header">
           <div className="header-background-image">
@@ -19,7 +19,7 @@ class Header extends React.Component {
         <Navbar default collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#">Choose County</a>
+              <a href="/pick-county-url-fix-later">Choose County</a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
@@ -70,6 +70,10 @@ class Header extends React.Component {
       </div>
     );
   }
+}
+
+Header.propTypes = {
+  data: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 module.exports = Header;

@@ -1,11 +1,10 @@
 import React from 'react';
-import Header from './Header.jsx';
-import Footer from './Footer.jsx';
 import { Col, Row } from 'react-bootstrap';
+import Footer from './Footer.jsx';
 
 class Home extends React.Component {
   render() {
-    return(
+    return (
       <div>
         <Row>
           <Col md={2}></Col>
@@ -18,6 +17,6 @@ class Home extends React.Component {
       </div>
     );
   }
-};
+}
 
 module.exports = Home;
