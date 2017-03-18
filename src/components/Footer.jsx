@@ -2,7 +2,7 @@ import React from 'react';
 
 class Footer extends React.Component {
   render() {
-    return(
+    return (
       <div className="site-footer">
         <p>© 2017 All Rights Reserved.</p>
 
@@ -12,6 +12,6 @@ class Footer extends React.Component {
       </div>
     );
   }
-};
+}
 
 module.exports = Footer;

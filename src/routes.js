@@ -1,5 +1,3 @@
-import React from 'react'
-import { Route, IndexRoute } from 'react-router'
 import Layout from './components/Layout.jsx';
 import App from './components/App.jsx';
 
@@ -9,9 +7,9 @@ const routes = {
   childRoutes: [
     {
       path: '/:jurisdiction/:topic',
-      component: App
-    }
-  ]
-}
+      component: App,
+    },
+  ],
+};
 
 export { routes };
