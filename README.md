@@ -35,8 +35,7 @@ The application is running at http://localhost:3000/. The server is also running
 
 ## Basic architecture
 
-The server side is implemented via Express. The public site is rendered on the server, so
-client-side code for that part is minimal. The administrative front end is a React app built
+The server side is implemented via Express. The public site is a Universal React App rendered on the server on initial request, and subsequent requests are rendered by the client. The administrative front end is a React app built
 using [create-react-app](https://github.com/facebookincubator/create-react-app) and Bootstrap.
 We've integrated that with the server based
 on [this blog post](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/).
