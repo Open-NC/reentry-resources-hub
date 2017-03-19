@@ -52,10 +52,10 @@ app.get('*', (req, res) => {
       console.log('************** I am the end of the props on the server! ***************');
       if (props.params.jurisdiction && props.params.topic) {
         compose(props.params.jurisdiction, props.params.topic, (result) => {
-          console.log('************** I am the server side render! ***************');
+          console.log("************** I am the server side content! ***************");
           console.log(result);
-          console.log('************** I am the end of server side render! ***************');
-          const markup = renderToString(<App data={result} />);
+          console.log("************** I am the end of server side content! ***************");
+          const markup = renderToString( <App data={result} />);
           res.render('main', { app: markup });
         });
       }
