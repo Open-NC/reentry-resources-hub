@@ -5,8 +5,12 @@ import { match } from 'react-router';
 import express from 'express';
 import handlebars from 'express-handlebars';
 import path from 'path';
-import { routes } from './routes';
 import compose from './server/compose';
+import { routes } from './routes';
+//import { createStore } from 'redux';
+import configureStore from './store/configureStore';
+import { createContent } from './actions/contentActions';
+import { Provider } from 'react-redux';
 import App from './components/App.jsx';
 
 const app = express();
@@ -55,8 +59,23 @@ app.get('*', (req, res) => {
           console.log("************** I am the server side content! ***************");
           console.log(result);
           console.log("************** I am the end of server side content! ***************");
-          const markup = renderToString( <App data={result} />);
-          res.render('main', { app: markup });
+
+          let preloadedState = {};
+          const store = configureStore(preloadedState);
+          store.dispatch(createContent(result));
+
+          const markup = renderToString(
+            <Provider store = { store }>
+              <App />
+            </Provider>
+          );
+
+          //const preloadedState = store.getState();
+
+          res.render('main', {
+                                app: markup,
+                                preloadedstate: preloadedState
+                              });
         });
       }
     // !! Note: Killed import of RouterContext from react-router. Restore if you uncomment below.

@@ -10,7 +10,7 @@ body {
   background-image: url(http://dev-big-old-book.pantheonsite.io/wp-content/uploads/2016/09/cropped-View_looking_north_of_Mount_Jefferson-1.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center top;
+  background-position: center bottom;
   opacity: 0.75;
   filter: alpha(opacity=75); /* For IE8 and earlier */
   background-attachment: fixed;
