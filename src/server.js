@@ -9,7 +9,7 @@ import compose from './server/compose';
 import { routes } from './routes';
 //import { createStore } from 'redux';
 import configureStore from './store/configureStore';
-import { createContent } from './actions/contentActions';
+import { loadServerContent } from './actions/contentActions';
 import { Provider } from 'react-redux';
 import App from './components/App.jsx';
 
@@ -60,9 +60,13 @@ app.get('*', (req, res) => {
           console.log(result);
           console.log("************** I am the end of server side content! ***************");
 
-          let preloadedState = {};
+          const preloadedState = result;
+          console.log('preloadedState');
+          console.log(preloadedState);
           const store = configureStore(preloadedState);
-          store.dispatch(createContent(result));
+          console.log('store');
+          console.log(store.getState());
+          //store.dispatch(loadServerContent(result));
 
           const markup = renderToString(
             <Provider store = { store }>
@@ -70,11 +74,14 @@ app.get('*', (req, res) => {
             </Provider>
           );
 
+          // Grab the initial state from our Redux store
+          const finalState = store.getState();
+
           //const preloadedState = store.getState();
 
           res.render('main', {
                                 app: markup,
-                                preloadedstate: preloadedState
+                                preloadedstate: finalState
                               });
         });
       }

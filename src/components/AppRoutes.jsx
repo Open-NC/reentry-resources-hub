@@ -2,9 +2,10 @@ import React from 'react';
 import { Router, browserHistory } from 'react-router';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux';
-import reducers from '../reducers/reducers'
+//import reducers from '../reducers/reducers'
 import { routes } from '../routes';
 import configureStore from '../store/configureStore';
+import { loadServerContent } from '../actions/contentActions'
 
 //TODO: Check on how to correctly pass initialSates as a parameter here
 //const store = configureStore(initialState);
@@ -17,7 +18,11 @@ delete window.__PRELOADED_STATE__
 
 // Create Redux store with initial state
 //const store = createStore(reducers, preloadedState)
-const store = configureStore();
+const store = configureStore(preloadedState);
+
+// Load content to store when client loads.
+// *** This may need to be handeled by injecting json into index.html head during server render.
+//store.dispatch(loadServerContent());
 
 export default class AppRoutes extends React.Component {
 
