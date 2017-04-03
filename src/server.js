@@ -12,6 +12,7 @@ import configureStore from './store/configureStore';
 import { loadServerContent } from './actions/contentActions';
 import { Provider } from 'react-redux';
 import App from './components/App.jsx';
+//import reducers from './reducers/reducers';
 
 const app = express();
 require('node-jsx').install();
@@ -29,14 +30,14 @@ if (true || process.env.NODE_ENV === 'production') { // eslint-disable-line no-c
 }
 
 app.get('/api/:jurisdiction/:topic', (req, res) => {
-  compose(req.params.jurisdiction, req.params.topic, (result) => {
-    // Result is an object of the form:
+  compose(req.params.jurisdiction, req.params.topic, (content) => {
+    // Content is an object of the form:
     // {
     //   config: {Merge of all the config files} ,
     //   common: {All the common topic info},
     //   jurisdiction: {All the topic info for the specified jurisdiction (county)}
     // }
-    res.send(result);
+    res.send(content);
   });
 });
 
@@ -55,18 +56,23 @@ app.get('*', (req, res) => {
       console.log(props);
       console.log('************** I am the end of the props on the server! ***************');
       if (props.params.jurisdiction && props.params.topic) {
-        compose(props.params.jurisdiction, props.params.topic, (result) => {
+        compose(props.params.jurisdiction, props.params.topic, (content) => {
           console.log("************** I am the server side content! ***************");
-          console.log(result);
+          console.log(content);
           console.log("************** I am the end of server side content! ***************");
 
-          const preloadedState = result;
+          const preloadedState = { content };
+          preloadedState.stringify = JSON.stringify(preloadedState);
           console.log('preloadedState');
           console.log(preloadedState);
+
+          //const store = createStore(reducers);
+
           const store = configureStore(preloadedState);
           console.log('store');
           console.log(store.getState());
-          //store.dispatch(loadServerContent(result));
+          //store.dispatch(loadServerContent(content));
+          //const preloadedState = store.getState();
 
           const markup = renderToString(
             <Provider store = { store }>
@@ -74,14 +80,17 @@ app.get('*', (req, res) => {
             </Provider>
           );
 
+          console.log('markup');
+          console.log(markup);
+
           // Grab the initial state from our Redux store
-          const finalState = store.getState();
+          //const finalState = store.getState();
 
           //const preloadedState = store.getState();
 
           res.render('main', {
                                 app: markup,
-                                preloadedstate: finalState
+                                preloadedState: preloadedState
                               });
         });
       }
