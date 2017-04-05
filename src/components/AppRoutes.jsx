@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import reducers from '../reducers/reducers'
 import { routes } from '../routes';
 import configureStore from '../store/configureStore';
-import { loadServerContent } from '../actions/contentActions'
+import { loadContent } from '../actions/contentActions'
 
 //TODO: Check on how to correctly pass initialSates as a parameter here
 //const store = configureStore(initialState);

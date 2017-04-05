@@ -10,9 +10,9 @@ import * as contentActions from '../actions/contentActions';
 require('es6-promise').polyfill();
 
 class App extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-  }
+  // constructor(props, context) {
+  //   super(props, context);
+  // }
 
   // _fetchContent(jurisdiction, topic) {
   //   fetch(`/api/${jurisdiction}/${topic}`)
@@ -30,6 +30,12 @@ class App extends React.Component {
   //     //this.setState({ data: content });
   //     this.props.actions.createContent(this.state.content);
   //   });
+  // }
+
+  // componentDidMount() {
+  //   console.log('this.props.actions');
+  //   console.log(this.props.actions);
+  //   this.props.actions.loadContent(this.props.params.jurisdiction, this.props.params.topic);
   // }
 
   render() {
