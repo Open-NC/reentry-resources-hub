@@ -38,6 +38,20 @@ class App extends React.Component {
   //   this.props.actions.loadContent(this.props.params.jurisdiction, this.props.params.topic);
   // }
 
+  componentWillReceiveProps(nextProps) {
+      console.log('Layout nextProps');
+      console.log(nextProps);
+      if (this.props.params !== nextProps.params) {
+      //   if (nextProps.jurisdiction === this.props.params.jurisdiction) {
+      //     this.props.params.topic = nextProps.params.topic;
+      //   } else {
+      //     this.props.params.jurisdiction = nextProps.params.jurisdiction;
+      //     this.props.params.topic = nextProps.params.topic;
+      //   }
+        this.props.actions.loadContent(nextProps.params.jurisdiction, nextProps.params.topic);
+      }
+    }
+
   render() {
     return (
       <div>
