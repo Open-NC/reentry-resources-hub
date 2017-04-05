@@ -77,7 +77,7 @@ class Content extends React.Component {
 }
 
 Content.propTypes = {
-  data: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  data: React.PropTypes.object // eslint-disable-line react/forbid-prop-types
 };
 
 module.exports = Content;

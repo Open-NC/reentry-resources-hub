@@ -5,8 +5,10 @@ import { match } from 'react-router';
 import express from 'express';
 import handlebars from 'express-handlebars';
 import path from 'path';
-import { routes } from './routes';
 import compose from './server/compose';
+import { routes } from './routes';
+import configureStore from './store/configureStore';
+import { Provider } from 'react-redux';
 import App from './components/App.jsx';
 
 const app = express();
@@ -25,14 +27,14 @@ if (true || process.env.NODE_ENV === 'production') { // eslint-disable-line no-c
 }
 
 app.get('/api/:jurisdiction/:topic', (req, res) => {
-  compose(req.params.jurisdiction, req.params.topic, (result) => {
-    // Result is an object of the form:
+  compose(req.params.jurisdiction, req.params.topic, (content) => {
+    // Content is an object of the form:
     // {
     //   config: {Merge of all the config files} ,
     //   common: {All the common topic info},
     //   jurisdiction: {All the topic info for the specified jurisdiction (county)}
     // }
-    res.send(result);
+    res.send(content);
   });
 });
 
@@ -51,12 +53,30 @@ app.get('*', (req, res) => {
       console.log(props);
       console.log('************** I am the end of the props on the server! ***************');
       if (props.params.jurisdiction && props.params.topic) {
-        compose(props.params.jurisdiction, props.params.topic, (result) => {
+        compose(props.params.jurisdiction, props.params.topic, (content) => {
           console.log("************** I am the server side content! ***************");
-          console.log(result);
+          console.log(content);
           console.log("************** I am the end of server side content! ***************");
-          const markup = renderToString( <App data={result} />);
-          res.render('main', { app: markup });
+
+          const preloadedState = { content };
+          preloadedState.stringify = JSON.stringify(preloadedState);
+          console.log('preloadedState');
+          console.log(preloadedState);
+
+          const store = configureStore(preloadedState);
+          console.log('store');
+          console.log(store.getState());
+
+          const markup = renderToString(
+            <Provider store = { store }>
+              <App />
+            </Provider>
+          );
+
+          res.render('main', {
+                                app: markup,
+                                preloadedState: preloadedState
+                              });
         });
       }
     // !! Note: Killed import of RouterContext from react-router. Restore if you uncomment below.

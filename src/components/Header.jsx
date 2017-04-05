@@ -9,7 +9,6 @@ class Header extends React.Component {
         <div className="site-header">
           <div className="header-background-image">
             <div className="title-box">
-              <h1>Reentry Resources Hub</h1>
               <h1>{this.props.data.config.common_jurisdiction_name} Reentry Resources Hub</h1>
               <h1>{this.props.data.config.local_jurisdiction_name} County</h1>
               <h4>Resources & assistance for those with criminal convictions or returning to the community after incarceration</h4>

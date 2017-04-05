@@ -11,6 +11,9 @@
   </head>
   <body>
     <div id="app"><div>{{{app}}}</div></div>
+    <script>
+      window.__PRELOADED_STATE__ = {{{preloadedState.stringify}}};
+    </script>
     <script src="/scripts/bundle.js"></script>
   </body>
 </html>
