@@ -5,49 +5,14 @@ import Content from './Content.jsx';
 import Footer from './Footer.jsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import fetch from 'isomorphic-fetch';
 import * as contentActions from '../actions/contentActions';
-require('es6-promise').polyfill();
 
 class App extends React.Component {
-  // constructor(props, context) {
-  //   super(props, context);
-  // }
-
-  // _fetchContent(jurisdiction, topic) {
-  //   fetch(`/api/${jurisdiction}/${topic}`)
-  //   .then((response) => {
-  //     if (response.status >= 400) {
-  //       throw new Error('Bad response from server');
-  //     }
-  //     console.log('Layout response');
-  //     console.log(response);
-  //     return response.json();
-  //   })
-  //   .then((content) => {
-  //     console.log('Layout content');
-  //     console.log(content);
-  //     //this.setState({ data: content });
-  //     this.props.actions.createContent(this.state.content);
-  //   });
-  // }
-
-  // componentDidMount() {
-  //   console.log('this.props.actions');
-  //   console.log(this.props.actions);
-  //   this.props.actions.loadContent(this.props.params.jurisdiction, this.props.params.topic);
-  // }
 
   componentWillReceiveProps(nextProps) {
-      console.log('Layout nextProps');
+      console.log('componentWillReceiveProps nextProps');
       console.log(nextProps);
       if (this.props.params !== nextProps.params) {
-      //   if (nextProps.jurisdiction === this.props.params.jurisdiction) {
-      //     this.props.params.topic = nextProps.params.topic;
-      //   } else {
-      //     this.props.params.jurisdiction = nextProps.params.jurisdiction;
-      //     this.props.params.topic = nextProps.params.topic;
-      //   }
         this.props.actions.loadContent(nextProps.params.jurisdiction, nextProps.params.topic);
       }
     }
@@ -66,9 +31,8 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  //data: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
   content: React.PropTypes.object.isRequired,
-  actions: React.PropTypes.object.isRequired
+  actions: React.PropTypes.object.isRequired // eslint-disable-line react/forbid-prop-types
 };
 
 function mapStateToProps(state, ownProps) {
@@ -79,7 +43,6 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    // createContent: content => dispatch(contentActions.createContent(content))
     actions: bindActionCreators(contentActions, dispatch)
   };
 }

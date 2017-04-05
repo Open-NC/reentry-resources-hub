@@ -7,12 +7,9 @@ import handlebars from 'express-handlebars';
 import path from 'path';
 import compose from './server/compose';
 import { routes } from './routes';
-//import { createStore } from 'redux';
 import configureStore from './store/configureStore';
-import { loadServerContent } from './actions/contentActions';
 import { Provider } from 'react-redux';
 import App from './components/App.jsx';
-//import reducers from './reducers/reducers';
 
 const app = express();
 require('node-jsx').install();
@@ -66,27 +63,15 @@ app.get('*', (req, res) => {
           console.log('preloadedState');
           console.log(preloadedState);
 
-          //const store = createStore(reducers);
-
           const store = configureStore(preloadedState);
           console.log('store');
           console.log(store.getState());
-          //store.dispatch(loadServerContent(content));
-          //const preloadedState = store.getState();
 
           const markup = renderToString(
             <Provider store = { store }>
               <App />
             </Provider>
           );
-
-          console.log('markup');
-          console.log(markup);
-
-          // Grab the initial state from our Redux store
-          //const finalState = store.getState();
-
-          //const preloadedState = store.getState();
 
           res.render('main', {
                                 app: markup,
