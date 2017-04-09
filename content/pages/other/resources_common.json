@@ -1,0 +1,10 @@
+{
+  "resources": [
+    {
+      "name": "An other resource.",
+      "description": "An other Description",
+      "url": "https://www.other.com",
+      "category": null
+    }
+  ]
+}

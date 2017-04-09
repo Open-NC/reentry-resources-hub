@@ -1,0 +1,10 @@
+{
+  "resources": [
+    {
+      "name": "A home resource.",
+      "description": "A home Description",
+      "url": "https://www.home.com",
+      "category": null
+    }
+  ]
+}

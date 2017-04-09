@@ -1,0 +1,10 @@
+{
+  "resources": [
+    {
+      "name": "A legal resource.",
+      "description": "A legal Description",
+      "url": "https://www.legal.com",
+      "category": null
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "resources": [
+    {
+      "name": "A support resource.",
+      "description": "A support Description",
+      "url": "https://www.support.com",
+      "category": null
+    }
+  ]
+}
