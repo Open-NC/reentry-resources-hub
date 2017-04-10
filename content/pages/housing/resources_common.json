@@ -1,0 +1,10 @@
+{
+  "resources": [
+    {
+      "name": "A housing resource.",
+      "description": "A housing Description",
+      "url": "https://www.housing.com",
+      "category": null
+    }
+  ]
+}

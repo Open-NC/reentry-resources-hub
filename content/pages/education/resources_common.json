@@ -1,0 +1,10 @@
+{
+  "resources": [
+    {
+      "name": "An education resource.",
+      "description": "An education Description",
+      "url": "https://www.education.com",
+      "category": null
+    }
+  ]
+}

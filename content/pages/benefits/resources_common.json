@@ -1,0 +1,10 @@
+{
+  "resources": [
+    {
+      "name": "A benefits resource.",
+      "description": "A benefits Description",
+      "url": "https://www.benefits.com",
+      "category": null
+    }
+  ]
+}
