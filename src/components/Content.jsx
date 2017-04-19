@@ -65,7 +65,7 @@ class Content extends React.Component {
             {/* Common Local Resources */}
             <ul>
               {data.common.local.resources.map((resource) => {
-                const tag = <li key={resource.url}><a href={resource.url}>{resource.name}</a><p>{resource.description}</p></li>;
+                const tag = <li key={url}><a href={url}>{resource.name}</a><p>{resource.description}</p></li>;
                 return tag;
               })}
             </ul>

@@ -14,7 +14,6 @@ import App from './components/App.jsx';
 const app = express();
 require('node-jsx').install();
 
-// TODO: Research the handlebars()... Probably don't really need it anymore.
 app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, '/views'));
@@ -49,19 +48,19 @@ app.get('*', (req, res) => {
       console.log('***Redirect***');
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (props) {
-      console.log('************** I am the props on the server! ***************');
-      console.log(props);
-      console.log('************** I am the end of the props on the server! ***************');
+      // console.log('************** I am the props on the server! ***************');
+      // console.log(props);
+      // console.log('************** I am the end of the props on the server! ***************');
       if (props.params.jurisdiction && props.params.topic) {
         compose(props.params.jurisdiction, props.params.topic, (content) => {
-          console.log("************** I am the server side content! ***************");
-          console.log(content);
-          console.log("************** I am the end of server side content! ***************");
+          // console.log("************** I am the server side content! ***************");
+          // console.log(content);
+          // console.log("************** I am the end of server side content! ***************");
 
           const preloadedState = { content };
           preloadedState.stringify = JSON.stringify(preloadedState);
-          console.log('preloadedState');
-          console.log(preloadedState);
+          // console.log('preloadedState');
+          // console.log(preloadedState);
 
           const store = configureStore(preloadedState);
           console.log('store');
