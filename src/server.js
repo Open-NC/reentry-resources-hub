@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { match } from 'react-router';
+import { match, RouterContext } from 'react-router';
 import express from 'express';
 import handlebars from 'express-handlebars';
 import path from 'path';
@@ -10,11 +10,11 @@ import { routes } from './routes';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
 import App from './components/App.jsx';
+import Home from './components/Home.jsx';
 
 const app = express();
 require('node-jsx').install();
 
-// TODO: Research the handlebars()... Probably don't really need it anymore.
 app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, '/views'));
@@ -49,43 +49,28 @@ app.get('*', (req, res) => {
       console.log('***Redirect***');
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (props) {
-      console.log('************** I am the props on the server! ***************');
-      console.log(props);
-      console.log('************** I am the end of the props on the server! ***************');
-      if (props.params.jurisdiction && props.params.topic) {
-        compose(props.params.jurisdiction, props.params.topic, (content) => {
-          console.log("************** I am the server side content! ***************");
-          console.log(content);
-          console.log("************** I am the end of server side content! ***************");
+      //   if (props.params.jurisdiction && props.params.topic) {
+      compose(props.params.jurisdiction, props.params.topic, (content) => {
+        const preloadedState = { content };
+        preloadedState.stringify = JSON.stringify(preloadedState);
+        // console.log('preloadedState');
+        // console.log(preloadedState);
 
-          const preloadedState = { content };
-          preloadedState.stringify = JSON.stringify(preloadedState);
-          console.log('preloadedState');
-          console.log(preloadedState);
+        const store = configureStore(preloadedState);
+        console.log('store');
+        console.log(store.getState());
 
-          const store = configureStore(preloadedState);
-          console.log('store');
-          console.log(store.getState());
-
-          const markup = renderToString(
-            <Provider store = { store }>
-              <App />
-            </Provider>
-          );
-
-          res.render('main', {
-                                app: markup,
-                                preloadedState: preloadedState
-                              });
-        });
-      }
-    // !! Note: Killed import of RouterContext from react-router. Restore if you uncomment below.
-    //   else {
-    //     const markup = renderToString(<RouterContext {...props} />);
-    //     console.log("RouterContext");
-    //     // render `index.ejs`, but pass in the markup we want it to display
-    //     res.render('main', { markup })
-    // }
+        const markup = renderToString(
+          <Provider store={store}>
+            <RouterContext {...content}/>
+          </Provider>
+        );
+        // render `/view/main.handlebars`, but pass in the markup we want it to display
+        res.render('main', {
+                              app: markup,
+                              preloadedState: preloadedState
+                            });
+      });
     } else {
       // no route match, so 404. In a real app you might render a custom
       // 404 view here

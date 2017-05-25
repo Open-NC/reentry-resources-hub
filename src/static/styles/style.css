@@ -10,7 +10,7 @@ body {
   background-image: url(http://dev-big-old-book.pantheonsite.io/wp-content/uploads/2016/09/cropped-View_looking_north_of_Mount_Jefferson-1.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center bottom;
+  background-position: bottom;
   opacity: 0.75;
   filter: alpha(opacity=75); /* For IE8 and earlier */
   background-attachment: fixed;
@@ -32,6 +32,11 @@ body {
   line-height: 1.6em;
 }
 
+.google-search {
+  float: right;
+  width: 20%;
+}
+
 .site-footer {
   font-family: Lato, sans-serif;
   padding: 2em;
@@ -39,4 +44,11 @@ body {
   color: #fff;
   background: hsl(198, 95%, 38%);
   text-align: center;
+}
+
+/* Make google search box appear correct*/
+input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus, .gsc-search-button
+{
+  box-sizing: content-box;
+  line-height: normal;
 }

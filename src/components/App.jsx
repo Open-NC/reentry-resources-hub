@@ -1,6 +1,8 @@
 /* eslint no-console: 0 */
 import React from 'react';
+import Home from './Home.jsx';
 import Header from './Header.jsx';
+import Search from './Search.jsx';
 import Content from './Content.jsx';
 import Footer from './Footer.jsx';
 import { bindActionCreators } from 'redux';
@@ -21,6 +23,7 @@ class App extends React.Component {
     return (
       <div>
         <Header data={this.props.content} />
+        <Search />
         {console.log('App this.props.content')}
         {console.log(this.props)}
         <Content data={this.props.content} />
