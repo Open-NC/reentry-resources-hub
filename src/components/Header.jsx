@@ -62,7 +62,7 @@ class Header extends React.Component {
                 <NavItem eventKey={9}>Other Resources</NavItem>
               </LinkContainer>
 
-              <LinkContainer to={`/${config.local_jurisdiction}/contact`}>
+              <LinkContainer to={`/contact`}>
                 <NavItem eventKey={10}>Contact Us</NavItem>
               </LinkContainer>
             </Nav>
