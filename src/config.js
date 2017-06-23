@@ -1,2 +1,2 @@
-const contentDir = '../reentry-resources-content';
+const contentDir = '../nc-reentry-resources-content';
 module.exports = contentDir;
