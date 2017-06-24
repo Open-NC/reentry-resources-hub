@@ -15,7 +15,7 @@ on [this page](https://github.com/CodeForNC/reentry-resources-hub/projects/2).
 Make sure you have [Node](https://nodejs.org/en/) >= 4 installed (we strongly recommend using Node >= 6 and npm >= 3).
 We prefer to use the [yarn](https://yarnpkg.com/) npm client.
 
-To install, clone this repository. From within the directory, run:
+To install, clone this repository and a suitable content directory and ensure that the content directory set in ./src/config.js points to it. If you clone the [nc-reentry-resources-content](https://github.com/CodeForNC/nc-reentry-resources-content) repository side-by-side with this repository, the default configuration will work. From within the directory, run:
 
 ````
     yarn
