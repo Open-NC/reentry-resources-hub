@@ -31,21 +31,6 @@ function loadJsonFile(path, callback) {
   });
 }
 
-
-function loadTextFile(path, callback) {
-  fs.open(path, 'r', (err, fd) => {
-    if (err) callback(err, null);
-    else {
-      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
-        if (rfErr) callback(rfErr, null);
-        else {
-          callback(null, data);
-        }
-      });
-    }
-  });
-}
-
 // Load and merge all the configurations
 function loadConfigurations(jurisdiction, topic, callback) {
   const file1 = `${contentDir}/config.json`; // site configuration
@@ -75,11 +60,11 @@ function loadConfigurations(jurisdiction, topic, callback) {
 
 function loadCommonTopic(topicName, config, callback) {
   const topic = {};
-  const file1 = `${contentDir}/pages/${topicName}/description.html`;
-  loadTextFile(file1, (err1, description) => {
+  const file1 = `${contentDir}/pages/${topicName}/description.json`;
+  loadJsonFile(file1, (err1, content) => {
     if (err1) callback(err1, null);
     else {
-      topic.description = description;
+      topic.description = content.description.join('\n');
       const file2 = `${contentDir}/pages/${topicName}/resources_common.json`;
       loadJsonFile(file2, (err2, common) => {
         if (err2) callback(err2, null);
@@ -101,11 +86,11 @@ function loadCommonTopic(topicName, config, callback) {
 
 function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
   const topic = {};
-  const file1 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/description.html`;
-  loadTextFile(file1, (err1, description) => {
+  const file1 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/description.json`;
+  loadJsonFile(file1, (err1, content) => {
     if (err1) callback(err1, null);
     else {
-      topic.description = description;
+      topic.description = content.description.join('\n');
       const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
       loadJsonFile(file2, (err2, local) => {
         if (err2) callback(err2, null);
