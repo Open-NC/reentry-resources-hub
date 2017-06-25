@@ -5,12 +5,12 @@ import { match, RouterContext } from 'react-router';
 import express from 'express';
 import handlebars from 'express-handlebars';
 import path from 'path';
-import compose from './server/compose';
+import {compose, mainCompose} from './server/compose';
 import { routes } from './routes';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
 import App from './components/App.jsx';
-import Home from './components/Home.jsx';
+import Main from './components/Main.jsx';
 
 const app = express();
 require('node-jsx').install();
@@ -25,6 +25,13 @@ app.set('port', (process.env.PORT || 3001));
 if (true || process.env.NODE_ENV === 'production') { // eslint-disable-line no-constant-condition
   app.use(express.static(path.join(__dirname, '/static')));
 }
+
+app.get('/api/main', (req, res) => {
+  mainCompose((mainContent) => {
+    console.log(mainContent);
+    res.send(mainContent);
+  });
+});
 
 app.get('/api/:jurisdiction/:topic', (req, res) => {
   compose(req.params.jurisdiction, req.params.topic, (content) => {
@@ -49,9 +56,34 @@ app.get('*', (req, res) => {
       console.log('***Redirect***');
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (props) {
-      //   if (props.params.jurisdiction && props.params.topic) {
-      compose(props.params.jurisdiction, props.params.topic, (content) => {
-        const preloadedState = { content };
+      if (props.params.jurisdiction && props.params.topic) {
+        compose(props.params.jurisdiction, props.params.topic, (content) => {
+          const preloadedState = { content };
+          preloadedState.stringify = JSON.stringify(preloadedState);
+          // console.log('preloadedState');
+          // console.log(preloadedState);
+
+          const store = configureStore(preloadedState);
+          console.log('store');
+          console.log(store.getState());
+
+          const markup = renderToString(
+            <Provider store={store}>
+              <RouterContext {...content}/>
+            </Provider>
+          );
+          // render `/view/main.handlebars`, but pass in the markup we want it to display
+          res.render('main', {
+                                app: markup,
+                                preloadedState: preloadedState
+                              });
+        });
+      }
+      else {
+        // TODO: Include and call globalCompose from config.js to handle home and contact us routes.
+        // globalCompose(props.location.pathname, (content) => {
+          // const preloadedState = { content };
+        const preloadedState = { props };
         preloadedState.stringify = JSON.stringify(preloadedState);
         // console.log('preloadedState');
         // console.log(preloadedState);
@@ -62,7 +94,7 @@ app.get('*', (req, res) => {
 
         const markup = renderToString(
           <Provider store={store}>
-            <RouterContext {...content}/>
+            <RouterContext {...props}/>
           </Provider>
         );
         // render `/view/main.handlebars`, but pass in the markup we want it to display
@@ -70,7 +102,8 @@ app.get('*', (req, res) => {
                               app: markup,
                               preloadedState: preloadedState
                             });
-      });
+        // });
+      }
     } else {
       // no route match, so 404. In a real app you might render a custom
       // 404 view here

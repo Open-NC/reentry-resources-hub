@@ -4,14 +4,26 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 class Header extends React.Component {
   render() {
-    const config = this.props.data.config;
+    var config;
+    if (this.props.data.config) {
+      config = this.props.data.config;
+      console.log('config:');
+      console.log(config);
+      var common_jurisdiction_name = config.common_jurisdiction_name;
+      var local_jurisdiction_name = `${config.local_jurisdiction_name} County`;
+    }
+    else {
+      var common_jurisdiction_name = 'North Carolina';
+      var local_jurisdiction_name = '';
+    }
+
     return (
       <div>
         <div className="site-header">
           <div className="header-background-image">
             <div className="title-box">
-              <h1>{config.common_jurisdiction_name} Reentry Resources Hub</h1>
-              <h1>{config.local_jurisdiction_name} County</h1>
+              <h1>{common_jurisdiction_name} Reentry Resources Hub</h1>
+              <h1>{local_jurisdiction_name}</h1>
               <h4>Resources & assistance for those with criminal convictions or returning to the community after incarceration</h4>
             </div>
           </div>

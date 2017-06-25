@@ -1,48 +1,44 @@
 const fs = require('fs');
 
-function loadConfig(path, inputConfig, callback) {
-  fs.open(path, 'r', (err, fd) => {
-    if (err) callback(err, null);
+function compose(jurisdiction, topic1, callback) {
+  loadConfigurations(jurisdiction, topic1, (err1, config) => {
+    if (err1) callback(err1);
     else {
-      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
-        if (rfErr) callback(rfErr, null);
-        else {
-          const config = JSON.parse(data);
-          callback(null, Object.assign({}, inputConfig, config));
-        }
+      loadTopic(jurisdiction, topic1, config, (err2, topic2) => {
+        if (err2) callback(err2);
+        else callback(topic2);
       });
     }
   });
 }
 
-function loadJsonFile(path, callback) {
-  fs.open(path, 'r', (err, fd) => {
-    if (err) callback(err, null);
+function mainCompose(callback) {
+  const file = './content/pages/main/config.json'; // main configuration
+  const main = {
+    config: {},
+    common: {}
+  };
+  //loadConfig(file, {}, (lcErr, config) => {
+  fs.open(file, 'r', (err, fd) => {
+    if (err) {
+      console.log(err);
+      callback(err, null);
+    }
     else {
       fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
         if (rfErr) callback(rfErr, null);
         else {
-          const content = JSON.parse(data);
-          callback(null, content);
+          const configMain = JSON.parse(data);
+          main.config = configMain
+          callback(null, main);
+
+          //callback(null, Object.assign({}, inputConfig, config));
         }
       });
     }
   });
-}
 
-
-function loadTextFile(path, callback) {
-  fs.open(path, 'r', (err, fd) => {
-    if (err) callback(err, null);
-    else {
-      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
-        if (rfErr) callback(rfErr, null);
-        else {
-          callback(null, data);
-        }
-      });
-    }
-  });
+  //});
 }
 
 // Load and merge all the configurations
@@ -66,6 +62,45 @@ function loadConfigurations(jurisdiction, topic, callback) {
               });
             }
           });
+        }
+      });
+    }
+  });
+}
+
+function loadConfig(path, inputConfig, callback) {
+  fs.open(path, 'r', (err, fd) => {
+    if (err) {
+      console.log(err);
+      callback(err, null);
+    }
+    else {
+      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
+        if (rfErr) callback(rfErr, null);
+        else {
+          const config = JSON.parse(data);
+          callback(null, Object.assign({}, inputConfig, config));
+        }
+      });
+    }
+  });
+}
+
+function loadTopic(jurisdiction, topicName, config, callback) {
+  const topic = {
+    config,
+    common: {},
+    jurisdiction: {},
+  };
+  loadCommonTopic(topicName, topic, (err1, commonTopic) => {
+    if (err1) callback(err1, null);
+    else {
+      topic.common = commonTopic;
+      loadJurisdictionTopic(jurisdiction, topicName, topic, (err2, jurisdictionTopic) => {
+        if (err2) callback(err2, null);
+        else {
+          topic.jurisdiction = jurisdictionTopic;
+          callback(null, topic);
         }
       });
     }
@@ -117,37 +152,33 @@ function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
   });
 }
 
-function loadTopic(jurisdiction, topicName, config, callback) {
-  const topic = {
-    config,
-    common: {},
-    jurisdiction: {},
-  };
-  loadCommonTopic(topicName, topic, (err1, commonTopic) => {
-    if (err1) callback(err1, null);
+function loadTextFile(path, callback) {
+  fs.open(path, 'r', (err, fd) => {
+    if (err) callback(err, null);
     else {
-      topic.common = commonTopic;
-      loadJurisdictionTopic(jurisdiction, topicName, topic, (err2, jurisdictionTopic) => {
-        if (err2) callback(err2, null);
+      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
+        if (rfErr) callback(rfErr, null);
         else {
-          topic.jurisdiction = jurisdictionTopic;
-          callback(null, topic);
+          callback(null, data);
         }
       });
     }
   });
 }
 
-function compose(jurisdiction, topic1, callback) {
-  loadConfigurations(jurisdiction, topic1, (err1, config) => {
-    if (err1) callback(err1);
+function loadJsonFile(path, callback) {
+  fs.open(path, 'r', (err, fd) => {
+    if (err) callback(err, null);
     else {
-      loadTopic(jurisdiction, topic1, config, (err2, topic2) => {
-        if (err2) callback(err2);
-        else callback(topic2);
+      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
+        if (rfErr) callback(rfErr, null);
+        else {
+          const content = JSON.parse(data);
+          callback(null, content);
+        }
       });
     }
   });
 }
 
-module.exports = compose;
+module.exports = {compose, mainCompose};

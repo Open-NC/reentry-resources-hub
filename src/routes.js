@@ -1,4 +1,4 @@
-import Home from './components/Home.jsx';
+import Main from './components/Main.jsx';
 import App from './components/App.jsx';
 import Contact from './components/Contact.jsx';
 
@@ -18,7 +18,7 @@ const routes = {
       childRoutes: [
         {
           path: '/',
-          component: Home
+          component: Main
         },
         {
           path: '/:jurisdiction/:topic',
