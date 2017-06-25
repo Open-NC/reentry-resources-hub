@@ -9,10 +9,11 @@ class Main extends React.Component {
     console.log(this.props.data);
     return (
       <div>
+        
         <Row>
           <Col md={2}></Col>
           <Col xs={12} md={8}>
-            {console.log('Home Component')}
+            {console.log('Main Component')}
             <h1>Home</h1>
             <h2>Master Homepage for the NC Reentry Resources Hub</h2>
             <h3>Placeholder for site introduction and instructions</h3>
