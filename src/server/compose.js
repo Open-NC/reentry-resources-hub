@@ -14,21 +14,27 @@ function compose(jurisdiction, topic1, callback) {
 }
 
 function mainCompose(callback) {
+  const commonConfigFile = `${contentDir}/config.json`;
   const mainConfigFile = `${contentDir}/pages/main/config.json`; // main configuration
   const mainDescFile = `${contentDir}/pages/main/description.json`;
   const main = {
     config: {},
     common: {}
   };
-  loadConfig(mainConfigFile, {}, (lc1Err, mainConfigRes) => {
+  loadConfig(commonConfigFile, {}, (lc1Err, commonConfigRes) => {
     if (lc1Err) callback(lc1Err, null);
     else {
-      main.config = mainConfigRes;
-      loadConfig(mainDescFile, {}, (lc2Err, mainDescRes) => {
+      loadConfig(mainConfigFile, commonConfigRes, (lc2Err, mainConfigRes) => {
         if (lc2Err) callback(lc2Err, null);
         else {
-          main.common = mainDescRes;
-          callback(main);
+          main.config = mainConfigRes;
+          loadConfig(mainDescFile, {}, (lc3Err, mainDescRes) => {
+            if (lc3Err) callback(lc3Err, null);
+            else {
+              main.common = mainDescRes;
+              callback(main);
+            }
+          });
         }
       });
     }
