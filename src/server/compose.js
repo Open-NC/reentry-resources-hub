@@ -14,36 +14,44 @@ function compose(jurisdiction, topic1, callback) {
 }
 
 function mainCompose(callback) {
-  const file = './content/pages/main/config.json'; // main configuration
+  const mainConfigFile = `${contentDir}/pages/main/config.json`; // main configuration
+  const mainDescFile = `${contentDir}/pages/main/description.json`;
   const main = {
     config: {},
     common: {}
   };
-  //loadConfig(file, {}, (lcErr, config) => {
-  fs.open(file, 'r', (err, fd) => {
+  fs.open(mainConfigFile, 'r', (err, fd) => {
     if (err) {
       console.log(err);
       callback(err, null);
     }
-<<<<<<< HEAD
     else {
       fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
         if (rfErr) callback(rfErr, null);
         else {
           const configMain = JSON.parse(data);
-          main.config = configMain
-          callback(null, main);
-
-          //callback(null, Object.assign({}, inputConfig, config));
+          main.config = configMain;
+        }
+      });
+    }
+  });
+  fs.open(mainDescFile, 'r', (err, fd) => {
+    if (err) {
+      console.log(err);
+      callback(err, null);
+    }
+    else {
+      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
+        if (rfErr) callback(rfErr, null);
+        else {
+          const descMain = JSON.parse(data);
+          main.common = descMain;
+          callback(main);
         }
       });
     }
   });
 
-  //});
-=======
-  });
->>>>>>> d9755f71c179e83d83990dbb205485e8d66e7571
 }
 
 // Load and merge all the configurations
@@ -151,20 +159,6 @@ function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
         else {
           topic.local = local;
           callback(null, topic);
-        }
-      });
-    }
-  });
-}
-
-function loadTextFile(path, callback) {
-  fs.open(path, 'r', (err, fd) => {
-    if (err) callback(err, null);
-    else {
-      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
-        if (rfErr) callback(rfErr, null);
-        else {
-          callback(null, data);
         }
       });
     }
