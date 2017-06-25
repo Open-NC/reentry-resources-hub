@@ -1,4 +1,5 @@
 const fs = require('fs');
+const contentDir = require('../config');
 
 function compose(jurisdiction, topic1, callback) {
   loadConfigurations(jurisdiction, topic1, (err1, config) => {
@@ -24,6 +25,7 @@ function mainCompose(callback) {
       console.log(err);
       callback(err, null);
     }
+<<<<<<< HEAD
     else {
       fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
         if (rfErr) callback(rfErr, null);
@@ -39,23 +41,26 @@ function mainCompose(callback) {
   });
 
   //});
+=======
+  });
+>>>>>>> d9755f71c179e83d83990dbb205485e8d66e7571
 }
 
 // Load and merge all the configurations
 function loadConfigurations(jurisdiction, topic, callback) {
-  const file1 = './content/config.json'; // site configuration
+  const file1 = `${contentDir}/config.json`; // site configuration
   loadConfig(file1, {}, (lc1Err, config1) => {
     if (lc1Err) callback(lc1Err, null);
     else {
-      const file2 = `./content/pages/${topic}/config.json`; // site topic configuration
+      const file2 = `${contentDir}/pages/${topic}/config.json`; // site topic configuration
       loadConfig(file2, config1, (lc2Err, config2) => {
         if (lc2Err) callback(lc2Err, null);
         else {
-          const file3 = `./content/jurisdictions/${jurisdiction}/config.json`; // local configuration
+          const file3 = `${contentDir}/jurisdictions/${jurisdiction}/config.json`; // local configuration
           loadConfig(file3, config2, (lc3Err, config3) => {
             if (lc3Err) callback(lc3Err, null);
             else {
-              const file4 = `./content/jurisdictions/${jurisdiction}/${topic}/config.json`; // local topic configuration
+              const file4 = `${contentDir}/jurisdictions/${jurisdiction}/${topic}/config.json`; // local topic configuration
               loadConfig(file4, config3, (lc4Err, config4) => {
                 if (lc4Err) callback(lc4Err, null);
                 else callback(null, config4);
@@ -109,17 +114,17 @@ function loadTopic(jurisdiction, topicName, config, callback) {
 
 function loadCommonTopic(topicName, config, callback) {
   const topic = {};
-  const file1 = `./content/pages/${topicName}/description.html`;
-  loadTextFile(file1, (err1, description) => {
+  const file1 = `${contentDir}/pages/${topicName}/description.json`;
+  loadJsonFile(file1, (err1, content) => {
     if (err1) callback(err1, null);
     else {
-      topic.description = description;
-      const file2 = `./content/pages/${topicName}/resources_common.json`;
+      topic.description = content.description.join('\n');
+      const file2 = `${contentDir}/pages/${topicName}/resources_common.json`;
       loadJsonFile(file2, (err2, common) => {
         if (err2) callback(err2, null);
         else {
           topic.common = common;
-          const file3 = `./content/pages/${topicName}/resources_local.json`;
+          const file3 = `${contentDir}/pages/${topicName}/resources_local.json`;
           loadJsonFile(file3, (err3, local) => {
             if (err3) callback(err3, null);
             else {
@@ -135,12 +140,12 @@ function loadCommonTopic(topicName, config, callback) {
 
 function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
   const topic = {};
-  const file1 = `./content/jurisdictions/${jurisdiction}/${topicName}/description.html`;
-  loadTextFile(file1, (err1, description) => {
+  const file1 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/description.json`;
+  loadJsonFile(file1, (err1, content) => {
     if (err1) callback(err1, null);
     else {
-      topic.description = description;
-      const file2 = `./content/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
+      topic.description = content.description.join('\n');
+      const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
       loadJsonFile(file2, (err2, local) => {
         if (err2) callback(err2, null);
         else {
