@@ -20,38 +20,19 @@ function mainCompose(callback) {
     config: {},
     common: {}
   };
-  fs.open(mainConfigFile, 'r', (err, fd) => {
-    if (err) {
-      console.log(err);
-      callback(err, null);
-    }
+  loadConfig(mainConfigFile, {}, (lc1Err, mainConfigRes) => {
+    if (lc1Err) callback(lc1Err, null);
     else {
-      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
-        if (rfErr) callback(rfErr, null);
+      main.config = mainConfigRes;
+      loadConfig(mainDescFile, {}, (lc2Err, mainDescRes) => {
+        if (lc2Err) callback(lc2Err, null);
         else {
-          const configMain = JSON.parse(data);
-          main.config = configMain;
-        }
-      });
-    }
-  });
-  fs.open(mainDescFile, 'r', (err, fd) => {
-    if (err) {
-      console.log(err);
-      callback(err, null);
-    }
-    else {
-      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
-        if (rfErr) callback(rfErr, null);
-        else {
-          const descMain = JSON.parse(data);
-          main.common = descMain;
+          main.common = mainDescRes;
           callback(main);
         }
       });
     }
   });
-
 }
 
 // Load and merge all the configurations
