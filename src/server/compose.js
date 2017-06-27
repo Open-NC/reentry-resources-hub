@@ -1,5 +1,5 @@
 const fs = require('fs');
-const contentDir = require('../config');
+const contentDir = require('../config').contentDir;
 
 function loadConfig(path, inputConfig, callback) {
   fs.open(path, 'r', (err, fd) => {
@@ -46,10 +46,14 @@ function loadConfigurations(jurisdiction, topic, callback) {
             if (lc3Err) callback(lc3Err, null);
             else {
               const file4 = `${contentDir}/jurisdictions/${jurisdiction}/${topic}/config.json`; // local topic configuration
-              loadConfig(file4, config3, (lc4Err, config4) => {
-                if (lc4Err) callback(lc4Err, null);
-                else callback(null, config4);
-              });
+              if (fs.existsSync(file4)) {
+                loadConfig(file4, config3, (lc4Err, config4) => {
+                  if (lc4Err) callback(lc4Err, null);
+                  else callback(null, config4);
+                });
+              } else {
+                callback(null, config3);
+              }
             }
           });
         }
@@ -87,11 +91,13 @@ function loadCommonTopic(topicName, config, callback) {
 function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
   const topic = {};
   const file1 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/description.json`;
-  loadJsonFile(file1, (err1, content) => {
-    if (err1) callback(err1, null);
-    else {
-      topic.description = content.description.join('\n');
-      const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
+  if (!fs.existsSync(file1)) {
+    topic.description = '';
+    const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
+    if (!fs.existsSync(file2)) {
+      topic.local = { resources: [] };
+      callback(null, topic);
+    } else {
       loadJsonFile(file2, (err2, local) => {
         if (err2) callback(err2, null);
         else {
@@ -100,7 +106,27 @@ function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
         }
       });
     }
-  });
+  } else {
+    loadJsonFile(file1, (err1, content) => {
+      if (err1) callback(err1, null);
+      else {
+        topic.description = content.description.join('\n');
+        const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
+        if (!fs.existsSync(file2)) {
+          topic.local = { resources: [] };
+          callback(null, topic);
+        } else {
+          loadJsonFile(file2, (err2, local) => {
+            if (err2) callback(err2, null);
+            else {
+              topic.local = local;
+              callback(null, topic);
+            }
+          });
+        }
+      }
+    });
+  }
 }
 
 function loadTopic(jurisdiction, topicName, config, callback) {
@@ -114,8 +140,9 @@ function loadTopic(jurisdiction, topicName, config, callback) {
     else {
       topic.common = commonTopic;
       loadJurisdictionTopic(jurisdiction, topicName, topic, (err2, jurisdictionTopic) => {
-        if (err2) callback(err2, null);
-        else {
+        if (err2) {
+          callback(err2, null);
+        } else {
           topic.jurisdiction = jurisdictionTopic;
           callback(null, topic);
         }
