@@ -1,40 +1,30 @@
 const fs = require('fs');
-const contentDir = require('../config');
+const contentDir = require('../config').contentDir;
 
-function compose(jurisdiction, topic1, callback) {
-  loadConfigurations(jurisdiction, topic1, (err1, config) => {
-    if (err1) callback(err1);
+function loadConfig(path, inputConfig, callback) {
+  fs.open(path, 'r', (err, fd) => {
+    if (err) callback(err, null);
     else {
-      loadTopic(jurisdiction, topic1, config, (err2, topic2) => {
-        if (err2) callback(err2);
-        else callback(topic2);
+      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
+        if (rfErr) callback(rfErr, null);
+        else {
+          const config = JSON.parse(data);
+          callback(null, Object.assign({}, inputConfig, config));
+        }
       });
     }
   });
 }
 
-function mainCompose(callback) {
-  const commonConfigFile = `${contentDir}/config.json`;
-  const mainConfigFile = `${contentDir}/pages/main/config.json`; // main configuration
-  const mainDescFile = `${contentDir}/pages/main/description.json`;
-  const main = {
-    config: {},
-    common: {}
-  };
-  loadConfig(commonConfigFile, {}, (lc1Err, commonConfigRes) => {
-    if (lc1Err) callback(lc1Err, null);
+function loadJsonFile(path, callback) {
+  fs.open(path, 'r', (err, fd) => {
+    if (err) callback(err, null);
     else {
-      loadConfig(mainConfigFile, commonConfigRes, (lc2Err, mainConfigRes) => {
-        if (lc2Err) callback(lc2Err, null);
+      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
+        if (rfErr) callback(rfErr, null);
         else {
-          main.config = mainConfigRes;
-          loadConfig(mainDescFile, {}, (lc3Err, mainDescRes) => {
-            if (lc3Err) callback(lc3Err, null);
-            else {
-              main.common = mainDescRes;
-              callback(main);
-            }
-          });
+          const content = JSON.parse(data);
+          callback(null, content);
         }
       });
     }
@@ -56,51 +46,16 @@ function loadConfigurations(jurisdiction, topic, callback) {
             if (lc3Err) callback(lc3Err, null);
             else {
               const file4 = `${contentDir}/jurisdictions/${jurisdiction}/${topic}/config.json`; // local topic configuration
-              loadConfig(file4, config3, (lc4Err, config4) => {
-                if (lc4Err) callback(lc4Err, null);
-                else callback(null, config4);
-              });
+              if (fs.existsSync(file4)) {
+                loadConfig(file4, config3, (lc4Err, config4) => {
+                  if (lc4Err) callback(lc4Err, null);
+                  else callback(null, config4);
+                });
+              } else {
+                callback(null, config3);
+              }
             }
           });
-        }
-      });
-    }
-  });
-}
-
-function loadConfig(path, inputConfig, callback) {
-  fs.open(path, 'r', (err, fd) => {
-    if (err) {
-      console.log(err);
-      callback(err, null);
-    }
-    else {
-      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
-        if (rfErr) callback(rfErr, null);
-        else {
-          const config = JSON.parse(data);
-          callback(null, Object.assign({}, inputConfig, config));
-        }
-      });
-    }
-  });
-}
-
-function loadTopic(jurisdiction, topicName, config, callback) {
-  const topic = {
-    config,
-    common: {},
-    jurisdiction: {},
-  };
-  loadCommonTopic(topicName, topic, (err1, commonTopic) => {
-    if (err1) callback(err1, null);
-    else {
-      topic.common = commonTopic;
-      loadJurisdictionTopic(jurisdiction, topicName, topic, (err2, jurisdictionTopic) => {
-        if (err2) callback(err2, null);
-        else {
-          topic.jurisdiction = jurisdictionTopic;
-          callback(null, topic);
         }
       });
     }
@@ -136,11 +91,13 @@ function loadCommonTopic(topicName, config, callback) {
 function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
   const topic = {};
   const file1 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/description.json`;
-  loadJsonFile(file1, (err1, content) => {
-    if (err1) callback(err1, null);
-    else {
-      topic.description = content.description.join('\n');
-      const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
+  if (!fs.existsSync(file1)) {
+    topic.description = '';
+    const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
+    if (!fs.existsSync(file2)) {
+      topic.local = { resources: [] };
+      callback(null, topic);
+    } else {
       loadJsonFile(file2, (err2, local) => {
         if (err2) callback(err2, null);
         else {
@@ -149,18 +106,85 @@ function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
         }
       });
     }
+  } else {
+    loadJsonFile(file1, (err1, content) => {
+      if (err1) callback(err1, null);
+      else {
+        topic.description = content.description.join('\n');
+        const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
+        if (!fs.existsSync(file2)) {
+          topic.local = { resources: [] };
+          callback(null, topic);
+        } else {
+          loadJsonFile(file2, (err2, local) => {
+            if (err2) callback(err2, null);
+            else {
+              topic.local = local;
+              callback(null, topic);
+            }
+          });
+        }
+      }
+    });
+  }
+}
+
+function loadTopic(jurisdiction, topicName, config, callback) {
+  const topic = {
+    config,
+    common: {},
+    jurisdiction: {},
+  };
+  loadCommonTopic(topicName, topic, (err1, commonTopic) => {
+    if (err1) callback(err1, null);
+    else {
+      topic.common = commonTopic;
+      loadJurisdictionTopic(jurisdiction, topicName, topic, (err2, jurisdictionTopic) => {
+        if (err2) {
+          callback(err2, null);
+        } else {
+          topic.jurisdiction = jurisdictionTopic;
+          callback(null, topic);
+        }
+      });
+    }
   });
 }
 
-function loadJsonFile(path, callback) {
-  fs.open(path, 'r', (err, fd) => {
-    if (err) callback(err, null);
+function compose(jurisdiction, topic1, callback) {
+  loadConfigurations(jurisdiction, topic1, (err1, config) => {
+    if (err1) callback(err1);
     else {
-      fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
-        if (rfErr) callback(rfErr, null);
+      loadTopic(jurisdiction, topic1, config, (err2, topic2) => {
+        if (err2) callback(err2);
+        else callback(topic2);
+      });
+    }
+  });
+}
+
+function mainCompose(callback) {
+  const commonConfigFile = `${contentDir}/config.json`;
+  const mainConfigFile = `${contentDir}/pages/main/config.json`; // main configuration
+  const mainDescFile = `${contentDir}/pages/main/description.json`;
+  const main = {
+    config: {},
+    common: {}
+  };
+  loadConfig(commonConfigFile, {}, (lc1Err, commonConfigRes) => {
+    if (lc1Err) callback(lc1Err, null);
+    else {
+      loadConfig(mainConfigFile, commonConfigRes, (lc2Err, mainConfigRes) => {
+        if (lc2Err) callback(lc2Err, null);
         else {
-          const content = JSON.parse(data);
-          callback(null, content);
+          main.config = mainConfigRes;
+          loadConfig(mainDescFile, {}, (lc3Err, mainDescRes) => {
+            if (lc3Err) callback(lc3Err, null);
+            else {
+              main.common = mainDescRes;
+              callback(main);
+            }
+          });
         }
       });
     }
