@@ -60,7 +60,6 @@ app.get('*', (req, res) => {
           preloadedState.stringify = JSON.stringify(preloadedState);
           // console.log('preloadedState');
           // console.log(preloadedState);
-
           const store = configureStore(preloadedState);
           console.log('store');
           console.log(store.getState());
@@ -78,17 +77,18 @@ app.get('*', (req, res) => {
         });
       }
       else {
-        // TODO: Include and call globalCompose from config.js to handle home and contact us routes.
+        // TODO: Include and call mainCompose from compose.js to handle home and contact us routes.
         // globalCompose(props.location.pathname, (content) => {
           // const preloadedState = { content };
-        const preloadedState = { props };
-        preloadedState.stringify = JSON.stringify(preloadedState);
-        // console.log('preloadedState');
-        // console.log(preloadedState);
+        mainCompose((content) => {
+          const preloadedState = { content };
+          preloadedState.stringify = JSON.stringify(preloadedState);
+          // console.log('preloadedState');
+          // console.log(preloadedState);
 
-        const store = configureStore(preloadedState);
-        // console.log('store');
-        // console.log(store.getState());
+          const store = configureStore(preloadedState);
+          console.log('store');
+          console.log(store.getState());
 
         const markup = renderToString(
           <Provider store={store}>
@@ -102,7 +102,7 @@ app.get('*', (req, res) => {
                             });
         });
       }
-    } 
+    }
     else {
       // no route match, so 404. In a real app you might render a custom
       // 404 view here
