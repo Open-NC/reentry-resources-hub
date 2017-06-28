@@ -5,17 +5,24 @@ import { LinkContainer } from 'react-router-bootstrap';
 class Header extends React.Component {
   render() {
     var config;
-    if (this.props.data.config) {
+    var local_jurisdiction_name;
+    var common_jurisdiction_name;
+    //if (this.props.data.config) {
       config = this.props.data.config;
       console.log('config:');
       console.log(config);
-      var common_jurisdiction_name = config.common_jurisdiction_name;
-      var local_jurisdiction_name = `${config.local_jurisdiction_name} County`;
-    }
-    else {
-      var common_jurisdiction_name = 'North Carolina';
-      var local_jurisdiction_name = '';
-    }
+      common_jurisdiction_name = config.common_jurisdiction_name;
+      if (config.local_jurisdiction_name) {
+        local_jurisdiction_name = `${config.local_jurisdiction_name} County`;
+      }
+      else {
+        local_jurisdiction_name = '';
+      }
+    //}
+    // else {
+    //   var common_jurisdiction_name = 'North Carolina';
+    //   var local_jurisdiction_name = '';
+    // }
 
     return (
       <div>

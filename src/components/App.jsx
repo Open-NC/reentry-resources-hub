@@ -11,12 +11,12 @@ import * as contentActions from '../actions/contentActions';
 class App extends React.Component {
 
   componentWillReceiveProps(nextProps) {
-      console.log('componentWillReceiveProps nextProps');
-      console.log(nextProps);
-      if (this.props.params !== nextProps.params) {
-        this.props.actions.loadContent(nextProps.params.jurisdiction, nextProps.params.topic);
-      }
+    console.log('componentWillReceiveProps nextProps');
+    console.log(nextProps);
+    if (this.props.params !== nextProps.params) {
+      this.props.actions.loadContent(nextProps.params.jurisdiction, nextProps.params.topic);
     }
+  }
 
   render() {
     return (
