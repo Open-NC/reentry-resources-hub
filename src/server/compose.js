@@ -163,4 +163,33 @@ function compose(jurisdiction, topic1, callback) {
   });
 }
 
-module.exports = compose;
+function mainCompose(callback) {
+  const commonConfigFile = `${contentDir}/config.json`;
+  const mainConfigFile = `${contentDir}/pages/main/config.json`; // main configuration
+  const mainDescFile = `${contentDir}/pages/main/description.json`;
+  const main = {
+    config: {},
+    common: {}
+  };
+  loadConfig(commonConfigFile, {}, (lc1Err, commonConfigRes) => {
+    if (lc1Err) callback(lc1Err, null);
+    else {
+      loadConfig(mainConfigFile, commonConfigRes, (lc2Err, mainConfigRes) => {
+        if (lc2Err) callback(lc2Err, null);
+        else {
+          main.config = mainConfigRes;
+          loadConfig(mainDescFile, {}, (lc3Err, mainDescRes) => {
+            if (lc3Err) callback(lc3Err, null);
+            else {
+              main.common = mainDescRes;
+              callback(main);
+            }
+          });
+        }
+      });
+    }
+  });
+}
+
+module.exports = {compose, mainCompose};
+
