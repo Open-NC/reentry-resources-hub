@@ -1,2 +1,4 @@
-const contentDir = '../nc-reentry-resources-content';
-module.exports = contentDir;
+const config = {
+  contentDir: '../nc-reentry-resources-content',
+};
+module.exports = config;

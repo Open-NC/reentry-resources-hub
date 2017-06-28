@@ -1,5 +1,6 @@
 /* eslint no-console: 0 */
 import React from 'react';
+import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import express from 'express';
@@ -8,9 +9,6 @@ import path from 'path';
 import {compose, mainCompose} from './server/compose';
 import { routes } from './routes';
 import configureStore from './store/configureStore';
-import { Provider } from 'react-redux';
-import App from './components/App.jsx';
-import Main from './components/Main.jsx';
 
 const app = express();
 require('node-jsx').install();
@@ -89,12 +87,12 @@ app.get('*', (req, res) => {
         // console.log(preloadedState);
 
         const store = configureStore(preloadedState);
-        console.log('store');
-        console.log(store.getState());
+        // console.log('store');
+        // console.log(store.getState());
 
         const markup = renderToString(
           <Provider store={store}>
-            <RouterContext {...props}/>
+            <RouterContext {...content} />
           </Provider>
         );
         // render `/view/main.handlebars`, but pass in the markup we want it to display
@@ -102,12 +100,13 @@ app.get('*', (req, res) => {
                               app: markup,
                               preloadedState: preloadedState
                             });
-        // });
+        });
       }
-    } else {
+    } 
+    else {
       // no route match, so 404. In a real app you might render a custom
       // 404 view here
-      console.log('***404***');
+      console.log(`***404 - ${req.url} ***`);
       res.sendStatus(404);
     }
   });
