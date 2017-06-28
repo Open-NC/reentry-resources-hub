@@ -10,7 +10,7 @@ class Header extends React.Component {
     //if (this.props.data.config) {
       config = this.props.data.config;
       console.log('config:');
-      console.log(this.props);
+      console.log(config);
       common_jurisdiction_name = config.common_jurisdiction_name;
       if (config.local_jurisdiction_name) {
         local_jurisdiction_name = `${config.local_jurisdiction_name} County`;
@@ -18,11 +18,6 @@ class Header extends React.Component {
       else {
         local_jurisdiction_name = '';
       }
-    //}
-    // else {
-    //   var common_jurisdiction_name = 'North Carolina';
-    //   var local_jurisdiction_name = '';
-    // }
 
     return (
       <div>

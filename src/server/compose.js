@@ -192,3 +192,4 @@ function mainCompose(callback) {
 }
 
 module.exports = {compose, mainCompose};
+

@@ -90,21 +90,20 @@ app.get('*', (req, res) => {
           console.log('store');
           console.log(store.getState());
 
-          const markup = renderToString(
-            <Provider store={store}>
-              <RouterContext {...content}/>
-            </Provider>
-          );
-          // render `/view/main.handlebars`, but pass in the markup we want it to display
-          res.render('main', {
-                                app: markup,
-                                preloadedState: preloadedState
-                              });
+        const markup = renderToString(
+          <Provider store={store}>
+            <RouterContext {...content} />
+          </Provider>
+        );
+        // render `/view/main.handlebars`, but pass in the markup we want it to display
+        res.render('main', {
+                              app: markup,
+                              preloadedState: preloadedState
+                            });
         });
       }
     }
     else {
-
       // no route match, so 404. In a real app you might render a custom
       // 404 view here
       console.log(`***404 - ${req.url} ***`);
