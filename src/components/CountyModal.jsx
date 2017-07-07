@@ -4,23 +4,6 @@ import { Modal, Button } from 'react-bootstrap';
 import { nc } from '../counties'
 
 class CountyModal extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.state = { isModalOpen: false };
-  //   // this.modalOpen = this._modalOpen.bind(this);
-  //   // this.modalClose = this._modalClose.bind(this);
-  // }
-
-  // _modalOpen() {
-  //   this.setState({ isModalOpen: true });
-  // }
-  //
-  // _modalClose() {
-  //   this.setState({ isModalOpen: false });
-  // }
-  //<a href={`/${county}/home`}>{county}</a>
-  //<Link to={`/${county}/home`} activeClassName='TODO'>{county}</Link>
-
   render() {
     return (
       <Modal {...this.props} bsSize='sm' aria-labelledby='contained-modal-title-lg'>
