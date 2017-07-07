@@ -28,13 +28,15 @@ class Main extends React.Component {
           <Col md={2}></Col>
           <Col xs={12} md={8}>
             {console.log('Main Component')}
-            {data.common.description.map((element) => {
-              return (
-                <div>
-                  {renderHTML(element)}
-                </div>
-              );
-            })}
+            <div className='content-body'>
+              {data.common.description.map((element) => {
+                return (
+                  <div>
+                    {renderHTML(element)}
+                  </div>
+                );
+              })}
+            </div>
           </Col>
           <Col md={2}></Col>
         </Row>

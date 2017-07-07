@@ -26,9 +26,9 @@ class Header extends React.Component {
 
     return (
       <div>
-        <div className="site-header">
-          <div className="header-background-image">
-            <div className="title-box">
+        <div className='site-header'>
+          <div className='header-background-image'>
+            <div className='title-box'>
               <h1>{common_jurisdiction_name} Reentry Resources Hub</h1>
               <h1>{local_jurisdiction_name}</h1>
               <h4>Resources & assistance for those with criminal convictions or returning to the community after incarceration</h4>
@@ -39,8 +39,8 @@ class Header extends React.Component {
           <Col md={12}>
           <Navbar.Header>
             <Navbar.Brand>
-              <Button bsStyle="link" onClick={()=>this.setState({ modalShow: true })}>
-                Choose County
+              <Button bsStyle='link' onClick={()=>this.setState({ modalShow: true })}>
+                Select County
               </Button>
             </Navbar.Brand>
             <Navbar.Toggle />
@@ -88,14 +88,14 @@ class Header extends React.Component {
               </LinkContainer>
             </Nav>
             <Nav pullRight>
-              <Button bsSize="large">
-                <Glyphicon glyph="search" />
+              <Button bsSize='large'>
+                <Glyphicon glyph='search' />
               </Button>
             </Nav>
           </Navbar.Collapse>
           </Col>
         </Navbar>
-        <CountyModal show={this.state.modalShow} onHide={modalClose} />
+        <CountyModal show={this.state.modalShow} onHide={modalClose}/>
       </div>
     );
   }
