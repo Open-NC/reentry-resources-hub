@@ -1,29 +1,34 @@
 import React from 'react';
 import { Navbar, Nav, NavItem, Col, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import CountyModal from './CountyModal.jsx'
 
 class Header extends React.Component {
+  constructor() {
+    super();
+    this.state = { modalShow: false };
+  }
+
   render() {
-    var config;
-    var local_jurisdiction_name;
-    var common_jurisdiction_name;
-    //if (this.props.data.config) {
-      config = this.props.data.config;
-      console.log('config:');
-      console.log(config);
-      common_jurisdiction_name = config.common_jurisdiction_name;
-      if (config.local_jurisdiction_name) {
-        local_jurisdiction_name = `${config.local_jurisdiction_name} County`;
-      }
-      else {
-        local_jurisdiction_name = '';
-      }
+    const modalClose = () => this.setState({ modalShow: false });
+    const config = this.props.data.config;
+    let local_jurisdiction_name;
+    let common_jurisdiction_name;
+    console.log('config:');
+    console.log(config);
+    common_jurisdiction_name = config.common_jurisdiction_name;
+    if (config.local_jurisdiction_name) {
+      local_jurisdiction_name = `${config.local_jurisdiction_name} County`;
+    }
+    else {
+      local_jurisdiction_name = '';
+    }
 
     return (
       <div>
-        <div className="site-header">
-          <div className="header-background-image">
-            <div className="title-box">
+        <div className='site-header'>
+          <div className='header-background-image'>
+            <div className='title-box'>
               <h1>{common_jurisdiction_name} Reentry Resources Hub</h1>
               <h1>{local_jurisdiction_name}</h1>
               <h4>Resources & assistance for those with criminal convictions or returning to the community after incarceration</h4>
@@ -34,7 +39,9 @@ class Header extends React.Component {
           <Col md={12}>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="/pick-county-url-fix-later">Choose County</a>
+              <Button bsStyle='link' onClick={()=>this.setState({ modalShow: true })}>
+                Select County
+              </Button>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
@@ -81,13 +88,14 @@ class Header extends React.Component {
               </LinkContainer>
             </Nav>
             <Nav pullRight>
-              <Button bsSize="large">
-                <Glyphicon glyph="search" />
+              <Button bsSize='large'>
+                <Glyphicon glyph='search' />
               </Button>
             </Nav>
           </Navbar.Collapse>
           </Col>
         </Navbar>
+        <CountyModal show={this.state.modalShow} onHide={modalClose}/>
       </div>
     );
   }

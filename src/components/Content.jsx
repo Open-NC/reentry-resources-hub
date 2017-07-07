@@ -33,7 +33,7 @@ class Content extends React.Component {
     const localJ = data.config.local_jurisdiction;
     const url = urlTemplate.replace(/{{common_jurisdiction}}/g, commonJ).replace(/{{local_jurisdiction}}/g, localJ);
     return (
-      <div className="content-body">
+      <div className='content-body'>
         <Row>
           <Col xs={1} sm={2} md={3}></Col>
           <Col xs={10} sm={8} md={6}>
