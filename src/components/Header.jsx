@@ -95,7 +95,7 @@ class Header extends React.Component {
           </Navbar.Collapse>
           </Col>
         </Navbar>
-        <CountyModal show={this.state.modalShow} onHide={modalClose}/>
+        <CountyModal myState={common_jurisdiction_name} show={this.state.modalShow} onHide={modalClose}/>
       </div>
     );
   }

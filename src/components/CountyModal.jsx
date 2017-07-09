@@ -6,9 +6,9 @@ import { nc } from '../counties'
 class CountyModal extends React.Component {
   render() {
     return (
-      <Modal {...this.props} bsSize='sm' aria-labelledby='contained-modal-title-lg'>
+      <Modal {...this.props} aria-labelledby='contained-modal-title-lg'>
         <Modal.Header closeButton>
-          <Modal.Title id='contained-modal-title-lg'>North Carolina Reentry Resources Hub</Modal.Title>
+          <Modal.Title id='contained-modal-title-lg'>{this.props.myState} Reentry Resources Hub</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className='county-modal-list'>
