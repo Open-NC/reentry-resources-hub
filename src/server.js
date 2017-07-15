@@ -6,7 +6,7 @@ import { match, RouterContext } from 'react-router';
 import express from 'express';
 import handlebars from 'express-handlebars';
 import path from 'path';
-import {compose, mainCompose} from './server/compose';
+import { compose, mainCompose } from './server/compose';
 import { routes } from './routes';
 import configureStore from './store/configureStore';
 
@@ -58,11 +58,8 @@ app.get('*', (req, res) => {
         compose(props.params.jurisdiction, props.params.topic, (content) => {
           const preloadedState = { content };
           preloadedState.stringify = JSON.stringify(preloadedState);
-          // console.log('preloadedState');
-          // console.log(preloadedState);
+
           const store = configureStore(preloadedState);
-          console.log('store');
-          console.log(store.getState());
 
           const markup = renderToString(
             <Provider store={store}>
@@ -83,12 +80,8 @@ app.get('*', (req, res) => {
         mainCompose((content) => {
           const preloadedState = { content };
           preloadedState.stringify = JSON.stringify(preloadedState);
-          // console.log('preloadedState');
-          // console.log(preloadedState);
 
           const store = configureStore(preloadedState);
-          console.log('store');
-          console.log(store.getState());
 
         const markup = renderToString(
           <Provider store={store}>
