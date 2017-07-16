@@ -8,7 +8,11 @@ function loadConfig(path, inputConfig, callback) {
       fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
         if (rfErr) callback(rfErr, null);
         else {
-          const config = JSON.parse(data);
+          const configArray = JSON.parse(data);
+          const config = {};
+          configArray.pairs.forEach((item) => {
+            config[item.name] = item.value;
+          });
           callback(null, Object.assign({}, inputConfig, config));
         }
       });
@@ -178,7 +182,7 @@ function mainCompose(callback) {
         if (lc2Err) callback(lc2Err, null);
         else {
           main.config = mainConfigRes;
-          loadConfig(mainDescFile, {}, (lc3Err, mainDescRes) => {
+          loadJsonFile(mainDescFile, (lc3Err, mainDescRes) => {
             if (lc3Err) callback(lc3Err, null);
             else {
               main.common = mainDescRes;
