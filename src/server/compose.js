@@ -8,7 +8,11 @@ function loadConfig(path, inputConfig, callback) {
       fs.readFile(fd, { encoding: 'utf8' }, (rfErr, data) => {
         if (rfErr) callback(rfErr, null);
         else {
-          const config = JSON.parse(data);
+          const configArray = JSON.parse(data);
+          const config = {};
+          configArray.pairs.forEach((item) => {
+            config[item.name] = item.value;
+          });
           callback(null, Object.assign({}, inputConfig, config));
         }
       });
@@ -37,7 +41,7 @@ function loadConfigurations(jurisdiction, topic, callback) {
   loadConfig(file1, {}, (lc1Err, config1) => {
     if (lc1Err) callback(lc1Err, null);
     else {
-      const file2 = `${contentDir}/pages/${topic}/config.json`; // site topic configuration
+      const file2 = `${contentDir}/topics/${topic}/config.json`; // site topic configuration
       loadConfig(file2, config1, (lc2Err, config2) => {
         if (lc2Err) callback(lc2Err, null);
         else {
@@ -64,17 +68,17 @@ function loadConfigurations(jurisdiction, topic, callback) {
 
 function loadCommonTopic(topicName, config, callback) {
   const topic = {};
-  const file1 = `${contentDir}/pages/${topicName}/description.json`;
+  const file1 = `${contentDir}/topics/${topicName}/description.json`;
   loadJsonFile(file1, (err1, content) => {
     if (err1) callback(err1, null);
     else {
       topic.description = content.description.join('\n');
-      const file2 = `${contentDir}/pages/${topicName}/resources_common.json`;
+      const file2 = `${contentDir}/topics/${topicName}/resources_common.json`;
       loadJsonFile(file2, (err2, common) => {
         if (err2) callback(err2, null);
         else {
           topic.common = common;
-          const file3 = `${contentDir}/pages/${topicName}/resources_local.json`;
+          const file3 = `${contentDir}/topics/${topicName}/resources_local.json`;
           loadJsonFile(file3, (err3, local) => {
             if (err3) callback(err3, null);
             else {
@@ -165,8 +169,8 @@ function compose(jurisdiction, topic1, callback) {
 
 function mainCompose(callback) {
   const commonConfigFile = `${contentDir}/config.json`;
-  const mainConfigFile = `${contentDir}/pages/main/config.json`; // main configuration
-  const mainDescFile = `${contentDir}/pages/main/description.json`;
+  const mainConfigFile = `${contentDir}/topics/main/config.json`; // main configuration
+  const mainDescFile = `${contentDir}/topics/main/description.json`;
   const main = {
     config: {},
     common: {}
@@ -178,7 +182,7 @@ function mainCompose(callback) {
         if (lc2Err) callback(lc2Err, null);
         else {
           main.config = mainConfigRes;
-          loadConfig(mainDescFile, {}, (lc3Err, mainDescRes) => {
+          loadJsonFile(mainDescFile, (lc3Err, mainDescRes) => {
             if (lc3Err) callback(lc3Err, null);
             else {
               main.common = mainDescRes;
