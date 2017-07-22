@@ -1,18 +1,15 @@
-/* eslint no-console: 0 */
 import React from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Header from './Header.jsx';
 import Search from './Search.jsx';
 import Content from './Content.jsx';
 import Footer from './Footer.jsx';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import * as contentActions from '../actions/contentActions';
 
 class App extends React.Component {
-
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps nextProps');
-    console.log(nextProps);
     if (this.props.params !== nextProps.params) {
       this.props.actions.loadContent(nextProps.params.jurisdiction, nextProps.params.topic);
     }
@@ -33,13 +30,14 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  content: React.PropTypes.object.isRequired,
-  actions: React.PropTypes.object.isRequired // eslint-disable-line react/forbid-prop-types
+  content: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
+  console.log('content : ', state.content);
     return {
-      content: state.content
+      content: state.content,
     };
 }
 
