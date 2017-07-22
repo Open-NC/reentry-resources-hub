@@ -44,7 +44,7 @@
       "max-len": 0,
       "linebreak-style": "off",
       "newline-per-chained-call": 0,
-      "no-use-befe-define": 0,
+      "no-use-before-define": 0,
       "prefer-template": 2,
       "react/jsx-filename-extension": 0,
       "react/forbid-prop-types": 0,
