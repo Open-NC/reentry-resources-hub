@@ -21,6 +21,7 @@ class App extends Component {
         <Header data={this.props.content} />
         <Search />
         <Content data={this.props.content} />
+        test
         <Footer />
       </div>
     );

@@ -4,6 +4,12 @@ import { LinkContainer } from 'react-router-bootstrap';
 import CountyModal from './CountyModal.jsx';
 
 class Header extends Component {
+  static defaultProps = {
+    data: {
+      config: {},
+    },
+  }
+
   constructor() {
     super();
     this.state = {
