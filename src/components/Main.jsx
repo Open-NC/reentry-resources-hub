@@ -1,17 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
 import renderHTML from 'react-render-html';
-import Header from './Header.jsx';
-import Footer from './Footer.jsx';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Header from './Header.jsx';
+import Footer from './Footer.jsx';
 import * as contentActions from '../actions/contentActions';
 
-class Main extends React.Component {
-
+class Main extends Component {
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps nextProps');
-    console.log(nextProps);
     if (this.props.params !== nextProps.params) {
       this.props.actions.loadMainContent(nextProps.params);
     }
@@ -19,23 +17,19 @@ class Main extends React.Component {
 
   render() {
     const data = this.props.content;
-    console.log('I am the Main conponent data');
-    console.log(this.props.data);
+
     return (
       <div>
         <Header data={data} />
         <Row>
           <Col md={2}></Col>
           <Col xs={12} md={8}>
-            {console.log('Main Component')}
-            <div className='content-body'>
-              {data.common.description.map((element) => {
-                return (
-                  <div>
-                    {renderHTML(element)}
-                  </div>
-                );
-              })}
+            <div className="content-body">
+              {data.common.description.map(element =>
+                <div>
+                  {renderHTML(element)}
+                </div>
+              )}
             </div>
           </Col>
           <Col md={2}></Col>
@@ -47,19 +41,20 @@ class Main extends React.Component {
 }
 
 Main.propTypes = {
-  content: React.PropTypes.object.isRequired,
-  actions: React.PropTypes.object.isRequired // eslint-disable-line react/forbid-prop-types
+  content: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
+  params: PropTypes.object,
 };
 
-function mapStateToProps(state, ownProps) {
-    return {
-      content: state.content
-    };
+function mapStateToProps(state) {
+  return {
+    content: state.content,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(contentActions, dispatch)
+    actions: bindActionCreators(contentActions, dispatch),
   };
 }
 
@@ -67,4 +62,3 @@ function mapDispatchToProps(dispatch) {
 // These components are called 'container components'.
 // Connect returns a function that is called immediately with the 'App' parameter.
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
-//module.exports = Main;

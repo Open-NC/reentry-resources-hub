@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { Modal, Button } from 'react-bootstrap';
 import { nc } from '../counties';
 
+// Example of a functional / 'Dumb' component.
+// Unaware of state and does not have access to typical React lifecycle methods.
 const CountyModal = (props) => {
   const {
     onHide,
-    show,
   } = props;
 
   const renderCounty = (county, idx) =>
@@ -17,7 +18,7 @@ const CountyModal = (props) => {
     </div>;
 
   return (
-    <Modal show={show} bsSize="sm" aria-labelledby="contained-modal-title-lg">
+    <Modal {...props} bsSize="sm" aria-labelledby="contained-modal-title-lg">
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-lg">
           North Carolina Reentry Resources Hub
@@ -40,7 +41,6 @@ const CountyModal = (props) => {
 
 CountyModal.propTypes = {
   onHide: PropTypes.func.isRequired,
-  show: PropTypes.bool.isRequired,
 };
 
 module.exports = CountyModal;

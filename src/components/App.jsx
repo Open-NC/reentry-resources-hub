@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -8,7 +8,7 @@ import Content from './Content.jsx';
 import Footer from './Footer.jsx';
 import * as contentActions from '../actions/contentActions';
 
-class App extends React.Component {
+class App extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.params !== nextProps.params) {
       this.props.actions.loadContent(nextProps.params.jurisdiction, nextProps.params.topic);
@@ -20,8 +20,6 @@ class App extends React.Component {
       <div>
         <Header data={this.props.content} />
         <Search />
-        {console.log('App this.props.content')}
-        {console.log(this.props)}
         <Content data={this.props.content} />
         <Footer />
       </div>
@@ -31,19 +29,19 @@ class App extends React.Component {
 
 App.propTypes = {
   content: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
-  console.log('content : ', state.content);
-    return {
-      content: state.content,
-    };
+  return {
+    content: state.content,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(contentActions, dispatch)
+    actions: bindActionCreators(contentActions, dispatch),
   };
 }
 
