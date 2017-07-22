@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "npm run client && concurrently \"npm run server\"",
-    "server": "NODE_ENV=production node_modules/.bin/babel-node --presets react,es2015,stage-0 src/server.js",
+    "server": "NODE_ENV=production node_modules/.bin/babel-node src/server.js",
     "client": "NODE_ENV=production node_modules/.bin/webpack --config webpack.config.js",
     "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1"
   },
