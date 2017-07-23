@@ -19,7 +19,6 @@ To install, clone this repository and a suitable content directory and ensure th
 
 ````
     yarn
-    cd admin-client; yarn; cd ..
     yarn start
 ````
 
@@ -27,7 +26,6 @@ If you prefer to use npm, the equivalent procedure is:
 
 ````
     npm install
-    cd admin-client; npm install; cd ..
     npm start
 ````
 

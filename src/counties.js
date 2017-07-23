@@ -100,7 +100,7 @@ const counties = {
     'Wilkes',
     'Wilson',
     'Yadkin',
-    'Yancey'
-  ]
+    'Yancey',
+  ],
 };
 module.exports = counties;
