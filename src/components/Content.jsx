@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import renderHTML from 'react-render-html';
 import { Col, Row } from 'react-bootstrap';
+import get from 'lodash.get';
 
 class Content extends Component {
   static _getUniqueCategory(array) {
@@ -11,7 +11,9 @@ class Content extends Component {
 
   static _formatJurisdictionResources(localResources) {
     const categories = Content._getUniqueCategory(localResources);
-    let resourcesHtml = '';
+    let resourcesHtml = '<ul>';
+
+    // TODO this should just generate the react elements
     categories.forEach((category) => {
       resourcesHtml += `<li>${category}</li>`;
       resourcesHtml += '<ul>';
@@ -22,15 +24,19 @@ class Content extends Component {
       });
       resourcesHtml += '</ul>';
     });
-    return renderHTML(resourcesHtml);
+
+    resourcesHtml += '</ul>';
+
+    return <div dangerouslySetInnerHTML={{__html:resourcesHtml}} />;
   }
 
   render() {
     const data = this.props.data;
-    const urlTemplate = data.common.local.resources[0].url;
+    const urlTemplate = get(this.props, ['data', 'common', 'local', 'resources', 0, 'url'], '/');
     const commonJ = data.config.common_jurisdiction;
     const localJ = data.config.local_jurisdiction;
     const url = urlTemplate.replace(/{{common_jurisdiction}}/g, commonJ).replace(/{{local_jurisdiction}}/g, localJ);
+
     return (
       <div className="content-body">
         <Row>
@@ -39,37 +45,34 @@ class Content extends Component {
             <h1>{data.config.page_name}</h1>
 
             {/* Common Description */}
-            {renderHTML(data.common.description)}
+            <div dangerouslySetInnerHTML={{__html:get(this.props, ['data', 'common', 'description'], '')}} />
 
             <h2>Local Information</h2>
             {/* Local Description */}
-            {renderHTML(data.jurisdiction.description)}
+            <div dangerouslySetInnerHTML={{__html:get(this.props, ['data', 'jurisdiction', 'description'], '')}} />
 
             <h2>Resources</h2>
             <h3>National, State, and General Resources</h3>
             {/* Common Resources */}
             <ul>
-              {data.common.common.resources.map((resource) => {
+              {get(this.props, ['data', 'common', 'resources'], []).map((resource) => {
                 const tag = <li key={resource.url}><a href={resource.url}>{resource.name}</a><p>{resource.description}</p></li>;
                 return tag;
               })}
             </ul>
             <h3>Local and Regional Resources</h3>
             {/* Local Resources */}
-            <ul>
-              {Content._formatJurisdictionResources(data.jurisdiction.local.resources)}
-            </ul>
+            {Content._formatJurisdictionResources(get(this.props, ['data', 'common', 'local', 'resources'], []))}
 
             <h4>Local Resources from 211</h4>
             {/* Common Local Resources */}
             <ul>
-              {data.common.local.resources.map((resource) => {
+              {get(this.props, ['data', 'common', 'local', 'resources'], []).map((resource) => {
                 const tag = <li key={url}><a href={url}>{resource.name}</a><p>{resource.description}</p></li>;
                 return tag;
               })}
             </ul>
           </Col>
-          <Col xs={1} sm={2} md={3}></Col>
         </Row>
       </div>
     );

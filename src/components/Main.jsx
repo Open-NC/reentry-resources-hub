@@ -7,8 +7,13 @@ import { connect } from 'react-redux';
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import * as contentActions from '../actions/contentActions';
+import get from 'lodash.get';
 
 class Main extends Component {
+  componentWillMount() {
+    this.props.actions.loadMainContent(this.props.params);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.params !== nextProps.params) {
       this.props.actions.loadMainContent(nextProps.params);
@@ -16,26 +21,27 @@ class Main extends Component {
   }
 
   render() {
-    const data = this.props.content;
+    const descriptions = get(this.props, ['content', 'common', 'description'], []);
 
     return (
-      <div>
-        <Header data={data} />
-        <Row>
-          <Col md={2}></Col>
-          <Col xs={12} md={8}>
-            <div className="content-body">
-              {data.common.description.map((element, idx) =>
-                <div key={idx}>
-                  {renderHTML(element)}
-                </div>
-              )}
-            </div>
-          </Col>
-          <Col md={2}></Col>
-        </Row>
-        <Footer />
-      </div>
+      this.props.content ?
+        <div>
+          <Header data={this.props.content} />
+          <Row>
+            <Col md={2}></Col>
+            <Col xs={12} md={8}>
+              <div className="content-body">
+                {descriptions.map((element, idx) =>
+                  <div key={idx}>
+                    {renderHTML(element)}
+                  </div>
+                )}
+              </div>
+            </Col>
+            <Col md={2}></Col>
+          </Row>
+          <Footer />
+        </div> : null
     );
   }
 }

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Navbar, Nav, NavItem, Col, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import CountyModal from './CountyModal.jsx';
+import get from 'lodash.get';
 
-class Header extends Component {
+export default class Header extends Component {
   constructor() {
     super();
     this.state = {
@@ -13,8 +14,8 @@ class Header extends Component {
 
   render() {
     const modalClose = () => this.setState({ modalShow: false });
-    const config = this.props.data.config;
-    const commonJurisdictionName = config.common_jurisdiction_name;
+    const config = this.props.data.config || {};
+    const commonJurisdictionName = get(this.props, ['data', 'config', 'common_jurisdiction_name'], '');
     let localJurisdictionName = '';
 
     if (config.local_jurisdiction_name) {
@@ -102,5 +103,3 @@ Header.propTypes = {
   config: React.PropTypes.object,
   data: React.PropTypes.object,
 };
-
-module.exports = Header;

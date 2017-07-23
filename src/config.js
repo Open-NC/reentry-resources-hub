@@ -1,5 +1,5 @@
 const config = {
-  contentDir: '../nc-reentry-resources-content',
+  contentDir: './content',
 };
 
 module.exports = config;

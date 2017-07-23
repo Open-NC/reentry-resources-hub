@@ -9,6 +9,10 @@ import Footer from './Footer.jsx';
 import * as contentActions from '../actions/contentActions';
 
 class App extends Component {
+  componentWillMount() {
+    this.props.actions.loadContent(this.props.params.jurisdiction, this.props.params.topic);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.params !== nextProps.params) {
       this.props.actions.loadContent(nextProps.params.jurisdiction, nextProps.params.topic);
@@ -17,12 +21,13 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <Header data={this.props.content} />
-        <Search />
-        <Content data={this.props.content} />
-        <Footer />
-      </div>
+      this.props.content ?
+        <div>
+          <Header data={this.props.content} />
+          <Search />
+          <Content data={this.props.content} />
+          <Footer />
+        </div> : null
     );
   }
 }
