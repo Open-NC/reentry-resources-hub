@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class Search extends React.Component {
+class Search extends Component {
   render() {
     return (
       <div className="google-search">

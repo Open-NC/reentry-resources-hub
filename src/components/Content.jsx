@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
 import { Col, Row } from 'react-bootstrap';
 
-class Content extends React.Component {
-
+class Content extends Component {
   static _getUniqueCategory(array) {
     const allCategories = array.map(itm => itm.category);
     const uniqueCategories = allCategories.filter((item, i, ar) => ar.indexOf(item) === i);
@@ -33,7 +32,7 @@ class Content extends React.Component {
     const localJ = data.config.local_jurisdiction;
     const url = urlTemplate.replace(/{{common_jurisdiction}}/g, commonJ).replace(/{{local_jurisdiction}}/g, localJ);
     return (
-      <div className='content-body'>
+      <div className="content-body">
         <Row>
           <Col xs={1} sm={2} md={3}></Col>
           <Col xs={10} sm={8} md={6}>
@@ -78,7 +77,7 @@ class Content extends React.Component {
 }
 
 Content.propTypes = {
-  data: React.PropTypes.object // eslint-disable-line react/forbid-prop-types
+  data: React.PropTypes.object,
 };
 
 module.exports = Content;
