@@ -3,35 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "proxy": "http://localhost:3001/",
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0",
-      "react"
-    ],
-    "env": {
-      "development": {
-        "plugins": [
-          [
-            "react-transform",
-            {
-              "transforms": [
-                {
-                  "transform": "react-transform-hmr",
-                  "imports": [
-                    "react"
-                  ],
-                  "locals": [
-                    "module"
-                  ]
-                }
-              ]
-            }
-          ]
-        ]
-      }
-    }
-  },
   "dependencies": {
     "coa-command-line-args": "^1.0.1",
     "es6-promise": "^4.0.5",
@@ -54,13 +25,14 @@
   },
   "scripts": {
     "start": "npm run client && concurrently \"npm run server\"",
-    "server": "NODE_ENV=production node_modules/.bin/babel-node --presets react,es2015 src/server.js",
+    "server": "NODE_ENV=production node_modules/.bin/babel-node src/server.js",
     "client": "NODE_ENV=production node_modules/.bin/webpack --config webpack.config.js",
     "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1"
   },
   "devDependencies": {
     "babel-cli": "6.14.0",
     "babel-core": "6.14.0",
+    "babel-eslint": "^7.2.3",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "6.14.0",
     "babel-preset-react": "^6.22.0",
@@ -76,27 +48,5 @@
     "redux-immutable-state-invariant": "^2.0.0",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
-  },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "extends": [
-      "airbnb/base",
-      "plugin:import/errors"
-    ],
-    "rules": {
-      "no-use-before-define": 0,
-      "arrow-body-style": 0,
-      "no-console": 0,
-      "max-len": [
-        "error",
-        100,
-        {
-          "ignoreTrailingComments": true
-        }
-      ]
-    },
-    "env": {
-      "mocha": true
-    }
   }
 }
