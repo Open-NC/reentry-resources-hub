@@ -18,6 +18,7 @@ We prefer to use the [yarn](https://yarnpkg.com/) npm client.
 To install, clone this repository and a suitable content directory and ensure that the content directory set in ./src/config.js points to it. If you clone the [nc-reentry-resources-content](https://github.com/CodeForNC/nc-reentry-resources-content) repository side-by-side with this repository, the default configuration will work. From within the directory, run:
 
 ````
+    git submodule init
     yarn
     yarn start
 ````
@@ -25,6 +26,7 @@ To install, clone this repository and a suitable content directory and ensure th
 If you prefer to use npm, the equivalent procedure is:
 
 ````
+    git submodule init
     npm install
     npm start
 ````

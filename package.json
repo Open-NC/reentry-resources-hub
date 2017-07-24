@@ -29,7 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "start": "npm run client && concurrently \"npm run server\"",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "NODE_ENV=production node src/server.js",
     "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1"
   },
