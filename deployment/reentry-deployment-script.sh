@@ -9,5 +9,7 @@ sudo yum update -y
 #disable SELinux
 sudo sed -i 's/enforcing/disabled/g' /etc/selinux/config /etc/selinux/config
 
+echo 'After reboot, please run script2'
+
 #restart server
 sudo shutdown -r now
