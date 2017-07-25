@@ -26,8 +26,8 @@ sudo systemctl enable nginx
 
 #create backup of original
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
-#copy new config file(s)
-cp /opt/reentry-deployment/nginx.conf /etc/nginx/nginx.conf
+#copy new nginx config file(s) from repo
+cp /opt/reentry-resources-hub/deployment/nginx.conf /etc/nginx/nginx.conf
 #restart nginx
 sudo systemctl restart nginx
 
@@ -40,7 +40,8 @@ git clone https://github.com/CodeForNC/nc-reentry-resources-content.git
 cd nc-reentry-resources-content && yarn && cd ..
 cd reentry-admin-api && yarn && cd ..
 cd reentry-admin-ui && yarn && cd ..
-cd reentry-resources-hub && yarn global add forever && yarn && yarn start
-#run app under forever manager
+cd reentry-resources-hub && yarn && yarn start
+#run app under forever or pm2
 ##TODO
+#yarn global add forever
 #forever start -c "yarn start" /opt/reentry-resources-hub/package.json
