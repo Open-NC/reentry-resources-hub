@@ -3,7 +3,7 @@
 ####PART 2
 
 #install dependencies and nginx
-sudo yum -y install gcc-c++ make nginx git wget
+sudo yum -y install gcc-c++ make nginx wget
 
 #download and run Node v8 installation files, add yarn repo
 sudo curl --silent --location https://rpm.nodesource.com/setup_8.x | bash -
@@ -33,7 +33,6 @@ sudo systemctl restart nginx
 
 #clone repos into /opt/
 cd /opt
-git clone https://github.com/CodeForNC/reentry-resources-hub.git
 git clone https://github.com/CodeForNC/reentry-admin-ui.git
 git clone https://github.com/CodeForNC/reentry-admin-api.git
 git clone https://github.com/CodeForNC/nc-reentry-resources-content.git
