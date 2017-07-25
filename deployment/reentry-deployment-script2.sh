@@ -40,4 +40,11 @@ git clone https://github.com/CodeForNC/nc-reentry-resources-content.git
 cd nc-reentry-resources-content && yarn && cd ..
 cd reentry-admin-api && yarn && cd ..
 cd reentry-admin-ui && yarn && cd ..
-cd reentry-resources-hub && yarn && yarn start
+cd reentry-resources-hub && yarn global add forever && yarn
+#run app under pm2
+forever start -c "yarn start" /opt/reentry-resources-hub/package.json
+
+#pm2 as a service: 'centos' is Default User on AWS CentOS builds
+sudo env PATH=$PATH:/usr/local/bin pm2 startup -u centos
+
+#log file for pm2 found at: /home/centos/.pm2/logs/app-err.log.

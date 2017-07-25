@@ -29,6 +29,7 @@
     "client": "NODE_ENV=production node_modules/.bin/webpack --config webpack.config.js",
     "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1"
   },
+  "script": "npm run client && concurrently \"npm run server\"",
   "devDependencies": {
     "babel-cli": "6.14.0",
     "babel-core": "6.14.0",
