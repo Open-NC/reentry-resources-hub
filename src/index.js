@@ -1,5 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import AppRoutes from './components/AppRoutes.jsx';
+import React, { Component } from 'react';
+import { render } from 'react-snapshot';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom';
 
-ReactDOM.render(<AppRoutes />, document.getElementById('app'));
+import Main from './components/Main.jsx';
+import App from './components/App.jsx';
+import Contact from './components/Contact.jsx';
+
+class AppRoutes extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/" exact component={Main} />
+          <Route path="/:jurisdiction/:topic" component={App} />
+          <Route path="/contact" exact component={Contact} />
+          {/* TODO create a not found page */}
+        </Switch>
+      </Router>
+    );
+  }
+}
+
+render(<AppRoutes />, document.getElementById('app'));

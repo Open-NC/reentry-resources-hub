@@ -1,105 +1,85 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavItem, Col, Button, Glyphicon } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Navbar, Nav, NavItem, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import CountyModal from './CountyModal.jsx';
+import Helmet from 'react-helmet';
 import get from 'lodash.get';
 
 export default class Header extends Component {
-  constructor() {
-    super();
-    this.state = {
-      modalShow: false,
-    };
-  }
-
   render() {
-    const modalClose = () => this.setState({ modalShow: false });
-    const config = this.props.data.config || {};
-    const commonJurisdictionName = get(this.props, ['data', 'config', 'common_jurisdiction_name'], '');
-    let localJurisdictionName = '';
-
-    if (config.local_jurisdiction_name) {
-      localJurisdictionName = `${config.local_jurisdiction_name} County`;
-    }
+    const jurisdiction = get(this.props, ['match', 'params', 'jurisdiction']);
 
     return (
       <div>
+        <Helmet title={jurisdiction ? `${jurisdiction} County – NC Reentry Resources Hub` : `NC Reentry Resources Hub`} />
         <div className="site-header">
           <div className="header-background-image">
             <div className="title-box">
-              <h1>{commonJurisdictionName} Reentry Resources Hub</h1>
-              <h1>{localJurisdictionName}</h1>
+              <h1>NC Reëntry Resources Hub</h1>
+              {jurisdiction && <h2>{jurisdiction}</h2>}
               <h4>Resources & assistance for those with criminal convictions or returning to the community after incarceration</h4>
             </div>
           </div>
         </div>
         <Navbar default collapseOnSelect>
-          <Col md={12}>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <Button bsStyle="link" onClick={() => this.setState({ modalShow: true })}>
-                  Select County
-                </Button>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-            <Navbar.Collapse>
-              <Nav>
-                <LinkContainer to={`/${config.local_jurisdiction}/home`}>
-                  <NavItem eventKey={1}>Home</NavItem>
-                </LinkContainer>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <Link to="/">Reëntry Hub</Link>
+            </Navbar.Brand>
+            <Navbar.Toggle />
+          </Navbar.Header>
+          <Navbar.Collapse>
+            {jurisdiction && <Nav>
+              <LinkContainer to={`/${jurisdiction}/home`}>
+                <NavItem eventKey={1}>Home</NavItem>
+              </LinkContainer>
 
-                <LinkContainer to={`/${config.local_jurisdiction}/housing`}>
-                  <NavItem eventKey={2}>Housing</NavItem>
-                </LinkContainer>
+              <LinkContainer to={`/${jurisdiction}/housing`}>
+                <NavItem eventKey={2}>Housing</NavItem>
+              </LinkContainer>
 
-                <LinkContainer to={`/${config.local_jurisdiction}/jobs`}>
-                  <NavItem eventKey={3}>Jobs</NavItem>
-                </LinkContainer>
+              <LinkContainer to={`/${jurisdiction}/jobs`}>
+                <NavItem eventKey={3}>Jobs</NavItem>
+              </LinkContainer>
 
-                <LinkContainer to={`/${config.local_jurisdiction}/benefits`}>
-                  <NavItem eventKey={4}>Public Benefits</NavItem>
-                </LinkContainer>
+              <LinkContainer to={`/${jurisdiction}/benefits`}>
+                <NavItem eventKey={4}>Benefits</NavItem>
+              </LinkContainer>
 
-                <LinkContainer to={`/${config.local_jurisdiction}/health`}>
-                  <NavItem eventKey={5}>Health Care</NavItem>
-                </LinkContainer>
+              <LinkContainer to={`/${jurisdiction}/health`}>
+                <NavItem eventKey={5}>Healthcare</NavItem>
+              </LinkContainer>
 
-                <LinkContainer to={`/${config.local_jurisdiction}/education`}>
-                  <NavItem eventKey={6}>Education</NavItem>
-                </LinkContainer>
+              <LinkContainer to={`/${jurisdiction}/education`}>
+                <NavItem eventKey={6}>Education</NavItem>
+              </LinkContainer>
 
-                <LinkContainer to={`/${config.local_jurisdiction}/legal`}>
-                  <NavItem eventKey={7}>Legal</NavItem>
-                </LinkContainer>
+              <LinkContainer to={`/${jurisdiction}/legal`}>
+                <NavItem eventKey={7}>Legal</NavItem>
+              </LinkContainer>
 
-                <LinkContainer to={`/${config.local_jurisdiction}/support`}>
-                  <NavItem eventKey={8}>Supporting Programs</NavItem>
-                </LinkContainer>
+              <LinkContainer to={`/${jurisdiction}/support`}>
+                <NavItem eventKey={8}>Support Programs</NavItem>
+              </LinkContainer>
 
-                <LinkContainer to={`/${config.local_jurisdiction}/other`}>
-                  <NavItem eventKey={9}>Other Resources</NavItem>
-                </LinkContainer>
+              <LinkContainer to={`/${jurisdiction}/other`}>
+                <NavItem eventKey={9}>Other Resources</NavItem>
+              </LinkContainer>
 
-                <LinkContainer to="/contact">
-                  <NavItem eventKey={10}>Contact Us</NavItem>
-                </LinkContainer>
-              </Nav>
-              <Nav pullRight>
-                <Button bsSize="large">
+              <LinkContainer to="/contact">
+                <NavItem eventKey={10}>Contact Us</NavItem>
+              </LinkContainer>
+            </Nav>}
+            <Nav pullRight>
+              <Navbar.Form>
+                <Button type="button">
                   <Glyphicon glyph="search" />
                 </Button>
-              </Nav>
-            </Navbar.Collapse>
-          </Col>
+              </Navbar.Form>
+            </Nav>
+          </Navbar.Collapse>
         </Navbar>
-        <CountyModal show={this.state.modalShow} onHide={modalClose} />
       </div>
     );
   }
 }
-
-Header.propTypes = {
-  config: React.PropTypes.object,
-  data: React.PropTypes.object,
-};

@@ -9,32 +9,35 @@ class Content extends Component {
     return uniqueCategories;
   }
 
-  static _formatJurisdictionResources(localResources) {
+  static jurisdictionResources(localResources) {
     const categories = Content._getUniqueCategory(localResources);
-    let resourcesHtml = '<ul>';
 
-    // TODO this should just generate the react elements
-    categories.forEach((category) => {
-      resourcesHtml += `<li>${category}</li>`;
-      resourcesHtml += '<ul>';
-      localResources.forEach((resource) => {
-        if (resource.category === category) {
-          resourcesHtml += `<li><a href=${resource.url}>${resource.name}</a><p>${resource.description}</p></li>`;
-        }
-      });
-      resourcesHtml += '</ul>';
-    });
-
-    resourcesHtml += '</ul>';
-
-    return <div dangerouslySetInnerHTML={{__html:resourcesHtml}} />;
+    return (
+      <ul>
+        {categories.map(function(category) {
+          return (
+            <li key={category}>
+              {category}
+              <ul>
+                {localResources.filter(resource => resource.category === category).map(({url, name, description}) => (
+                  <li>
+                    <a href={url}>{name}</a><p>{description}</p>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          )
+        })}
+      </ul>
+    );
   }
 
   render() {
-    const data = this.props.data;
+    const { data } = this.props;
     const urlTemplate = get(this.props, ['data', 'common', 'local', 'resources', 0, 'url'], '/');
-    const commonJ = data.config.common_jurisdiction;
-    const localJ = data.config.local_jurisdiction;
+    const commonJ = get(data, ['config', 'common_jurisdiction'], '');
+    const localJ = get(data, ['config', 'local_jurisdiction'], '');
+    const pageName = get(data, ['config', 'page_name'], '');
     const url = urlTemplate.replace(/{{common_jurisdiction}}/g, commonJ).replace(/{{local_jurisdiction}}/g, localJ);
 
     return (
@@ -42,7 +45,7 @@ class Content extends Component {
         <Row>
           <Col xs={1} sm={2} md={3}></Col>
           <Col xs={10} sm={8} md={6}>
-            <h1>{data.config.page_name}</h1>
+            <h1>{pageName}</h1>
 
             {/* Common Description */}
             <div dangerouslySetInnerHTML={{__html:get(this.props, ['data', 'common', 'description'], '')}} />
@@ -62,7 +65,7 @@ class Content extends Component {
             </ul>
             <h3>Local and Regional Resources</h3>
             {/* Local Resources */}
-            {Content._formatJurisdictionResources(get(this.props, ['data', 'common', 'local', 'resources'], []))}
+            {Content.jurisdictionResources(get(this.props, ['data', 'common', 'local', 'resources'], []))}
 
             <h4>Local Resources from 211</h4>
             {/* Common Local Resources */}
@@ -83,4 +86,4 @@ Content.propTypes = {
   data: React.PropTypes.object,
 };
 
-module.exports = Content;
+export default Content;

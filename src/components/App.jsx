@@ -1,31 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import Header from './Header.jsx';
-import Search from './Search.jsx';
 import Content from './Content.jsx';
 import Footer from './Footer.jsx';
-import * as contentActions from '../actions/contentActions';
+import { snapshot } from 'react-snapshot';
 
-class App extends Component {
+export default class App extends Component {
+  state = {
+    content: null
+  };
+
+  updateContent({params}) {
+    snapshot(() =>
+      fetch(`/api/${params.jurisdiction}/${params.topic}`)
+      .then(response => {
+        if (response.status >= 400) {
+          throw new Error('Bad response from server');
+        }
+
+        return response.json();
+      })
+    ).then((content) => this.setState({content}));
+  }
+
   componentWillMount() {
-    this.props.actions.loadContent(this.props.params.jurisdiction, this.props.params.topic);
+    this.updateContent(this.props.match);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.params !== nextProps.params) {
-      this.props.actions.loadContent(nextProps.params.jurisdiction, nextProps.params.topic);
+    if (this.props.match !== nextProps.match) {
+      this.updateContent(nextProps.match);
     }
   }
 
   render() {
     return (
-      this.props.content ?
+      this.state.content ?
         <div>
-          <Header data={this.props.content} />
-          <Search />
-          <Content data={this.props.content} />
+          <Header {...this.props} data={this.state.content} />
+          <Content data={this.state.content} />
           <Footer />
         </div> : null
     );
@@ -33,24 +46,5 @@ class App extends Component {
 }
 
 App.propTypes = {
-  content: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired,
-  params: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
-
-function mapStateToProps(state) {
-  return {
-    content: state.content,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(contentActions, dispatch),
-  };
-}
-
-// Connect function from react-redux function allows components to interact with redux.
-// These components are called 'container components'.
-// Connect returns a function that is called immediately with the 'App' parameter.
-export default connect(mapStateToProps, mapDispatchToProps)(App);

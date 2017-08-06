@@ -1,5 +1,5 @@
 const fs = require('fs');
-const contentDir = require('../config').contentDir;
+const contentDir = './content';
 
 function loadConfig(path, inputConfig, callback) {
   fs.open(path, 'r', (err, fd) => {
