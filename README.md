@@ -35,4 +35,4 @@ The application is running at http://localhost:3000/. The server is also running
 
 In one terminal, run `node server/index.js`.  In another terminal, run `yarn build` or `npm run build`.
 
-If you want to push the contents of the build folder to GitHub pages, run `yarn run deploy`.
+If you want to push the contents of the build folder to GitHub pages, run `yarn deploy`.

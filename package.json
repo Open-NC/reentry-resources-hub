@@ -28,7 +28,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "deploy": "npm run build && gh-pages -d build"
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "concurrently": "^3.1.0",

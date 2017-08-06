@@ -13,7 +13,7 @@ import Contact from './components/Contact.jsx';
 class AppRoutes extends Component {
   render() {
     return (
-      <Router>
+      <Router basename="/reentry-resources-hub">
         <Switch>
           <Route path="/" exact component={Main} />
           <Route path="/:jurisdiction/:topic" component={App} />
