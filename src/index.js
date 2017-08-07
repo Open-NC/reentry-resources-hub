@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { render } from 'react-snapshot';
+import { render, IS_REACT_SNAPSHOT } from 'react-snapshot';
 import {
   BrowserRouter as Router,
   Route,
@@ -15,7 +15,7 @@ import './style.css';
 class AppRoutes extends Component {
   render() {
     return (
-      <Router basename="/reentry-resources-hub" forceRefresh>
+      <Router basename="/reentry-resources-hub" forceRefresh={process.env.NODE_ENV === 'production' && !IS_REACT_SNAPSHOT}>
         <Switch>
           <Route path="/" exact component={Main} />
           <Route path="/:jurisdiction/:topic/" component={App} />
@@ -27,4 +27,6 @@ class AppRoutes extends Component {
   }
 }
 
-render(<AppRoutes />, document.getElementById('app'));
+if(process.env.NODE_ENV !== 'production' || IS_REACT_SNAPSHOT) {
+  render(<AppRoutes />, document.getElementById('app'));
+}

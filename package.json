@@ -5,10 +5,8 @@
   "homepage": "/reentry-resources-hub",
   "proxy": "http://localhost:3001/",
   "dependencies": {
-    "es6-promise": "^4.1.1",
     "express": "^4.15.3",
     "fs": "0.0.2",
-    "isomorphic-fetch": "^2.2.1",
     "lodash.get": "^4.4.2",
     "path": "^0.12.7",
     "prop-types": "^15.5.10",

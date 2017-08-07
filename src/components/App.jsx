@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Header from './Header.jsx';
 import Content from './Content.jsx';
 import Footer from './Footer.jsx';
-import fetch from 'isomorphic-fetch';
 import { snapshot } from 'react-snapshot';
 
 export default class App extends Component {
@@ -12,9 +11,9 @@ export default class App extends Component {
   };
 
   updateContent({params}) {
-    const p = snapshot(() =>
-      fetch(`/api/${params.jurisdiction}/${params.topic}`).then(response => response.json())
-    ).then((content) => this.setState({content}));
+    const p = snapshot(function() {
+      return fetch(`/api/${params.jurisdiction}/${params.topic}`).then(response => response.ok ? response.json() : Promise.reject(null));
+    }).then((content) => this.setState({content}));
 
     // this works around a bug in snapshot where it doesn't return a promise with a .catch() method
     p && p.catch(e => console.log(e));
