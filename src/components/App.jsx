@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Header from './Header.jsx';
 import Content from './Content.jsx';
 import Footer from './Footer.jsx';
-import { snapshot } from 'react-snapshot';
 import fetch from 'isomorphic-fetch';
+import { snapshot } from 'react-snapshot';
 
 export default class App extends Component {
   state = {
@@ -12,16 +12,13 @@ export default class App extends Component {
   };
 
   updateContent({params}) {
-    snapshot(() =>
+    const p = snapshot(() =>
       fetch(`/api/${params.jurisdiction}/${params.topic}`)
-      .then(response => {
-        if (response.status >= 400) {
-          throw new Error('Bad response from server');
-        }
+        .then(response => response.json())
+      ).then((content) => this.setState({content}));
 
-        return response.json();
-      }).catch(e => console.error(e))
-    ).then((content) => this.setState({content}));
+    // this works around a bug in snapshot where it doesn't return a promise with a .catch() method
+    p && p.catch(e => console.log(e));
   }
 
   componentWillMount() {

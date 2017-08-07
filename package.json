@@ -2,7 +2,7 @@
   "name": "nc-reentry-resources-hub",
   "version": "0.0.1",
   "private": true,
-  "homepage": "https://brendanyounger.github.io/reentry-resources-hub",
+  "homepage": "/reentry-resources-hub",
   "proxy": "http://localhost:3001/",
   "dependencies": {
     "es6-promise": "^4.0.5",
@@ -39,7 +39,14 @@
     "eslint-plugin-react": "^6.8.0",
     "gh-pages": "^1.0.0",
     "react-scripts": "0.8.4",
-    "react-snapshot": "^2.0.0-0",
+    "react-snapshot": "^2.0.0-1",
     "redux-immutable-state-invariant": "^2.0.0"
+  },
+  "reactSnapshot": {
+    "include": [
+    ],
+    "exclude": [
+    ],
+    "snapshotDelay": 300
   }
 }
