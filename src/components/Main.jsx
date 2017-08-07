@@ -6,7 +6,7 @@ import Footer from './Footer.jsx';
 import { nc } from '../counties';
 
 export default class Main extends Component {
-  renderCounty = (county) => (<li key={county}><Link to={`/${county}/home`}>{county}</Link></li>);
+  renderCounty = (county) => (<li key={county}><Link to={`/${county}/home/`}>{county}</Link></li>);
 
   render() {
     const perCol = Math.ceil(nc.length / 4);

@@ -30,43 +30,43 @@ export default class Header extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             {jurisdiction && <Nav>
-              <LinkContainer to={`/${jurisdiction}/home`}>
+              <LinkContainer to={`/${jurisdiction}/home/`}>
                 <NavItem eventKey={1}>Home</NavItem>
               </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/housing`}>
+              <LinkContainer to={`/${jurisdiction}/housing/`}>
                 <NavItem eventKey={2}>Housing</NavItem>
               </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/jobs`}>
+              <LinkContainer to={`/${jurisdiction}/jobs/`}>
                 <NavItem eventKey={3}>Jobs</NavItem>
               </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/benefits`}>
+              <LinkContainer to={`/${jurisdiction}/benefits/`}>
                 <NavItem eventKey={4}>Benefits</NavItem>
               </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/health`}>
+              <LinkContainer to={`/${jurisdiction}/health/`}>
                 <NavItem eventKey={5}>Healthcare</NavItem>
               </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/education`}>
+              <LinkContainer to={`/${jurisdiction}/education/`}>
                 <NavItem eventKey={6}>Education</NavItem>
               </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/legal`}>
+              <LinkContainer to={`/${jurisdiction}/legal/`}>
                 <NavItem eventKey={7}>Legal</NavItem>
               </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/support`}>
+              <LinkContainer to={`/${jurisdiction}/support/`}>
                 <NavItem eventKey={8}>Support Programs</NavItem>
               </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/other`}>
+              <LinkContainer to={`/${jurisdiction}/other/`}>
                 <NavItem eventKey={9}>Other Resources</NavItem>
               </LinkContainer>
 
-              <LinkContainer to="/contact">
+              <LinkContainer to="/contact/">
                 <NavItem eventKey={10}>Contact Us</NavItem>
               </LinkContainer>
             </Nav>}

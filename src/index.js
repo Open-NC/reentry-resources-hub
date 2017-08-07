@@ -10,14 +10,16 @@ import Main from './components/Main.jsx';
 import App from './components/App.jsx';
 import Contact from './components/Contact.jsx';
 
+import './style.css';
+
 class AppRoutes extends Component {
   render() {
     return (
       <Router basename="/reentry-resources-hub">
         <Switch>
           <Route path="/" exact component={Main} />
-          <Route path="/:jurisdiction/:topic" component={App} />
-          <Route path="/contact" exact component={Contact} />
+          <Route path="/:jurisdiction/:topic/" component={App} />
+          <Route path="/contact/" exact component={Contact} />
           {/* TODO create a not found page */}
         </Switch>
       </Router>

@@ -4,6 +4,7 @@ import Header from './Header.jsx';
 import Content from './Content.jsx';
 import Footer from './Footer.jsx';
 import { snapshot } from 'react-snapshot';
+import fetch from 'isomorphic-fetch';
 
 export default class App extends Component {
   state = {
@@ -19,7 +20,7 @@ export default class App extends Component {
         }
 
         return response.json();
-      })
+      }).catch(e => console.error(e))
     ).then((content) => this.setState({content}));
   }
 
