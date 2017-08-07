@@ -15,7 +15,7 @@ import './style.css';
 class AppRoutes extends Component {
   render() {
     return (
-      <Router basename="/reentry-resources-hub">
+      <Router basename="/reentry-resources-hub" forceRefresh>
         <Switch>
           <Route path="/" exact component={Main} />
           <Route path="/:jurisdiction/:topic/" component={App} />
