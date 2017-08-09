@@ -15,7 +15,7 @@ export default class Header extends Component {
         <div className="site-header">
           <div className="header-background-image">
             <div className="title-box">
-              <h1>NC Reëntry Resources Hub</h1>
+              <h1>NC Reentry Resources Hub</h1>
               {jurisdiction && <h2>{jurisdiction}</h2>}
               <h4>Resources & assistance for those with criminal convictions or returning to the community after incarceration</h4>
             </div>
