@@ -24,7 +24,7 @@ export default class Header extends Component {
         <Navbar default collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">Reëntry Hub</Link>
+              <Link to="/">Reentry Hub</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
