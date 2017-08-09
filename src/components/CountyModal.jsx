@@ -2,7 +2,6 @@ import React from 'react';
 import { Modal, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { nc } from '../counties';
 
-
 const County = props =>
   <Button bsStyle="link" className="county-button" href={`/${props.name}/home`}>
     <ListGroupItem className="county-item">
@@ -15,7 +14,7 @@ class CountyFilter extends React.Component {
   handleChange(event) {
     this.props.updateSearch(event.target.value);
   }
- 
+
   render() {
     return (
       <input type="text" placeholder="County Search" className="input-search" onChange={this.handleChange.bind(this)} value={this.props.searchText} />
@@ -55,8 +54,6 @@ class CountyModal extends React.Component {
   }
 
   updateSearch(inputValue) {
-    let filter = this.state.filter;
-
     this.setState({
       filter: inputValue
     });

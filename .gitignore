@@ -7,4 +7,5 @@ npm-debug.log
 .env
 npm-debug.log
 
-bundle.js
+# compiled sources
+/build
