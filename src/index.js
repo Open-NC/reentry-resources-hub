@@ -27,6 +27,6 @@ class AppRoutes extends Component {
   }
 }
 
-if(process.env.NODE_ENV !== 'production' || IS_REACT_SNAPSHOT) {
+if (process.env.NODE_ENV !== 'production' || IS_REACT_SNAPSHOT) {
   render(<AppRoutes />, document.getElementById('app'));
 }

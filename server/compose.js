@@ -11,7 +11,7 @@ function loadConfig(path, inputConfig, callback) {
     });
 
     callback(null, Object.assign({}, inputConfig, config));
-  } catch(e) {
+  } catch (e) {
     callback(e);
   }
 }
@@ -19,7 +19,7 @@ function loadConfig(path, inputConfig, callback) {
 function loadJsonFile(path, callback) {
   try {
     callback(null, JSON.parse(fs.readFileSync(path)));
-  } catch(e) {
+  } catch (e) {
     callback(e);
   }
 }
@@ -162,7 +162,7 @@ function mainCompose(callback) {
   const mainDescFile = `${contentDir}/topics/main/description.json`;
   const main = {
     config: {},
-    common: {}
+    common: {},
   };
   loadConfig(commonConfigFile, {}, (lc1Err, commonConfigRes) => {
     if (lc1Err) callback(lc1Err, null);
@@ -184,5 +184,5 @@ function mainCompose(callback) {
   });
 }
 
-module.exports = {compose, mainCompose};
+module.exports = { compose, mainCompose };
 

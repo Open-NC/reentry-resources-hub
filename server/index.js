@@ -1,7 +1,6 @@
 /* eslint no-console: 0 */
 const express = require('express');
-const path = require('path');
-const { compose, mainCompose } = require('./compose');
+const { compose } = require('./compose');
 
 const app = express();
 

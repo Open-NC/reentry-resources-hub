@@ -6,7 +6,7 @@ import Footer from './Footer.jsx';
 import { nc } from '../counties';
 
 export default class Main extends Component {
-  renderCounty = (county) => (<li key={county}><Link to={`/${county}/home/`}>{county}</Link></li>);
+  renderCounty = county => (<li key={county}><Link to={`/${county}/home/`}>{county}</Link></li>);
 
   render() {
     const perCol = Math.ceil(nc.length / 4);
@@ -16,34 +16,34 @@ export default class Main extends Component {
     const col4 = nc.slice(3 * perCol, 4 * perCol);
 
     return (
-        <div>
-          <Header {...this.props} />
-          <Grid>
-            <Row className="content-body">
-              <Col xs={12} sm={6} md={3} lg={3}>
-                <ul>
-                  {col1.map(this.renderCounty)}
-                </ul>
-              </Col>
-              <Col xs={12} sm={6} md={3} lg={3}>
-                <ul>
-                  {col2.map(this.renderCounty)}
-                </ul>
-              </Col>
-              <Col xs={12} sm={6} md={3} lg={3}>
-                <ul>
-                  {col3.map(this.renderCounty)}
-                </ul>
-              </Col>
-              <Col xs={12} sm={6} md={3} lg={3}>
-                <ul>
-                  {col4.map(this.renderCounty)}
-                </ul>
-              </Col>
-            </Row>
-          </Grid>
-          <Footer />
-        </div>
+      <div>
+        <Header {...this.props} />
+        <Grid>
+          <Row className="content-body">
+            <Col xs={12} sm={6} md={3} lg={3}>
+              <ul>
+                {col1.map(this.renderCounty)}
+              </ul>
+            </Col>
+            <Col xs={12} sm={6} md={3} lg={3}>
+              <ul>
+                {col2.map(this.renderCounty)}
+              </ul>
+            </Col>
+            <Col xs={12} sm={6} md={3} lg={3}>
+              <ul>
+                {col3.map(this.renderCounty)}
+              </ul>
+            </Col>
+            <Col xs={12} sm={6} md={3} lg={3}>
+              <ul>
+                {col4.map(this.renderCounty)}
+              </ul>
+            </Col>
+          </Row>
+        </Grid>
+        <Footer />
+      </div>
     );
   }
 }
