@@ -55,7 +55,6 @@ class Contact extends Component {
 
     return (
       <div>
-        <Header />
         <Row>
           <Col xs={1} md={2} />
           <Col xs={10} md={8}>
@@ -99,7 +98,6 @@ class Contact extends Component {
           </Col>
           <Col xs={1} md={2} />
         </Row>
-        <Footer />
       </div>
     );
   }
