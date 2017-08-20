@@ -50,6 +50,34 @@ body {
   text-align: center;
 }
 
+.modal-title {
+  text-align: center;
+}
+
+.county-item {
+  padding: 2px 20px;
+}
+
+.county-button {
+  padding: 0px;
+  width: 100%;
+  text-align: left;
+}
+
+.county-item:hover {
+  background-color: #e4edff;
+}
+
+.input-search {
+  text-align: center;
+  width: 100%;
+  padding: 3px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #eaeaea;
+  border-color: #888686;
+} 
+
 /* Make google search box appear correct*/
 input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus, .gsc-search-button
 {
