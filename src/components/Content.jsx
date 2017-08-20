@@ -14,12 +14,12 @@ class Content extends Component {
 
     return (
       <ul>
-        {categories.map(function(category) {
-          return (
+        {categories.map(category =>
+          (
             <li key={category}>
               {category}
               <ul>
-                {localResources.filter(resource => resource.category === category).map(({url, name, description}) => (
+                {localResources.filter(resource => resource.category === category).map(({ url, name, description }) => (
                   <li>
                     <a href={url}>{name}</a><p>{description}</p>
                   </li>
@@ -27,7 +27,7 @@ class Content extends Component {
               </ul>
             </li>
           )
-        })}
+        )}
       </ul>
     );
   }
@@ -48,11 +48,11 @@ class Content extends Component {
             <h1>{pageName}</h1>
 
             {/* Common Description */}
-            <div dangerouslySetInnerHTML={{__html:get(this.props, ['data', 'common', 'description'], '')}} />
+            <div dangerouslySetInnerHTML={{ __html: get(this.props, ['data', 'common', 'description'], '') }} />
 
             <h2>Local Information</h2>
             {/* Local Description */}
-            <div dangerouslySetInnerHTML={{__html:get(this.props, ['data', 'jurisdiction', 'description'], '')}} />
+            <div dangerouslySetInnerHTML={{ __html: get(this.props, ['data', 'jurisdiction', 'description'], '') }} />
 
             <h2>Resources</h2>
             <h3>National, State, and General Resources</h3>
