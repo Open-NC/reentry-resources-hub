@@ -22,7 +22,7 @@ class Contact extends Component {
     formSubmitted: false,
   };
 
-  resetState = () => {
+  setFormSubmittedState = () => {
     this.setState({
       ...Contact.initialState,
       formSubmitted: true,
@@ -71,7 +71,10 @@ class Contact extends Component {
       }),
     };
 
-    return fetch('http://localhost:3001/api/sendEmail', opts) // Make Request
+    // this url needs to be wherever the server is getting hosted. Obviously localhost:3001 will not work on a production build.
+    const url = 'http://localhost:3001';
+
+    return fetch(`${url}/api/sendEmail`, opts) // Make Request
       .then(data => data.json()) // Blob the response
       .then((response) => {
         // If something went wrong on the API.
@@ -82,7 +85,7 @@ class Contact extends Component {
           });
         } else {
           // Clear out the form and give feedback.
-          this.resetState();
+          this.setFormSubmittedState();
         }
       });
   }

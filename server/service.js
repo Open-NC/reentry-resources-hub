@@ -9,7 +9,6 @@ function sendEmail(payload) {
   });
 
   const subject = 'Reentry Resources Contact Form';
-
   // TODO: Consider using an email templating service like EJS for building a proper email.
   const body = `${payload.name} has the following message for you: <br /> ${payload.message} <br /> - ${payload.email}`;
 
