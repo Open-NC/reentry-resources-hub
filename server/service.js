@@ -12,7 +12,7 @@ function sendEmail(payload) {
   // TODO: Consider using an email templating service like EJS for building a proper email.
   const body = `${payload.name} has the following message for you: <br /> ${payload.message} <br /> - ${payload.email}`;
 
-  // This implementation will send an email from the dedicated Reentry email address to itself.
+  // This implementation will send an email from the dedicated Reentry email address to eric && jason.
   const email = {
     Source: process.env.SES_EMAIL,
     Destination: { ToAddresses: ['jason@codeforgreensboro.org', 'eric.jackson@democracyapps.org'] },
