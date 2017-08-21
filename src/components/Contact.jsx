@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap';
 
 class Contact extends Component {
+  // Easy to create an initialState static prop on Contact for resetting the state after the form has been submitted.
   static initialState = {
     name: '',
     message: '',
@@ -31,18 +32,23 @@ class Contact extends Component {
   handleChange = (event) => {
     const { name, value } = event.currentTarget;
 
-    this.setState({ [name]: value });
+    this.setState({
+      [name]: value,
+      formSubmitted: false, // Clear out the formSubmitted feedback if the user interacts w/ form.
+    });
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
 
+    // Run some basic validation.
     if (!this.state.name) {
       this.setState({ error: 'Name is required.' });
 
       return null;
     }
 
+    // TODO: Add in regex to check for proper email.
     if (!this.state.email) {
       this.setState({ error: 'Email is required.' });
 
@@ -55,6 +61,8 @@ class Contact extends Component {
       return null;
     }
 
+    // Prepare fetch API options.
+    // API expects application/json
     const opts = {
       method: 'POST',
       body: JSON.stringify(this.state),
@@ -63,27 +71,20 @@ class Contact extends Component {
       }),
     };
 
-    return fetch('http://localhost:3001/api/sendEmail', opts)
-      .then(data => data.json())
+    return fetch('http://localhost:3001/api/sendEmail', opts) // Make Request
+      .then(data => data.json()) // Blob the response
       .then((response) => {
+        // If something went wrong on the API.
         if (response.code === 500) {
           this.setState({
             error: 'Something went wrong.',
+            formSubmitted: false,
           });
         } else {
+          // Clear out the form and give feedback.
           this.resetState();
         }
       });
-
-    // TODO: Build out a createMessage action that will send form data to the API for email processing.
-    // this.props.createMessage(this.state)
-    //   .then(() => {
-    //     this.setState({
-    //       ...Contact.initialState,
-    //       formSubmitted: true,
-    //     });
-    //   })
-    //   .catch(err => console.error(err));
   }
 
   render() {

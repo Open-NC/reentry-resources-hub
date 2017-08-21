@@ -8,19 +8,22 @@ function sendEmail(payload) {
     region: process.env.AWS_DEFAULT_REGION,
   });
 
-  const subject = 'test';
+  const subject = 'Reentry Resources Contact Form';
+
+  // TODO: Consider using an email templating service like EJS for building a proper email.
   const body = `${payload.name} has the following message for you: <br /> ${payload.message} <br /> - ${payload.email}`;
 
+  // This implementation will send an email from the dedicated Reentry email address to itself.
   const email = {
     Source: process.env.SES_EMAIL,
-    Destination: { ToAddresses: [process.env.SES_EMAIL] },
+    Destination: { ToAddresses: ['jason@codeforgreensboro.org', 'eric.jackson@democracyapps.org'] },
     Message: {
       Subject: {
-        Data: subject || 'Inquiry from reentry resources hub.',
+        Data: subject,
       },
       Body: {
         Html: {
-          Data: body || 'Something went wrong in the sending of this email.',
+          Data: body,
         },
       },
     },
