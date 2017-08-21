@@ -72,7 +72,7 @@ class Contact extends Component {
     };
 
     // this url needs to be wherever the server is getting hosted. Obviously localhost:3001 will not work on a production build.
-    const url = 'http://localhost:3001';
+    const url = process.env.API_URL || 'http://localhost:3001';
 
     return fetch(`${url}/api/sendEmail`, opts) // Make Request
       .then(data => data.json()) // Blob the response
