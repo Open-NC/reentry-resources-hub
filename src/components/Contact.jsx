@@ -7,20 +7,26 @@ import {
   ControlLabel,
   Button,
 } from 'react-bootstrap';
-import Header from './Header.jsx';
-import Footer from './Footer.jsx';
 
 class Contact extends Component {
   static initialState = {
     name: '',
     message: '',
     email: '',
+    error: '',
   };
 
   state = {
     ...Contact.initialState,
     formSubmitted: false,
   };
+
+  resetState = () => {
+    this.setState({
+      ...Contact.initialState,
+      formSubmitted: true,
+    });
+  }
 
   handleChange = (event) => {
     const { name, value } = event.currentTarget;
@@ -31,10 +37,43 @@ class Contact extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    this.setState({
-      ...Contact.initialState,
-      formSubmitted: true,
-    });
+    if (!this.state.name) {
+      this.setState({ error: 'Name is required.' });
+
+      return null;
+    }
+
+    if (!this.state.email) {
+      this.setState({ error: 'Email is required.' });
+
+      return null;
+    }
+
+    if (!this.state.message) {
+      this.setState({ error: 'Message is required.' });
+
+      return null;
+    }
+
+    const opts = {
+      method: 'POST',
+      body: JSON.stringify(this.state),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+    };
+
+    return fetch('http://localhost:3001/api/sendEmail', opts)
+      .then(data => data.json())
+      .then((response) => {
+        if (response.code === 500) {
+          this.setState({
+            error: 'Something went wrong.',
+          });
+        } else {
+          this.resetState();
+        }
+      });
 
     // TODO: Build out a createMessage action that will send form data to the API for email processing.
     // this.props.createMessage(this.state)
@@ -53,12 +92,18 @@ class Contact extends Component {
         Form submitted successfully. Thank you for your feedback.
       </div>;
 
+    const renderError = () =>
+      <div className="alert alert-danger" role="alert">
+        {this.state.error}
+      </div>;
+
     return (
       <div>
         <Row>
           <Col xs={1} md={2} />
           <Col xs={10} md={8}>
             <form>
+              {this.state.error && renderError()}
               {this.state.formSubmitted && renderSuccess()}
               <FormGroup>
                 <ControlLabel>Name</ControlLabel>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import get from 'lodash.get';
-import Contact from './Contact.jsx';
 
 class Content extends Component {
   static _getUniqueCategory(array) {
