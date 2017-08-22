@@ -15,7 +15,9 @@ function sendEmail(payload) {
   // This implementation will send an email from the dedicated Reentry email address to eric && jason.
   const email = {
     Source: process.env.SES_EMAIL,
-    Destination: { ToAddresses: ['jason@codeforgreensboro.org', 'eric.jackson@democracyapps.org'] },
+    Destination: {
+      ToAddresses: process.env.RECEPIENT_EMAILS.split(','),
+    },
     Message: {
       Subject: {
         Data: subject,

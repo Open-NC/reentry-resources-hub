@@ -15,7 +15,6 @@ if (!process.env.AWS_KEY) {
 }
 
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(bodyParser.json());
 app.use(cors());
 
