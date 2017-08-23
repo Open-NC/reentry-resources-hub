@@ -66,7 +66,7 @@ export default class Header extends Component {
                 <NavItem eventKey={9}>Other Resources</NavItem>
               </LinkContainer>
 
-              <LinkContainer to="/contact/">
+              <LinkContainer to={`/${jurisdiction}/contact/`}>
                 <NavItem eventKey={10}>Contact Us</NavItem>
               </LinkContainer>
             </Nav>}

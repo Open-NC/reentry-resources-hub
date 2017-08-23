@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { snapshot } from 'react-snapshot';
 import Header from './Header.jsx';
 import Content from './Content.jsx';
+import Contact from './Contact.jsx';
 import Footer from './Footer.jsx';
 
 export default class App extends Component {
@@ -38,7 +39,8 @@ export default class App extends Component {
       this.state.content ?
         <div>
           <Header {...this.props} data={this.state.content} />
-          <Content data={this.state.content} />
+          {/* I don't love doing this, but wanted to maintain visual consistency amongst views without having to render the Header + Footer components inside of Contact. */}
+          {location.href.includes('contact') ? <Contact /> : <Content data={this.state.content} />}
           <Footer />
         </div> : null
     );
