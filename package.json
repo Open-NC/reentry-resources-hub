@@ -5,6 +5,10 @@
   "homepage": "/reentry-resources-hub",
   "proxy": "http://localhost:3001/",
   "dependencies": {
+    "aws-sdk": "^2.100.0",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "fs": "0.0.2",
     "lodash.get": "^4.4.2",
@@ -25,7 +29,8 @@
     "build": "react-scripts build && react-snapshot",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "concurrently \"npm run server\" \"npm run client\" \"npm run watch-css\"",
+    "watch-css": "node-sass -w --output-style compressed src/sass/main.scss src/style.css",
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
@@ -36,6 +41,7 @@
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.8.0",
     "gh-pages": "^1.0.0",
+    "node-sass": "^4.5.3",
     "react-scripts": "0.8.4",
     "react-snapshot": "^2.0.0-1",
     "redux-immutable-state-invariant": "^2.0.0"

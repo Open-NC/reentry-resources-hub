@@ -11,7 +11,7 @@ export default class Header extends Component {
 
     return (
       <div>
-        <Helmet title={jurisdiction ? `${jurisdiction} County – NC Reentry Resources Hub` : `NC Reentry Resources Hub`} />
+        <Helmet title={jurisdiction ? `${jurisdiction} County – NC Reentry Resources Hub` : 'NC Reentry Resources Hub'} />
         <div className="site-header">
           <div className="header-background-image">
             <div className="title-box">
@@ -66,7 +66,7 @@ export default class Header extends Component {
                 <NavItem eventKey={9}>Other Resources</NavItem>
               </LinkContainer>
 
-              <LinkContainer to="/contact/">
+              <LinkContainer to={`/${jurisdiction}/contact/`}>
                 <NavItem eventKey={10}>Contact Us</NavItem>
               </LinkContainer>
             </Nav>}
