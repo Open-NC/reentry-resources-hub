@@ -1,5 +1,6 @@
 const fs = require('fs');
-const contentDir = './content';
+//const contentDir = './content';
+const contentDir = '../nc-reentry-resources-content';
 
 function loadConfig(path, inputConfig, callback) {
   try {
