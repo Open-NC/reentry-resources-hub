@@ -1,6 +1,4 @@
 const fs = require('fs');
-//const contentDir = './content';
-const contentDir = '../nc-reentry-resources-content';
 
 function loadConfig(path, inputConfig, callback) {
   try {
@@ -26,7 +24,7 @@ function loadJsonFile(path, callback) {
 }
 
 // Load and merge all the configurations
-function loadConfigurations(jurisdiction, topic, callback) {
+function loadConfigurations(jurisdiction, topic, contentDir, callback) {
   const file1 = `${contentDir}/config.json`; // site configuration
   loadConfig(file1, {}, (lc1Err, config1) => {
     if (lc1Err) callback(lc1Err, null);
@@ -56,7 +54,7 @@ function loadConfigurations(jurisdiction, topic, callback) {
   });
 }
 
-function loadCommonTopic(topicName, config, callback) {
+function loadCommonTopic(topicName, config, contentDir, callback) {
   const topic = {};
   const file1 = `${contentDir}/topics/${topicName}/description.json`;
   loadJsonFile(file1, (err1, content) => {
@@ -82,7 +80,7 @@ function loadCommonTopic(topicName, config, callback) {
   });
 }
 
-function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
+function loadJurisdictionTopic(jurisdiction, topicName, config, contentDir, callback) {
   const topic = {};
   const file1 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/description.json`;
   if (!fs.existsSync(file1)) {
@@ -123,17 +121,17 @@ function loadJurisdictionTopic(jurisdiction, topicName, config, callback) {
   }
 }
 
-function loadTopic(jurisdiction, topicName, config, callback) {
+function loadTopic(jurisdiction, topicName, config, contentDir, callback) {
   const topic = {
     config,
     common: {},
     jurisdiction: {},
   };
-  loadCommonTopic(topicName, topic, (err1, commonTopic) => {
+  loadCommonTopic(topicName, topic, contentDir, (err1, commonTopic) => {
     if (err1) callback(err1, null);
     else {
       topic.common = commonTopic;
-      loadJurisdictionTopic(jurisdiction, topicName, topic, (err2, jurisdictionTopic) => {
+      loadJurisdictionTopic(jurisdiction, topicName, topic, contentDir, (err2, jurisdictionTopic) => {
         if (err2) {
           callback(err2, null);
         } else {
@@ -145,11 +143,11 @@ function loadTopic(jurisdiction, topicName, config, callback) {
   });
 }
 
-function compose(jurisdiction, topic1, callback) {
-  loadConfigurations(jurisdiction, topic1, (err1, config) => {
+function compose(jurisdiction, topic1, contentDir, callback) {
+  loadConfigurations(jurisdiction, topic1, contentDir, (err1, config) => {
     if (err1) callback(err1);
     else {
-      loadTopic(jurisdiction, topic1, config, (err2, topic2) => {
+      loadTopic(jurisdiction, topic1, config, contentDir, (err2, topic2) => {
         if (err2) callback(err2);
         else callback(topic2);
       });
@@ -157,7 +155,7 @@ function compose(jurisdiction, topic1, callback) {
   });
 }
 
-function mainCompose(callback) {
+function mainCompose(contentDir, callback) {
   const commonConfigFile = `${contentDir}/config.json`;
   const mainConfigFile = `${contentDir}/topics/main/config.json`; // main configuration
   const mainDescFile = `${contentDir}/topics/main/description.json`;
