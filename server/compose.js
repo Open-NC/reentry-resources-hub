@@ -74,7 +74,7 @@ function loadCommonTopic(topicName, config, contentDir, callback) {
       loadJsonFile(file2, (err2, common) => {
         if (err2) callback(err2, null);
         else {
-          topic.common = common;
+          topic.resources = common.resources;
           const file3 = `${contentDir}/topics/${topicName}/resources_local.json`;
           loadJsonFile(file3, (err3, local) => {
             if (err3) callback(err3, null);
