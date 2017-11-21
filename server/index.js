@@ -5,6 +5,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const { compose } = require('./compose');
 const controller = require('./controller');
+require('dotenv').config();
 
 const app = express();
 
@@ -28,9 +29,14 @@ app.set('port', (process.env.PORT || 3001));
 // }
 
 app.get('/api/:jurisdiction/:topic', (req, res) => {
-  compose(req.params.jurisdiction, req.params.topic, (content) => {
-    res.json(content);
-  });
+  let contentDirectory = '../nc-reentry-resources-content';
+  if (process.env.content_directory) {
+    contentDirectory = process.env.content_directory;
+  }
+  compose(req.params.jurisdiction, req.params.topic,
+    contentDirectory, (content) => {
+      res.json(content);
+    });
 });
 
 app.post('/api/sendEmail', controller.sendEmail);
