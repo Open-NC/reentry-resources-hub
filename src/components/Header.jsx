@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, NavItem, Button, Glyphicon } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Helmet from 'react-helmet';
 import get from 'lodash.get';
@@ -16,7 +16,7 @@ export default class Header extends Component {
           <div className="header-background-image">
             <div className="title-box">
               <h1>NC Reentry Resources Hub</h1>
-              {jurisdiction && <h2>{jurisdiction}</h2>}
+              {jurisdiction && <h2>{jurisdiction} County</h2>}
               <h4>Resources & assistance for those with criminal convictions or returning to the community after incarceration</h4>
             </div>
           </div>
@@ -70,13 +70,13 @@ export default class Header extends Component {
                 <NavItem eventKey={10}>Contact Us</NavItem>
               </LinkContainer>
             </Nav>}
-            <Nav pullRight>
+            {/*<Nav pullRight>
               <Navbar.Form>
                 <Button type="button">
                   <Glyphicon glyph="search" />
                 </Button>
               </Navbar.Form>
-            </Nav>
+            </Nav>*/}
           </Navbar.Collapse>
         </Navbar>
       </div>

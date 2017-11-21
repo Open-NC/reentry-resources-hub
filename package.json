@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "homepage": "/reentry-resources-hub",
-  "proxy": "http://localhost:3001/",
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "aws-sdk": "^2.100.0",
     "body-parser": "^1.17.2",
