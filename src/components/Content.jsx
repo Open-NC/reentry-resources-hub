@@ -65,7 +65,7 @@ class Content extends Component {
             </ul>
             <h3>Local and Regional Resources</h3>
             {/* Local Resources */}
-            {Content.jurisdictionResources(get(this.props, ['data', 'common', 'local', 'resources'], []))}
+            {Content.jurisdictionResources(get(this.props, ['data', 'jurisdiction', 'resources'], []))}
 
             <h4>Local Resources from 211</h4>
             {/* Common Local Resources */}

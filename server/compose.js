@@ -96,13 +96,13 @@ function loadJurisdictionTopic(jurisdiction, topicName, config, contentDir, call
     topic.description = '';
     const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
     if (!fs.existsSync(file2)) {
-      topic.local = { resources: [] };
+      topic.resources = [];
       callback(null, topic);
     } else {
       loadJsonFile(file2, (err2, local) => {
         if (err2) callback(err2, null);
         else {
-          topic.local = local;
+          topic.resources = local.resources;
           callback(null, topic);
         }
       });
@@ -114,13 +114,13 @@ function loadJurisdictionTopic(jurisdiction, topicName, config, contentDir, call
         topic.description = vInterpolate(content.description.join('\n'), config.config);
         const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
         if (!fs.existsSync(file2)) {
-          topic.local = { resources: [] };
+          topic.resources = [];
           callback(null, topic);
         } else {
           loadJsonFile(file2, (err2, local) => {
             if (err2) callback(err2, null);
             else {
-              topic.local = local;
+              topic.resources = local.resources;
               callback(null, topic);
             }
           });
