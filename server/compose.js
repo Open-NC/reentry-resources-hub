@@ -1,5 +1,14 @@
 const fs = require('fs');
 
+function vInterpolate(input, config) {
+  const commonJ = config.common_jurisdiction;
+  const localJ = config.local_jurisdiction;
+  const baseUrl = config.base_url;
+  return input.replace(/{{common_jurisdiction}}/g, commonJ)
+  .replace(/{{local_jurisdiction}}/g, localJ)
+  .replace(/{{base_url}}/g, baseUrl);
+}
+
 function loadConfig(path, inputConfig, callback) {
   try {
     const configArray = JSON.parse(fs.readFileSync(path));
@@ -60,12 +69,12 @@ function loadCommonTopic(topicName, config, contentDir, callback) {
   loadJsonFile(file1, (err1, content) => {
     if (err1) callback(err1, null);
     else {
-      topic.description = content.description.join('\n');
+      topic.description = vInterpolate(content.description.join('\n'), config.config);
       const file2 = `${contentDir}/topics/${topicName}/resources_common.json`;
       loadJsonFile(file2, (err2, common) => {
         if (err2) callback(err2, null);
         else {
-          topic.common = common;
+          topic.resources = common.resources;
           const file3 = `${contentDir}/topics/${topicName}/resources_local.json`;
           loadJsonFile(file3, (err3, local) => {
             if (err3) callback(err3, null);
@@ -87,13 +96,13 @@ function loadJurisdictionTopic(jurisdiction, topicName, config, contentDir, call
     topic.description = '';
     const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
     if (!fs.existsSync(file2)) {
-      topic.local = { resources: [] };
+      topic.resources = [];
       callback(null, topic);
     } else {
       loadJsonFile(file2, (err2, local) => {
         if (err2) callback(err2, null);
         else {
-          topic.local = local;
+          topic.resources = local.resources;
           callback(null, topic);
         }
       });
@@ -102,16 +111,16 @@ function loadJurisdictionTopic(jurisdiction, topicName, config, contentDir, call
     loadJsonFile(file1, (err1, content) => {
       if (err1) callback(err1, null);
       else {
-        topic.description = content.description.join('\n');
+        topic.description = vInterpolate(content.description.join('\n'), config.config);
         const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
         if (!fs.existsSync(file2)) {
-          topic.local = { resources: [] };
+          topic.resources = [];
           callback(null, topic);
         } else {
           loadJsonFile(file2, (err2, local) => {
             if (err2) callback(err2, null);
             else {
-              topic.local = local;
+              topic.resources = local.resources;
               callback(null, topic);
             }
           });
