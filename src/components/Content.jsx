@@ -20,7 +20,7 @@ class Content extends Component {
               {category}
               <ul>
                 {localResources.filter(resource => resource.category === category).map(({ url, name, description }) => (
-                  <li>
+                  <li key={url}>
                     <a href={url}>{name}</a><p>{description}</p>
                   </li>
                 ))}
@@ -34,11 +34,9 @@ class Content extends Component {
 
   render() {
     const { data } = this.props;
-    const urlTemplate = get(this.props, ['data', 'common', 'local', 'resources', 0, 'url'], '/');
     const commonJ = get(data, ['config', 'common_jurisdiction'], '');
     const localJ = get(data, ['config', 'local_jurisdiction'], '');
     const pageName = get(data, ['config', 'page_name'], '');
-    const url = urlTemplate.replace(/{{common_jurisdiction}}/g, commonJ).replace(/{{local_jurisdiction}}/g, localJ);
 
     return (
       <div className="content-body">
@@ -71,6 +69,8 @@ class Content extends Component {
             {/* Common Local Resources */}
             <ul>
               {get(this.props, ['data', 'common', 'local', 'resources'], []).map((resource) => {
+                const url = resource.url.replace(/{{common_jurisdiction}}/g, commonJ).replace(/{{local_jurisdiction}}/g, localJ);
+
                 const tag = <li key={url}><a href={url}>{resource.name}</a><p>{resource.description}</p></li>;
                 return tag;
               })}
