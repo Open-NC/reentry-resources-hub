@@ -55,8 +55,8 @@ class Content extends Component {
               <div dangerouslySetInnerHTML={{ __html: get(this.props, ['data', 'jurisdiction', 'description'], '') }} />
             </div>: null }
 
-            <h2>Resources</h2>
-            <h3>National, State, and General Resources</h3>
+            <h1>Resources</h1>
+            <h2>National, State, and General Resources</h2>
             {/* Common Resources */}
             <ul>
               {get(this.props, ['data', 'common', 'resources'], []).map((resource) => {
@@ -64,7 +64,7 @@ class Content extends Component {
                 return tag;
               })}
             </ul>
-            <h3>Local and Regional Resources</h3>
+            <h2>Local and Regional Resources</h2>
             {/* Local Resources */}
             {Content.jurisdictionResources(get(this.props, ['data', 'jurisdiction', 'resources'], []))}
 
