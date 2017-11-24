@@ -43,8 +43,8 @@ class Content extends Component {
     return (
       <div className="content-body">
         <Row>
-          <Col xs={1} sm={2} md={3}></Col>
-          <Col xs={10} sm={8} md={6}>
+          <Col xs={1} sm={2} md={2}></Col>
+          <Col xs={10} sm={8} md={8}>
             <h1>{pageName}</h1>
 
             {/* Common Description */}
