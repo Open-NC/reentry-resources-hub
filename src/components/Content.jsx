@@ -20,8 +20,8 @@ class Content extends Component {
               {category}
               <ul>
                 {localResources.filter(resource => resource.category === category).map(({ url, name, description }) => (
-                  <li>
-                    <a href={url}>{name}</a><p>{description}</p>
+                  <li key={url}>
+                    <a href={url}>{name}</a><p dangerouslySetInnerHTML={{ __html: description }} />
                   </li>
                 ))}
               </ul>
@@ -34,11 +34,9 @@ class Content extends Component {
 
   render() {
     const { data } = this.props;
-    const urlTemplate = get(this.props, ['data', 'common', 'local', 'resources', 0, 'url'], '/');
     const commonJ = get(data, ['config', 'common_jurisdiction'], '');
     const localJ = get(data, ['config', 'local_jurisdiction'], '');
     const pageName = get(data, ['config', 'page_name'], '');
-    const url = urlTemplate.replace(/{{common_jurisdiction}}/g, commonJ).replace(/{{local_jurisdiction}}/g, localJ);
 
     return (
       <div className="content-body">
@@ -50,28 +48,33 @@ class Content extends Component {
             {/* Common Description */}
             <div dangerouslySetInnerHTML={{ __html: get(this.props, ['data', 'common', 'description'], '') }} />
 
-            <h2>Local Information</h2>
-            {/* Local Description */}
-            <div dangerouslySetInnerHTML={{ __html: get(this.props, ['data', 'jurisdiction', 'description'], '') }} />
+            { this.props.data.jurisdiction.resources.length > 0 ?
+            <div>
+              <h2>Local Information</h2>
+              {/* Local Description */}
+              <div dangerouslySetInnerHTML={{ __html: get(this.props, ['data', 'jurisdiction', 'description'], '') }} />
+            </div>: null }
 
             <h2>Resources</h2>
             <h3>National, State, and General Resources</h3>
             {/* Common Resources */}
             <ul>
               {get(this.props, ['data', 'common', 'resources'], []).map((resource) => {
-                const tag = <li key={resource.url}><a href={resource.url}>{resource.name}</a><p>{resource.description}</p></li>;
+                const tag = <li key={resource.url}><a href={resource.url}>{resource.name}</a><p dangerouslySetInnerHTML={{ __html: resource.description }} /></li>;
                 return tag;
               })}
             </ul>
             <h3>Local and Regional Resources</h3>
             {/* Local Resources */}
-            {Content.jurisdictionResources(get(this.props, ['data', 'common', 'local', 'resources'], []))}
+            {Content.jurisdictionResources(get(this.props, ['data', 'jurisdiction', 'resources'], []))}
 
             <h4>Local Resources from 211</h4>
             {/* Common Local Resources */}
             <ul>
               {get(this.props, ['data', 'common', 'local', 'resources'], []).map((resource) => {
-                const tag = <li key={url}><a href={url}>{resource.name}</a><p>{resource.description}</p></li>;
+                const url = resource.url.replace(/{{common_jurisdiction}}/g, commonJ).replace(/{{local_jurisdiction}}/g, localJ);
+
+                const tag = <li key={url}><a href={url}>{resource.name}</a><p dangerouslySetInnerHTML={{ __html: resource.description }} /></li>;
                 return tag;
               })}
             </ul>
