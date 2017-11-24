@@ -21,7 +21,7 @@ class Content extends Component {
               <ul>
                 {localResources.filter(resource => resource.category === category).map(({ url, name, description }) => (
                   <li key={url}>
-                    <a href={url}>{name}</a><p>{description}</p>
+                    <a href={url}>{name}</a><p dangerouslySetInnerHTML={{ __html: description }} />
                   </li>
                 ))}
               </ul>
@@ -60,7 +60,7 @@ class Content extends Component {
             {/* Common Resources */}
             <ul>
               {get(this.props, ['data', 'common', 'resources'], []).map((resource) => {
-                const tag = <li key={resource.url}><a href={resource.url}>{resource.name}</a><p>{resource.description}</p></li>;
+                const tag = <li key={resource.url}><a href={resource.url}>{resource.name}</a><p dangerouslySetInnerHTML={{ __html: resource.description }} /></li>;
                 return tag;
               })}
             </ul>
@@ -74,7 +74,7 @@ class Content extends Component {
               {get(this.props, ['data', 'common', 'local', 'resources'], []).map((resource) => {
                 const url = resource.url.replace(/{{common_jurisdiction}}/g, commonJ).replace(/{{local_jurisdiction}}/g, localJ);
 
-                const tag = <li key={url}><a href={url}>{resource.name}</a><p>{resource.description}</p></li>;
+                const tag = <li key={url}><a href={url}>{resource.name}</a><p dangerouslySetInnerHTML={{ __html: resource.description }} /></li>;
                 return tag;
               })}
             </ul>
