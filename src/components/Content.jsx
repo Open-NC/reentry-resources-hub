@@ -41,16 +41,19 @@ class Content extends Component {
     return (
       <div className="content-body">
         <Row>
-          <Col xs={1} sm={2} md={3}></Col>
-          <Col xs={10} sm={8} md={6}>
+          <Col xs={1} sm={2} md={2}></Col>
+          <Col xs={10} sm={8} md={8}>
             <h1>{pageName}</h1>
 
             {/* Common Description */}
             <div dangerouslySetInnerHTML={{ __html: get(this.props, ['data', 'common', 'description'], '') }} />
 
-            <h2>Local Information</h2>
-            {/* Local Description */}
-            <div dangerouslySetInnerHTML={{ __html: get(this.props, ['data', 'jurisdiction', 'description'], '') }} />
+            { this.props.data.jurisdiction.resources.length > 0 ?
+            <div>
+              <h2>Local Information</h2>
+              {/* Local Description */}
+              <div dangerouslySetInnerHTML={{ __html: get(this.props, ['data', 'jurisdiction', 'description'], '') }} />
+            </div>: null }
 
             <h2>Resources</h2>
             <h3>National, State, and General Resources</h3>
