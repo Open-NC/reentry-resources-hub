@@ -28,13 +28,28 @@ body {
 }
 
 .navbar-name {
+  z-index: 3;
+}
+
+.topic-name {
+  background-color: #fff;
+  z-index: 2;
+  padding-left: 10%;
+}
+
+.topic-header-row {
+  background-color: #fff;
   z-index: 2;
 }
 
 .content-body {
   font-size: 2rem;
-  line-height: 1.6em;
+  line-height: 2.0em;
 }
+
+/*.content-body ul {
+  list-style-type: none;
+}*/
 
 .google-search {
   float: right;

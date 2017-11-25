@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Affix from 'react-overlays/lib/AutoAffix';
+import AutoAffix from 'react-overlays/lib/AutoAffix';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -29,6 +29,7 @@ export default class Header extends Component {
 
   render() {
     const jurisdiction = get(this.props, ['match', 'params', 'jurisdiction']);
+    const topic = get(this.props, ['data', 'config', 'page_name']);
 
     return (
       <div>
@@ -42,14 +43,14 @@ export default class Header extends Component {
             </div>
           </div>
         </div>
-        <Affix { ...this.props }
+        <AutoAffix { ...this.props }
           onAffix={ () => this.setState({ affixed: true }) }
           onAffixTop={ () => this.setState({ affixed: false }) } >
           <div className="navbar-name" ref={ navbarContent => this.content = navbarContent }>
             <Navbar default collapseOnSelect >
               <Navbar.Header>
                 <Navbar.Brand>
-                  <Link to="/">Reentry Hub</Link>
+                  <Link to="/">{jurisdiction ? `${jurisdiction} ${topic}` : `Reentry Hub`}</Link>
                 </Navbar.Brand>
                 <Navbar.Toggle />
               </Navbar.Header>
@@ -72,7 +73,7 @@ export default class Header extends Component {
                   </LinkContainer>
 
                   <LinkContainer to={`/${jurisdiction}/health/`}>
-                    <NavItem eventKey={5}>Healthcare</NavItem>
+                    <NavItem eventKey={5}>Health Care</NavItem>
                   </LinkContainer>
 
                   <LinkContainer to={`/${jurisdiction}/education/`}>
@@ -105,7 +106,7 @@ export default class Header extends Component {
               </Navbar.Collapse>
             </Navbar>
           </div>
-        </Affix>
+        </AutoAffix>
 
         { this.state.affixed &&
           <div style={ { width: "100%", height: this.contentHeight } } />
