@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Affix from 'react-overlays/lib/AutoAffix';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -6,6 +7,26 @@ import Helmet from 'react-helmet';
 import get from 'lodash.get';
 
 export default class Header extends Component {
+  componentWillMount() {
+    this.setState({ affixed: false });
+  }
+
+  componentDidMount() {
+    this.updateHeight();
+  }
+
+  componentDidUpdate() {
+    this.updateHeight();
+  }
+
+    updateHeight() {
+      this.contentHeight = Math.max(
+        this.content.scrollHeight,
+        this.content.offsetHeight,
+        this.content.clientHeight
+      );
+    }
+
   render() {
     const jurisdiction = get(this.props, ['match', 'params', 'jurisdiction']);
 
@@ -21,64 +42,74 @@ export default class Header extends Component {
             </div>
           </div>
         </div>
-        <Navbar default collapseOnSelect>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <Link to="/">Reentry Hub</Link>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          <Navbar.Collapse>
-            {jurisdiction && <Nav>
-              <LinkContainer to={`/${jurisdiction}/home/`}>
-                <NavItem eventKey={1}>Home</NavItem>
-              </LinkContainer>
+        <Affix { ...this.props }
+                    onAffix={ () => this.setState({ affixed: true }) }
+                    onAffixTop={ () => this.setState({ affixed: false }) } >
+          <div className="navbar-name" ref={ c => this.content = c }>
+            <Navbar default collapseOnSelect >
+              <Navbar.Header>
+                <Navbar.Brand>
+                  <Link to="/">Reentry Hub</Link>
+                </Navbar.Brand>
+                <Navbar.Toggle />
+              </Navbar.Header>
+              <Navbar.Collapse>
+                {jurisdiction && <Nav>
+                  <LinkContainer to={`/${jurisdiction}/home/`}>
+                    <NavItem eventKey={1}>Home</NavItem>
+                  </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/housing/`}>
-                <NavItem eventKey={2}>Housing</NavItem>
-              </LinkContainer>
+                  <LinkContainer to={`/${jurisdiction}/housing/`}>
+                    <NavItem eventKey={2}>Housing</NavItem>
+                  </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/jobs/`}>
-                <NavItem eventKey={3}>Jobs</NavItem>
-              </LinkContainer>
+                  <LinkContainer to={`/${jurisdiction}/jobs/`}>
+                    <NavItem eventKey={3}>Jobs</NavItem>
+                  </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/benefits/`}>
-                <NavItem eventKey={4}>Benefits</NavItem>
-              </LinkContainer>
+                  <LinkContainer to={`/${jurisdiction}/benefits/`}>
+                    <NavItem eventKey={4}>Public Benefits</NavItem>
+                  </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/health/`}>
-                <NavItem eventKey={5}>Healthcare</NavItem>
-              </LinkContainer>
+                  <LinkContainer to={`/${jurisdiction}/health/`}>
+                    <NavItem eventKey={5}>Healthcare</NavItem>
+                  </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/education/`}>
-                <NavItem eventKey={6}>Education</NavItem>
-              </LinkContainer>
+                  <LinkContainer to={`/${jurisdiction}/education/`}>
+                    <NavItem eventKey={6}>Education</NavItem>
+                  </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/legal/`}>
-                <NavItem eventKey={7}>Legal</NavItem>
-              </LinkContainer>
+                  <LinkContainer to={`/${jurisdiction}/legal/`}>
+                    <NavItem eventKey={7}>Legal</NavItem>
+                  </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/support/`}>
-                <NavItem eventKey={8}>Support Programs</NavItem>
-              </LinkContainer>
+                  <LinkContainer to={`/${jurisdiction}/support/`}>
+                    <NavItem eventKey={8}>Support Programs</NavItem>
+                  </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/other/`}>
-                <NavItem eventKey={9}>Other Resources</NavItem>
-              </LinkContainer>
+                  <LinkContainer to={`/${jurisdiction}/other/`}>
+                    <NavItem eventKey={9}>Other Resources</NavItem>
+                  </LinkContainer>
 
-              <LinkContainer to={`/${jurisdiction}/contact/`}>
-                <NavItem eventKey={10}>Contact Us</NavItem>
-              </LinkContainer>
-            </Nav>}
-            {/*<Nav pullRight>
-              <Navbar.Form>
-                <Button type="button">
-                  <Glyphicon glyph="search" />
-                </Button>
-              </Navbar.Form>
-            </Nav>*/}
-          </Navbar.Collapse>
-        </Navbar>
+                  <LinkContainer to={`/${jurisdiction}/contact/`}>
+                    <NavItem eventKey={10}>Contact Us</NavItem>
+                  </LinkContainer>
+                </Nav>}
+                {/*<Nav pullRight>
+                  <Navbar.Form>
+                    <Button type="button">
+                      <Glyphicon glyph="search" />
+                    </Button>
+                  </Navbar.Form>
+                </Nav>*/}
+              </Navbar.Collapse>
+            </Navbar>
+          </div>
+        </Affix>
+
+        { this.state.affixed &&
+          <div style={ { width: "100%", height: this.contentHeight } } />
+        }
       </div>
     );
   }

@@ -55,7 +55,7 @@ class Content extends Component {
               <div dangerouslySetInnerHTML={{ __html: get(this.props, ['data', 'jurisdiction', 'description'], '') }} />
             </div>: null }
 
-            { this.props.data.common.resources.length != 0 || this.props.data.jurisdiction.resources.length != 0 ?
+            { this.props.data.common.resources.length !== 0 || this.props.data.jurisdiction.resources.length !== 0 ?
               <h1>Resources</h1>
             : null }
 
@@ -93,6 +93,7 @@ class Content extends Component {
               </ul>
             </div>: null }
           </Col>
+          <Col xs={1} sm={2} md={2}></Col>
         </Row>
       </div>
     );
