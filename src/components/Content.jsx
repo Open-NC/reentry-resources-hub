@@ -51,7 +51,7 @@ class Content extends Component {
             {/* Common Description */}
             <div dangerouslySetInnerHTML={{ __html: get(this.props, ['data', 'common', 'description'], '') }} />
 
-            { this.props.data.jurisdiction.resources.length > 0 ?
+            { this.props.data.jurisdiction.description.length > 0 ?
             <div>
               <h2>Local Information</h2>
               {/* Local Description */}
