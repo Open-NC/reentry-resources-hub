@@ -43,8 +43,8 @@ export default class Header extends Component {
           </div>
         </div>
         <Affix { ...this.props }
-                    onAffix={ () => this.setState({ affixed: true }) }
-                    onAffixTop={ () => this.setState({ affixed: false }) } >
+          onAffix={ () => this.setState({ affixed: true }) }
+          onAffixTop={ () => this.setState({ affixed: false }) } >
           <div className="navbar-name" ref={ navbarContent => this.content = navbarContent }>
             <Navbar default collapseOnSelect >
               <Navbar.Header>
