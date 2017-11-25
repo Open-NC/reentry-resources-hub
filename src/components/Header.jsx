@@ -19,13 +19,13 @@ export default class Header extends Component {
     this.updateHeight();
   }
 
-    updateHeight() {
-      this.contentHeight = Math.max(
-        this.content.scrollHeight,
-        this.content.offsetHeight,
-        this.content.clientHeight
-      );
-    }
+  updateHeight() {
+    this.contentHeight = Math.max(
+      this.content.scrollHeight,
+      this.content.offsetHeight,
+      this.content.clientHeight
+    );
+  }
 
   render() {
     const jurisdiction = get(this.props, ['match', 'params', 'jurisdiction']);
@@ -45,7 +45,7 @@ export default class Header extends Component {
         <Affix { ...this.props }
                     onAffix={ () => this.setState({ affixed: true }) }
                     onAffixTop={ () => this.setState({ affixed: false }) } >
-          <div className="navbar-name" ref={ c => this.content = c }>
+          <div className="navbar-name" ref={ navbarContent => this.content = navbarContent }>
             <Navbar default collapseOnSelect >
               <Navbar.Header>
                 <Navbar.Brand>

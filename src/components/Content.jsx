@@ -37,11 +37,14 @@ class Content extends Component {
     const commonJ = get(data, ['config', 'common_jurisdiction'], '');
     const localJ = get(data, ['config', 'local_jurisdiction'], '');
     const pageName = get(data, ['config', 'page_name'], '');
+    const jurisdiction = get(data, ['config', 'local_jurisdiction_name']);
     console.log(this.props);
     return (
       <div className="content-body">
         <Row>
-          <Col xs={1} sm={2} md={2}></Col>
+          <Col xs={1} sm={2} md={2}>
+            {/*<h2>{jurisdiction} County</h2>*/}
+          </Col>
           <Col xs={10} sm={8} md={8}>
             <h1>{pageName}</h1>
 
