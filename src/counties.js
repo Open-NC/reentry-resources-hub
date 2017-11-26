@@ -65,7 +65,7 @@ const counties = {
     'Montgomery',
     'Moore',
     'Nash',
-    'New Hanover',
+    'NewHanover',
     'Northampton',
     'Onslow',
     'Orange',
