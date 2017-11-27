@@ -10,7 +10,7 @@ import Main from './components/Main.jsx';
 import App from './components/App.jsx';
 import Contact from './components/Contact.jsx';
 
-import './style.css';
+import './index.css';
 
 class AppRoutes extends Component {
   render() {

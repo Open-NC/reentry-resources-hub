@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import AutoAffix from 'react-overlays/lib/AutoAffix';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import Helmet from 'react-helmet';
+import { AutoAffix } from 'react-overlays';
 import get from 'lodash.get';
 
 export default class Header extends Component {
