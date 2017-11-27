@@ -51,7 +51,7 @@ export default class Header extends Component {
               <Navbar.Header>
                 <h3 className="county-topic">{jurisdiction ? `${jurisdiction} ${topic}` : null }</h3>
                 <Navbar.Brand>
-                  <Link to="/">Change County</Link>
+                  <Link to="/">{jurisdiction ? "Change County" : null }</Link>
                 </Navbar.Brand>
                 <Navbar.Toggle />
               </Navbar.Header>
