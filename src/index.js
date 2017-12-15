@@ -10,6 +10,8 @@ import Main from './components/Main.jsx';
 import App from './components/App.jsx';
 import Contact from './components/Contact.jsx';
 
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 
 class AppRoutes extends Component {
