@@ -11,6 +11,7 @@ module.exports = function processAndValidateArgs(argv) {
 
   const config = {
     task: args.args[0],
+    target: (args.args.length > 1) ? args.args[1] : null,
     logger: new Logger('dbops', args.getOption('logfile', null)),
   };
   if (validTasks.indexOf(config.task) < 0) usageAndExit();

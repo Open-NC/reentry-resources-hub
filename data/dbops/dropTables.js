@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-const fs = require('fs');
 const Logger = require('../logger');
 const ConnectionManager = require('../db/connection_manager');
 const connectionDefinitions = require('./connection_definitions');
