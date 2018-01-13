@@ -4,7 +4,8 @@ create table if not exists resources (
   description text,
   url text,
   jurisdiction varchar(36),
-  localized boolean
+  localized boolean,
+  category varchar(256)
 );
 truncate table resources;
 select 'OK' as result;
