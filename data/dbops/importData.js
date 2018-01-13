@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const fs = require('fs');
 const Logger = require('../logger');
 const ConnectionManager = require('../db/connection_manager');
@@ -6,56 +7,143 @@ const generateUUID = require('../common/generateUUID');
 
 const logger = new Logger('MDA', './mda.log');
 const connectionManager = new ConnectionManager(connectionDefinitions, logger);
+const maps = {
+  jurisdictions: {},
+  topics: {},
+  categories: {},
+};
+
+function jurisdictionQuery(d, table) {
+  if (d.length > 0) {
+    const dstring = d.reduce((accum, cur, index) => {
+      const id = (cur.id.length > 1) ? cur.id : generateUUID();
+      const comma = (index > 0) ? ',' : '';
+      const pj = cur.parent_jurisdiction ? `'${cur.parent_jurisdiction}'` : 'null';
+      return `${accum}${comma} ('${id}', '${cur.tag}', '${cur.display_name}', `
+      + `${pj}, '${cur.jurisdiction_type}')`;
+    }, '');
+
+    return `insert into ${table} (id, tag, display_name, parent_jurisdiction, jurisdiction_type) VALUES ${dstring} RETURNING *;`;
+  }
+  return null;
+}
+
+function topicQuery(d, table) {
+  if (d.length > 0) {
+    const dstring = d.reduce((accum, cur, index) => {
+      const id = (cur.id.length > 1) ? cur.id : generateUUID();
+      const comma = (index > 0) ? ',' : '';
+      return `${accum}${comma} ('${id}', '${cur.tag}', '${cur.display_name}')`;
+    }, '');
+
+    return `insert into ${table} (id, tag, display_name) VALUES ${dstring} returning *;`;
+  }
+  return null;
+}
+
+function categoryQuery(d, table) {
+  if (d.length > 0) {
+    const dstring = d.reduce((accum, cur, index) => {
+      const id = (cur.id.length > 1) ? cur.id : generateUUID();
+      const comma = (index > 0) ? ',' : '';
+      return `${accum}${comma} ('${id}', '${cur.tag}', '${cur.display_name}', ${cur.description})`;
+    }, '');
+
+    return `insert into ${table} (id, tag, display_name, description) VALUES ${dstring} returning *;`;
+  }
+  return null;
+}
+
+function getTopic(topicTag) {
+  return (maps.topics[topicTag]) ? maps.topics[topicTag].id : null;
+}
+
+function getJurisdiction(jTag) {
+  return (maps.jurisdictions[jTag]) ? maps.jurisdictions[jTag].id : null;
+}
+
+function getCategory(cTag) {
+  return (maps.categories[cTag]) ? maps.categories[cTag].id : null;
+}
+
+let args = null;
+
+function pageQuery(d, table) {
+  if (d.length > 0) {
+    const dstring = d.reduce((accum, cur, index) => {
+      const id = (cur.id.length > 1) ? cur.id : generateUUID();
+      const comma = (index > 0) ? ',' : '';
+      const topic = (cur.topic.length === 36) ? cur.topic : getTopic(cur.topic);
+      const jurisdiction = (cur.jurisdiction.length === 36) ? cur.jurisdiction : getJurisdiction(cur.jurisdiction);
+      const content = cur.content.replace(/"/g, '\\"').replace(/'/g, "''");
+      const val = `${accum}${comma} ('${id}', '${topic}', '${jurisdiction}', '${content}')`;
+      return val;
+    }, '');
+
+    return `insert into ${table} (id, topic, jurisdiction, content) VALUES ${dstring} RETURNING *;`;
+  }
+  return null;
+}
+
+function resourceQuery(d, table) {
+  const refs = [];
+  if (d.length > 0) {
+    const dstring = d.reduce((accum, cur, index) => {
+      const id = (cur.id.length > 1) ? cur.id : generateUUID();
+      const comma = (index > 0) ? ',' : '';
+      const topic = (cur.topic.length === 36) ? cur.topic : getTopic(cur.topic);
+      const jurisdiction = (cur.jurisdiction.length === 36) ? cur.jurisdiction : getJurisdiction(cur.jurisdiction);
+      refs.push({ id: generateUUID(), resource: id, topic, ordinal: cur.ordinal });
+      const description = cur.description.replace(/"/g, '\\"').replace(/'/g, "''");
+      const val = `${accum}${comma} ('${id}', '${cur.name}', '${description}', '${cur.url}', '${jurisdiction}', ${cur.localized ? 'true' : 'false'})`;
+      return val;
+    }, '');
+
+    const rstring = refs.reduce((accum, cur, index) => {
+      const comma = (index > 0) ? ',' : '';
+      const val = `${accum}${comma} ('${cur.id}', '${cur.resource}', '${cur.topic}', ${cur.ordinal})`;
+      return val;
+    }, '');
+
+    const query1 = `insert into ${table} (id, name, description, url, jurisdiction, localized) VALUES ${dstring} RETURNING *; `;
+    const query2 = `insert into resource_references (id, resource, topic, ordinal) VALUES ${rstring} RETURNING *; `;
+    return query1 + query2;
+  }
+  return null;
+}
+
+const inserts = {
+  jurisdictions: jurisdictionQuery,
+  topics: topicQuery,
+  categories: categoryQuery,
+  pages: pageQuery,
+  resources: resourceQuery,
+};
 
 async function runSql(targetDir, table, dbName) {
   const files = fs.readdirSync(targetDir);
-  if (files.indexOf(`${table}.json`) >= 0) {
-    console.log(`Importing table ${table}`);
-    let fd = fs.openSync(`${targetDir}/${table}.json`, 'r');
+  args = [];
+  if (files.indexOf(`${table}.json`) >= 0 && inserts[table]) {
+    console.log(`   Importing table ${table}`);
+    const fd = fs.openSync(`${targetDir}/${table}.json`, 'r');
     const d = JSON.parse(fs.readFileSync(fd, { encoding: 'utf8' })).data;
     fs.closeSync(fd);
     const cn = connectionManager.getConnection(dbName);
-    if (!cn) {
-      console.log('No database connection');
+    if (!cn) throw new Error('No database connection');
+    const query = inserts[table](d, table);
+    if (query) {
+      return cn.query(query)
+      .then((result) => {
+        if (maps[table]) {
+          result.rows.forEach((item) => {
+            maps[table][item.tag] = item;
+          });
+        }
+      })
+      .catch(err => Promise.reject(`Query error: ${err.message}`));
     }
-
-    const dstring = d.reduce((accum, cur) => {
-      const id = (cur.id.length > 1) ? cur.id : generateUUID();
-      console.log(`ID ${id} - ${cur.tag}`);
-      if (accum.length > 0) {
-        return `${accum}, ('${id}', '${cur.tag}', '${cur.display_name}', ${cur.parent_jurisdiction ? "'" + cur.parent_jurisdiction + "'" : 'null'}, '${cur.jurisdiction_type}')`;
-      }
-      return `('${id}', '${cur.tag}', '${cur.display_name}', ${cur.parent_jurisdiction ? "'" + cur.parent_jurisdiction + "'" : 'null'}, '${cur.jurisdiction_type}')`;
-    }, '');
-    // const cur = d[0];
-    // dstring = `('${cur.id}', '${cur.tag}', '${cur.display_name}', ${cur.parent_jurisdiction ? "'" + cur.parent_jurisdiction + "'" : 'null'}, '${cur.jurisdiction_type}')`;
-
-    console.log(dstring);
-    const query = `insert into ${table} (id, tag, display_name, parent_jurisdiction, jurisdiction_type) VALUES ${dstring};`;
-
-    console.log(query);
-    return cn.query(query)
-    .then(res => {
-      console.log('Did the insert');
-      return res;
-    })
-    .catch(err => {
-      console.log(`Got an error: ${err}`);
-      return Promise.reject(`Query error: ${err.message}`);
-    });
   }
-  // const cn = connectionManager.getConnection(dbName);
-  // if (!cn) {
-  //   console.log('No database connection');
-  // }
-  // const query = `select * from ${table}`;
-  // return cn.query(query)
-  // .then(res => {
-  //   return res;
-  // })
-  // .catch(err => {
-  //   return Promise.reject(`Query error: ${err.message}`);
-  // });
+  return Promise.resolve(null);
 }
 
 async function runTaskSequence(tasks, target) {

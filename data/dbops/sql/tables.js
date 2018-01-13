@@ -12,10 +12,10 @@ module.exports = {
     'configurations',
     'topics',
     'jurisdictions',
+    'categories',
     'pages',
     'resources',
     'resource_references',
-    'categories',
   ],
 };
 

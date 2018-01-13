@@ -1,0 +1,112 @@
+{
+  "data": [
+    {
+      "id": "a05b97ff-c762-44bb-8f8b-34b689f7fe11",
+      "name": "Healthcare.gov",
+      "description": "Federal Affordable Care Act (ACA) website. Call 1-855-733-3711 to schedule an appointment with a Federal navigator.",
+      "url": "https://www.healthcare.gov",
+      "ordinal": 1,
+      "jurisdiction": "nc",
+      "topic": "health"
+    },
+    {
+      "id": "",
+      "name": "National Alliance on Mental Illness",
+      "description": "",
+      "url": "https://www.nami.org/",
+      "ordinal": 2,
+      "jurisdiction": "nc",
+      "topic": "health"
+    },
+    {
+      "id": "",
+      "name": "NC Access to Recovery",
+      "description": "",
+      "url": "http://rcnc.org/recovery-supports/atr/",
+      "ordinal": 3,
+      "jurisdiction": "nc",
+      "topic": "health"
+    },
+    {
+      "id": "2e289c2d-fd84-40dd-ac2f-c0ba29ab3de4",
+      "name": "NC211.org Healthcare Resources - All",
+      "description": "",
+      "url": "https://www.nc211.org/healthcare-0",
+      "localized": true,
+      "ordinal": 1,
+      "jurisdiction": "nc",
+      "topic": "health"
+    },
+    {
+      "id": "",
+      "name": "Affordable Care Act",
+      "description": "",
+      "url": "http://www.icarol.info/Search.aspx?org=82852&Count=5&Search=affordable+care+act+insurance+information%2fcounseling&NameOnly=True&pst=Coverage&sort=Proximity&TaxExact=False&Country=United%20States&StateProvince={{common_jurisdiction}}&County={{local_jurisdiction}}&City=-1",
+      "localized": true,
+      "ordinal": 2,
+      "jurisdiction": "nc",
+      "topic": "health"
+    },
+    {
+      "id": "",
+      "name": "Medicaid",
+      "description": "",
+      "url": "http://www.icarol.info/Search.aspx?org=82852&Count=5&Search=medicaid&NameOnly=True&pst=Coverage&sort=Proximity&TaxExact=False&Country=United%20States&StateProvince={{common_jurisdiction}}&County={{local_jurisdiction}}&City=-1",
+      "localized": true,
+      "ordinal": 3,
+      "jurisdiction": "nc",
+      "topic": "health"
+    },
+    {
+      "id": "",
+      "name": "Medicare",
+      "description": "",
+      "url": "http://www.icarol.info/Search.aspx?org=82852&Count=5&Search=medicare&NameOnly=True&pst=Coverage&sort=Proximity&TaxExact=False&Country=United%20States&StateProvince={{common_jurisdiction}}&County={{local_jurisdiction}}&City=-1",
+      "localized": true,
+      "ordinal": 4,
+      "jurisdiction": "nc",
+      "topic": "health"
+    },
+    {
+      "id": "",
+      "name": "Community Clinics",
+      "description": "",
+      "url": "http://www.icarol.info/Search.aspx?org=82852&Count=5&Search=community+clinic&NameOnly=True&pst=Coverage&sort=Proximity&TaxExact=False&Country=United%20States&StateProvince={{common_jurisdiction}}&County={{local_jurisdiction}}&City=-1",
+      "localized": true,
+      "ordinal": 5,
+      "jurisdiction": "nc",
+      "topic": "health"
+    },
+    {
+      "id": "",
+      "name": "Diabetes Clinics",
+      "description": "",
+      "url": "http://www.icarol.info/Search.aspx?org=82852&Count=5&Search=diabetes+management+clinics&NameOnly=True&pst=Coverage&sort=Proximity&TaxExact=False&Country=United%20States&StateProvince={{common_jurisdiction}}&County={{local_jurisdiction}}&City=-1",
+      "localized": true,
+      "ordinal": 6,
+      "jurisdiction": "nc",
+      "topic": "health"
+    },
+    {
+      "id": "",
+      "name": "STI/STD Testing",
+      "description": "",
+      "url": "http://www.icarol.info/Search.aspx?org=82852&Count=5&Search=sexually+transmitted+disease+testing&NameOnly=True&pst=Coverage&sort=Proximity&TaxExact=False&Country=United%20States&StateProvince={{common_jurisdiction}}&County={{local_jurisdiction}}&City=-1",
+      "localized": true,
+      "ordinal": 7,
+      "jurisdiction": "nc",
+      "topic": "health"
+    },
+    {
+      "id": "",
+      "name": "Transportation for Medical Appointments",
+      "description": "",
+      "url": "http://www.icarol.info/Search.aspx?org=82852&Count=5&Search=medical+appointments+transportation&NameOnly=True&pst=Coverage&sort=Proximity&TaxExact=False&Country=United%20States&StateProvince={{common_jurisdiction}}&County={{local_jurisdiction}}&City=-1",
+      "localized": true,
+      "ordinal": 8,
+      "jurisdiction": "nc",
+      "topic": "health"
+    }
+  ]
+}
+

@@ -1,6 +1,7 @@
 create table if not exists categories (
   id varchar(36) primary key,
-  name varchar(256) not null,
+  tag varchar(64) not null,
+  display_name varchar(256),  
   description text
 );
 truncate table categories;
