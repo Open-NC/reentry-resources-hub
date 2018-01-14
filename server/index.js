@@ -38,6 +38,7 @@ app.get('/api/:jurisdiction/:topic', (req, res) => {
   if (doDb) {
     compose(req.params.jurisdiction, req.params.topic,
       contentDirectory, (content) => {
+        console.log(JSON.stringify(content));
         res.json(content);
       });
   } else {

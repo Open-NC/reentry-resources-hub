@@ -1,7 +1,7 @@
 const fs = require('fs');
 const ConnectionManager = require('../data/db/connection_manager');
 const connectionDefinitions = require('../data/connection_definitions');
-const Logger = require('../logger');
+const Logger = require('../data/logger');
 const logger = new Logger('reentry', './reentry.log');
 
 const connectionManager = new ConnectionManager(connectionDefinitions, logger);
