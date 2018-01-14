@@ -1,4 +1,27 @@
 const fs = require('fs');
+const ConnectionManager = require('../data/db/connection_manager');
+const connectionDefinitions = require('../data/connection_definitions');
+const Logger = require('../logger');
+const logger = new Logger('reentry', './reentry.log');
+
+const connectionManager = new ConnectionManager(connectionDefinitions, logger);
+
+async function runSql(table, dbName) {
+  console.log(` Dropping table ${table}`);
+  const cn = connectionManager.getConnection(dbName);
+  if (!cn) {
+    console.log('No database connection');
+  }
+  const query = `drop table if exists ${table}`;
+  return cn.query(query)
+  .then(res => {
+    return res;
+  })
+  .catch(err => {
+    return Promise.reject(`Query error: ${err.message}`);
+  });
+}
+
 
 function vInterpolate(input, config) {
   const commonJ = config.common_jurisdiction;

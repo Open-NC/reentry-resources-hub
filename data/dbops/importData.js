@@ -2,7 +2,7 @@
 const fs = require('fs');
 const Logger = require('../logger');
 const ConnectionManager = require('../db/connection_manager');
-const connectionDefinitions = require('./connection_definitions');
+const connectionDefinitions = require('../connection_definitions');
 const generateUUID = require('../common/generateUUID');
 
 const logger = new Logger('MDA', './dbops.log');
@@ -12,6 +12,19 @@ const maps = {
   topics: {},
   categories: {},
 };
+
+function configurationQuery(d, table) {
+  if (d.length > 0) {
+    const dstring = d.reduce((accum, cur, index) => {
+      const id = (cur.id.length > 1) ? cur.id : generateUUID();
+      const comma = (index > 0) ? ',' : '';
+      return `${accum}${comma} ('${id}', '${cur.name}', '${cur.value}')`;
+    }, '');
+
+    return `insert into ${table} (id, name, value) VALUES ${dstring} returning *;`;
+  }
+  return null;
+}
 
 function jurisdictionQuery(d, table) {
   if (d.length > 0) {
@@ -113,6 +126,7 @@ function resourceQuery(d, table) {
 }
 
 const inserts = {
+  configurations: configurationQuery,
   jurisdictions: jurisdictionQuery,
   topics: topicQuery,
   categories: categoryQuery,

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const Logger = require('../logger');
 const ConnectionManager = require('../db/connection_manager');
-const connectionDefinitions = require('./connection_definitions');
+const connectionDefinitions = require('../connection_definitions');
 
 const logger = new Logger('MDA', './dbops.log');
 
