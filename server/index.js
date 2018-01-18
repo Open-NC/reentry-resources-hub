@@ -3,10 +3,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const { compose } = require('./compose');
-const { dbCompose } = require('./db_compose');
-const controller = require('./controller');
 require('dotenv').config();
+const { compose } = require('./compose');
+const dbCompose = require('./db_compose').compose;
+const controller = require('./controller');
+console.log(process.env.dbhost);
 
 const app = express();
 
@@ -29,19 +30,20 @@ app.set('port', (process.env.PORT || 3001));
 //   jurisdiction: {All the topic info for the specified jurisdiction (county)}
 // }
 
-const doDb = false;
+const doDb = true;
 app.get('/api/:jurisdiction/:topic', (req, res) => {
   let contentDirectory = '../nc-reentry-resources-content';
   if (process.env.content_directory) {
     contentDirectory = process.env.content_directory;
   }
-  if (doDb) {
+  if (!doDb) {
     compose(req.params.jurisdiction, req.params.topic,
       contentDirectory, (content) => {
         console.log(JSON.stringify(content));
         res.json(content);
       });
   } else {
+    console.log('Calling dbCompose');
     dbCompose(req.params.jurisdiction, req.params.topic,
     contentDirectory, (content) => {
       res.json(content);
