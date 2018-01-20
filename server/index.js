@@ -23,19 +23,13 @@ app.use(cors());
 
 app.set('port', (process.env.PORT || 3001));
 
-// Content is an object of the form:
-// {
-//   config: {Merge of all the config files} ,
-//   common: {All the common topic info},
-//   jurisdiction: {All the topic info for the specified jurisdiction (county)}
-// }
-
 const doDb = true;
 app.get('/api/:jurisdiction/:topic', (req, res) => {
   let contentDirectory = '../nc-reentry-resources-content';
   if (process.env.content_directory) {
     contentDirectory = process.env.content_directory;
   }
+  contentDirectory = '.';
   if (!doDb) {
     compose(req.params.jurisdiction, req.params.topic,
       contentDirectory, (content) => {
