@@ -1,196 +1,136 @@
-const fs = require('fs');
+const ConnectionManager = require('../data/db/connection_manager');
+const connectionDefinitions = require('../data/connection_definitions');
+const Logger = require('../data/logger');
+const logger = new Logger('reentry', './reentry.log');
 
-function vInterpolate(input, config) {
-  const commonJ = config.common_jurisdiction;
-  const localJ = config.local_jurisdiction;
-  const baseUrl = config.base_url;
-  return input.replace(/{{common_jurisdiction}}/g, commonJ)
-  .replace(/{{local_jurisdiction}}/g, localJ)
-  .replace(/{{base_url}}/g, baseUrl);
-}
+const connectionManager = new ConnectionManager(connectionDefinitions, logger);
 
-function loadConfig(path, inputConfig, callback) {
-  try {
-    const configArray = JSON.parse(fs.readFileSync(path));
-    const config = {};
+function getConfiguration(cn, jurisdiction, topic) {
+  const query = "SELECT * FROM configurations WHERE name IN ('common_jurisdiction_name', 'common_jurisdiction','base_url');"
+    + `SELECT * FROM jurisdictions WHERE tag = '${jurisdiction}';`
+    + `SELECT * FROM topics WHERE tag = '${topic}';`;
 
-    configArray.pairs.forEach((item) => {
+  return cn.query(query)
+  .then((res) => {
+    const config = {
+      common_jurisdiction_name: null,
+      common_jurisdiction: null,
+      common_jurisdiction_id: null,
+      base_url: null,
+      page_name: null,
+      page_tag: topic,
+      topic_id: null,
+      local_jurisdiction_name: null,
+      local_jurisdiction: jurisdiction,
+      local_jurisdiction_id: null,
+    };
+    // Query 1 - configuration
+    if (res[0].rows.length !== 3) throw new Error('Missing configuration information');
+    res[0].rows.forEach((item) => {
       config[item.name] = item.value;
     });
 
-    callback(null, Object.assign({}, inputConfig, config));
-  } catch (e) {
-    callback(e);
-  }
+    // Query 2 - jurisdiction
+    if (res[1].rowCount >= 1) {
+      config.local_jurisdiction_name = res[1].rows[0].display_name;
+      config.local_jurisdiction_id = res[1].rows[0].id;
+      config.common_jurisdiction_id = res[1].rows[0].parent_jurisdiction;
+      // Last is a hack. TODO: walk up ancestors until null.
+    } else throw new Error(`Unknown jurisdiction ${jurisdiction}`);
+
+    // Query 3 - topic
+    if (res[2].rowCount >= 1) {
+      config.page_name = res[2].rows[0].display_name;
+      config.topic_id = res[2].rows[0].id;
+    } else throw new Error(`Unknown topic ${topic}`);
+
+    return Promise.resolve({ config });
+  })
+  .catch(err => Promise.reject(`Query error: ${err.message}`));
 }
 
-function loadJsonFile(path, callback) {
-  try {
-    callback(null, JSON.parse(fs.readFileSync(path)));
-  } catch (e) {
-    callback(e);
-  }
-}
+function getPageContent(cn, data, jurisdictions, topic) {
+  const jvalue = jurisdictions.reduce((accum, cur, idx) => {
+    return `${accum}${idx > 0 ? ', ' : ''}${cur}`;
+  }, '');
 
-// Load and merge all the configurations
-function loadConfigurations(jurisdiction, topic, contentDir, callback) {
-  const file1 = `${contentDir}/config.json`; // site configuration
-  loadConfig(file1, {}, (lc1Err, config1) => {
-    if (lc1Err) callback(lc1Err, null);
-    else {
-      const file2 = `${contentDir}/topics/${topic}/config.json`; // site topic configuration
-      loadConfig(file2, config1, (lc2Err, config2) => {
-        if (lc2Err) callback(lc2Err, null);
-        else {
-          const file3 = `${contentDir}/jurisdictions/${jurisdiction}/config.json`; // local configuration
-          loadConfig(file3, config2, (lc3Err, config3) => {
-            if (lc3Err) callback(lc3Err, null);
-            else {
-              const file4 = `${contentDir}/jurisdictions/${jurisdiction}/${topic}/config.json`; // local topic configuration
-              if (fs.existsSync(file4)) {
-                loadConfig(file4, config3, (lc4Err, config4) => {
-                  if (lc4Err) callback(lc4Err, null);
-                  else callback(null, config4);
-                });
-              } else {
-                callback(null, config3);
-              }
-            }
-          });
-        }
-      });
-    }
-  });
-}
-
-function loadCommonTopic(topicName, config, contentDir, callback) {
-  const topic = {};
-  const file1 = `${contentDir}/topics/${topicName}/description.json`;
-  loadJsonFile(file1, (err1, content) => {
-    if (err1) callback(err1, null);
-    else {
-      topic.description = vInterpolate(content.description.join('\n'), config.config);
-      const file2 = `${contentDir}/topics/${topicName}/resources_common.json`;
-      loadJsonFile(file2, (err2, common) => {
-        if (err2) callback(err2, null);
-        else {
-          topic.resources = common.resources;
-          const file3 = `${contentDir}/topics/${topicName}/resources_local.json`;
-          loadJsonFile(file3, (err3, local) => {
-            if (err3) callback(err3, null);
-            else {
-              topic.local = local;
-              callback(null, topic);
-            }
-          });
-        }
-      });
-    }
-  });
-}
-
-function loadJurisdictionTopic(jurisdiction, topicName, config, contentDir, callback) {
-  const topic = {};
-  const file1 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/description.json`;
-  if (!fs.existsSync(file1)) {
-    topic.description = '';
-    const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
-    if (!fs.existsSync(file2)) {
-      topic.resources = [];
-      callback(null, topic);
-    } else {
-      loadJsonFile(file2, (err2, local) => {
-        if (err2) callback(err2, null);
-        else {
-          topic.resources = local.resources;
-          callback(null, topic);
-        }
-      });
-    }
-  } else {
-    loadJsonFile(file1, (err1, content) => {
-      if (err1) callback(err1, null);
-      else {
-        topic.description = vInterpolate(content.description.join('\n'), config.config);
-        const file2 = `${contentDir}/jurisdictions/${jurisdiction}/${topicName}/resources_local.json`;
-        if (!fs.existsSync(file2)) {
-          topic.resources = [];
-          callback(null, topic);
-        } else {
-          loadJsonFile(file2, (err2, local) => {
-            if (err2) callback(err2, null);
-            else {
-              topic.resources = local.resources;
-              callback(null, topic);
-            }
-          });
-        }
+  const query = `SELECT * FROM pages WHERE jurisdiction = ANY('{${jvalue}}') AND topic = '${topic}';`;
+  return cn.query(query, jurisdictions)
+  .then((res) => {
+    let lContent = '';
+    let cContent = '';
+    res.rows.forEach((row) => {
+      if (row.jurisdiction === data.config.local_jurisdiction_id) {
+        lContent = row.content;
+      } else {
+        cContent = row.content;
       }
     });
-  }
+
+    return Promise.resolve(Object.assign({}, data, {
+      common: { description: cContent },
+      jurisdiction: { description: lContent },
+    }));
+  })
+  .catch(err => Promise.reject(`Query error: ${err.message}`));
 }
 
-function loadTopic(jurisdiction, topicName, config, contentDir, callback) {
-  const topic = {
-    config,
-    common: {},
-    jurisdiction: {},
-  };
-  loadCommonTopic(topicName, topic, contentDir, (err1, commonTopic) => {
-    if (err1) callback(err1, null);
-    else {
-      topic.common = commonTopic;
-      loadJurisdictionTopic(jurisdiction, topicName, topic, contentDir, (err2, jurisdictionTopic) => {
-        if (err2) {
-          callback(err2, null);
-        } else {
-          topic.jurisdiction = jurisdictionTopic;
-          callback(null, topic);
-        }
-      });
-    }
+function getResources(cn, data, jurisdictions, topic) {
+  const jvalue = jurisdictions.reduce((accum, cur, idx) => {
+    return `${accum}${idx > 0 ? ', ' : ''}${cur}`;
+  }, '');
+
+  const query = 'SELECT rr.topic, rr.ordinal, rr.id AS ref_id, r.id AS resource_id, '
+  + 'r.name, r.description, r.url, r.jurisdiction, r.localized, r.category '
+  + 'FROM resource_references AS rr LEFT JOIN resources AS r '
+  + 'ON rr.resource = r.id '
+  + `WHERE r.jurisdiction = ANY('{${jvalue}}') AND rr.topic = '${topic}' ORDER BY rr.ordinal;`;
+  const ndata = Object.assign({}, data);
+  ndata.common.resources = [];
+  ndata.common.local = { resources: [] };
+  ndata.jurisdiction.resources = [];
+  return cn.query(query, jurisdictions)
+  .then((res) => {
+    res.rows.forEach((row) => {
+      if (row.jurisdiction === data.config.local_jurisdiction_id) {
+        ndata.jurisdiction.resources.push(row);
+      } else if (row.localized) {
+        ndata.common.local.resources.push(row);
+      } else {
+        ndata.common.resources.push(row);
+      }
+    });
+    return Promise.resolve(ndata);
+  })
+  .catch(err => Promise.reject(`Query error: ${err.message}`));
+}
+
+function compose(jurisdiction, topic, callback) {
+  // I'm doing a cheap shortcut to avoid SQL injection attack
+  // by just removing all non-alphanumeric characters - I want to
+  // do a single DB call with 3 statements in getConfiguration and
+  // parameterizing multiple statements is not allowed).
+  // Possible future TODO: write a single DB function to gather all.
+  const tJurisdiction = jurisdiction.toLowerCase().replace(/\W/g, '');
+  const tTopic = topic.toLowerCase().replace(/\W/g, '');
+
+  const cn = connectionManager.getConnection('aws');
+  if (!cn) throw new Error('No database connection');
+
+  return getConfiguration(cn, tJurisdiction, tTopic)
+  .then((data) => {
+    const jurisdictions = [data.config.common_jurisdiction_id, data.config.local_jurisdiction_id];
+    return getPageContent(cn, data, jurisdictions, data.config.topic_id);
+  })
+  .then((data) => {
+    // Now get resources
+    const jurisdictions = [data.config.common_jurisdiction_id, data.config.local_jurisdiction_id];
+    return getResources(cn, data, jurisdictions, data.config.topic_id);
+  })
+  .then((data) => {
+    callback(data);
   });
 }
 
-function compose(jurisdiction, topic1, contentDir, callback) {
-  loadConfigurations(jurisdiction, topic1, contentDir, (err1, config) => {
-    if (err1) callback(err1);
-    else {
-      loadTopic(jurisdiction, topic1, config, contentDir, (err2, topic2) => {
-        if (err2) callback(err2);
-        else callback(topic2);
-      });
-    }
-  });
-}
-
-function mainCompose(contentDir, callback) {
-  const commonConfigFile = `${contentDir}/config.json`;
-  const mainConfigFile = `${contentDir}/topics/main/config.json`; // main configuration
-  const mainDescFile = `${contentDir}/topics/main/description.json`;
-  const main = {
-    config: {},
-    common: {},
-  };
-  loadConfig(commonConfigFile, {}, (lc1Err, commonConfigRes) => {
-    if (lc1Err) callback(lc1Err, null);
-    else {
-      loadConfig(mainConfigFile, commonConfigRes, (lc2Err, mainConfigRes) => {
-        if (lc2Err) callback(lc2Err, null);
-        else {
-          main.config = mainConfigRes;
-          loadJsonFile(mainDescFile, (lc3Err, mainDescRes) => {
-            if (lc3Err) callback(lc3Err, null);
-            else {
-              main.common = mainDescRes;
-              callback(main);
-            }
-          });
-        }
-      });
-    }
-  });
-}
-
-module.exports = { compose, mainCompose };
+module.exports = { compose };
 

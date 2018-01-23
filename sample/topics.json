@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "id": "",
+      "tag": "housing",
+      "display_name": "Housing"
+    },
+    {
+      "id": "",
+      "tag": "benefits",
+      "display_name": "Public Benefits"
+    },
+    {
+      "id": "",
+      "tag": "education",
+      "display_name": "Education"
+    },
+    {
+      "id": "",
+      "tag": "health",
+      "display_name": "Health"
+    },
+    {
+      "id": "",
+      "tag": "home",
+      "display_name": "Home"
+    },
+    {
+      "id": "",
+      "tag": "jobs",
+      "display_name": "Jobs"
+    },
+    {
+      "id": "",
+      "tag": "legal",
+      "display_name": "Legal"
+    },
+    {
+      "id": "",
+      "tag": "support",
+      "display_name": "Support Programs"
+    },
+    {
+      "id": "",
+      "tag": "other",
+      "display_name": "Other Resources"
+    }
+  ]
+}

@@ -1,11 +1,10 @@
 cra-server-ex.graffle
 node_modules
-npm-debug.log
+*.log
 
 # misc
 .DS_Store
 .env
-npm-debug.log
 
 # compiled sources
 /build

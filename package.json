@@ -2,17 +2,23 @@
   "name": "nc-reentry-resources-hub",
   "version": "0.0.1",
   "private": true,
-  "proxy": "http://localhost:3001/",
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "aws-sdk": "^2.100.0",
     "body-parser": "^1.17.2",
     "bootstrap": "3",
+    "bunyan": "^1.8.12",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "fs": "0.0.2",
     "lodash.get": "^4.4.2",
+    "mssql": "^4.1.0",
+    "os": "^0.1.1",
     "path": "^0.12.7",
+    "pg": "^7.4.1",
+    "pg-native": "^2.2.0",
+    "pg-pool": "^2.0.3",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.2",
@@ -22,19 +28,22 @@
     "react-render-html": "^0.5.0",
     "react-router": "^4.1.2",
     "react-router-bootstrap": "^0.24.2",
-    "react-router-dom": "^4.1.2"
+    "react-router-dom": "^4.1.2",
+    "uuid": "^3.1.0"
   },
   "scripts": {
     "client": "react-scripts start",
     "server": "node server/index.js",
-    "build": "react-scripts build && react-snapshot",
+    "build": "react-scripts build && yarn run build:server",
+    "build:server": "NODE_ENV=production webpack --config webpackProdServer.config.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "start": "concurrently \"npm run server\" \"npm run client\" \"npm run watch-css\"",
-    "watch-css": "node-sass -w --output-style compressed src/sass/main.scss src/style.css",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
+    "babel-preset-es2015": "6.14.0",
+    "babel-preset-stage-0": "6.5.0",
     "concurrently": "^3.1.0",
     "eslint": "^3.12.2",
     "eslint-config-airbnb": "^13.0.0",
@@ -44,12 +53,6 @@
     "gh-pages": "^1.0.0",
     "node-sass": "^4.5.3",
     "react-scripts": "0.9.0",
-    "react-snapshot": "^2.0.0-1",
-    "redux-immutable-state-invariant": "^2.0.0"
-  },
-  "reactSnapshot": {
-    "include": [],
-    "exclude": [],
-    "snapshotDelay": 300
+    "webpack": "^2.2.1"
   }
 }
