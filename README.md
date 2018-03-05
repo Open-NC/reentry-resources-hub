@@ -24,7 +24,7 @@ Next, clone this repository (or a fork of this repository) and install dependenc
     yarn
 ````
 
-The descriptions and resource information are stored in a database on AWS. Contact @ejaxon to obtain credentials or learn how to create a copy of the database. Once you have your username and password, copy the ```server.env.example``` file to ```.env``` and replace the placeholder text with your username and password.
+The descriptions and resource information are stored in a database on AWS. Open an [issue](https://github.com/Open-NC/reentry-resources-hub/issues) and mention [@ejaxon](https://github.com/ejaxon) to obtain credentials or learn how to create a copy of the database. Once you have your username and password, copy the ```server.env.example``` file to ```.env``` and replace the placeholder text with your username and password.
 
 You may then run the site locally by running:
 
