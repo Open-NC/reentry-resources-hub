@@ -7,6 +7,7 @@ import {
   Switch,
   Link,
 } from 'react-router-dom'
+import TaxonomiesNav from './TaxonomiesNav';
 import CountiesIndex from './CountiesIndex';
 import CountyPage from './CountyPage';
 
@@ -16,6 +17,9 @@ const client = new ApolloClient({
 });
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+  }
   render() {
     return (
       <ApolloProvider client={client}>
@@ -29,7 +33,7 @@ class App extends Component {
                   </div>
                 </Link>
               </div>
-              <nav></nav>
+              <TaxonomiesNav />
             </header>
             <main className="content-body">
               <Switch>

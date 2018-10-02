@@ -38,9 +38,8 @@ const CountyPage = (props) => (
         if (loading) return <div> Loading </div>;
         if (error) {
           console.log(error);
-          return <div className="page-text">Error :( </div>;
+          return <div className="page-text"> Error :( </div>;
         }
-        // console.log(data.page)
         return <div
           dangerouslySetInnerHTML={{__html: data.page.common_content}}
           className="page-text"

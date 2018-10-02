@@ -32,6 +32,12 @@ body {
   z-index: 3;
 }
 
+nav li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 0.5em 0 0;
+}
+
 .topic-name {
   background-color: #fff;
   z-index: 2;
