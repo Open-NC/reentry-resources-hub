@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import { withRouter } from 'react-router'
 import gql from 'graphql-tag';
-import { Col, Row, Grid, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Navbar, NavItem } from 'react-bootstrap';
 
 // If the current URL does not have a county, return an empty Navbar
@@ -31,9 +30,14 @@ const TaxonomiesNav = ({ location }) => (
         }
         return <Navbar>
           {data.taxonomies.map(taxonomy => (
-            <NavItem key={taxonomy.name} href="#">
-              <Link to={`/${splitPath[1]}/${taxonomy.name}`}>{taxonomy.name}</Link>
-            </NavItem>
+            <li key={taxonomy.name}>
+              <NavLink
+                to={`/${splitPath[1]}/${taxonomy.name}`}
+                activeClassName="selected"
+              >
+                {taxonomy.name}
+              </NavLink>
+            </li>
           ))}
         </Navbar>
       }}

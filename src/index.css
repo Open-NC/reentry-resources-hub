@@ -28,6 +28,14 @@ body {
   background-color: hsla(198, 95%, 38%, 0.75);
 }
 
+.title-box a {
+  color: inherit;
+}
+
+.title-box a:focus {
+  text-decoration: underline;
+}
+
 .navbar-name {
   z-index: 3;
 }
@@ -37,6 +45,11 @@ nav li {
   display: inline-block;
   margin: 0 0.5em 0 0;
 }
+
+nav li a.selected {
+  color: #23527c;
+}
+
 
 .topic-name {
   background-color: #fff;

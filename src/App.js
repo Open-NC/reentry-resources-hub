@@ -27,11 +27,11 @@ class App extends Component {
           <div className="App">
             <header className="site-header">
               <div className="header-background-image">
-                <Link to="/">
-                  <div className="title-box">
+                <div className="title-box">
+                  <Link to="/">
                     NC Reentry Resources Hub
-                  </div>
-                </Link>
+                  </Link>
+                </div>
               </div>
               <TaxonomiesNav />
             </header>
