@@ -4,6 +4,7 @@ body {
 
 .site-header {
   font-family: Lato, sans-serif;
+  font-size: 2.5em;
 }
 
 .header-background-image {
@@ -86,6 +87,10 @@ body {
 
 .county-item:hover {
   background-color: #e4edff;
+}
+
+.page-text {
+  padding: 2vh 12.5vw 2vh 12.5vw;
 }
 
 .input-search {

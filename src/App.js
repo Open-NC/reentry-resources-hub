@@ -5,15 +5,15 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
+  Link,
 } from 'react-router-dom'
 import CountiesIndex from './CountiesIndex';
+import CountyPage from './CountyPage';
 
 const client = new ApolloClient({
   // TODO: ACTUAL URL
   uri: "http://localhost:4000/graphql"
 });
-
-
 
 class App extends Component {
   render() {
@@ -23,17 +23,18 @@ class App extends Component {
           <div className="App">
             <header className="site-header">
               <div className="header-background-image">
-                <div className="title-box">
-                  NC Reentry Resources Hub
-                </div>
+                <Link to="/">
+                  <div className="title-box">
+                    NC Reentry Resources Hub
+                  </div>
+                </Link>
               </div>
               <nav></nav>
             </header>
             <main className="content-body">
               <Switch>
+                <Route path="/:county/:taxonomy" component={CountyPage} />
                 <Route path="/" component={CountiesIndex}/>
-                <Route path="/:county" component={CountiesIndex} />
-                <Route path="/contact" component={CountiesIndex} />
               </Switch>
             </main>
             <footer className="site-footer">

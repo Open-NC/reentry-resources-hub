@@ -18,7 +18,7 @@ const CountiesIndex = () => (
         if (loading) return <div> Loading </div>;
         if (error) {
           console.log(error);
-          return <div>Error :( </div>;
+          return <div className="page-text">Error :( </div>;
         }
         const sortedLocations = data.locations
           .map(d => Object.assign(d))
