@@ -4,7 +4,6 @@ body {
 
 .site-header {
   font-family: Lato, sans-serif;
-  font-size: 2.5em;
 }
 
 .header-background-image {
@@ -18,26 +17,24 @@ body {
   padding: 4rem 0;
 }
 
-.title-box {
+/* .title-box {
   text-align: center;
   color: #fff;
   width: 750px;
   max-width: 75%;
   padding: 1rem;
   margin: 0 auto;
+  font-size: 2em;
   background-color: hsla(198, 95%, 38%, 0.75);
-}
+} */
 
 .title-box a {
   color: inherit;
+  color: white;
 }
 
 .title-box a:focus {
   text-decoration: underline;
-}
-
-.navbar-name {
-  z-index: 3;
 }
 
 nav li {

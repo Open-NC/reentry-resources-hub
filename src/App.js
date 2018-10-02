@@ -7,6 +7,7 @@ import {
   Switch,
   Link,
 } from 'react-router-dom'
+import { Navbar } from 'react-bootstrap';
 import TaxonomiesNav from './TaxonomiesNav';
 import CountiesIndex from './CountiesIndex';
 import CountyPage from './CountyPage';
@@ -26,14 +27,20 @@ class App extends Component {
         <Router basename="/reentry-resources-hub">
           <div className="App">
             <header className="site-header">
-              <div className="header-background-image">
-                <div className="title-box">
-                  <Link to="/">
-                    NC Reentry Resources Hub
-                  </Link>
-                </div>
-              </div>
-              <TaxonomiesNav />
+              <Navbar
+                collapseOnSelect
+                className="header-background-image"
+              >
+                <Navbar.Header>
+                  <Navbar.Brand>
+                    <Link to="/">
+                      NC Reentry Resources Hub
+                    </Link>
+                  </Navbar.Brand>
+                  <Navbar.Toggle />
+                  <TaxonomiesNav />
+                </Navbar.Header>
+              </Navbar>
             </header>
             <main className="content-body">
               <Switch>
