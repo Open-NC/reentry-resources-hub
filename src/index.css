@@ -2,13 +2,15 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-.navbar-header {
+header.site-header, nav.navbar, .navbar-header {
   background: hsl(198, 95%, 38%);
   font-family: Lato, sans-serif;
 }
 
 .navbar-default .navbar-brand {
   color: #fff;
+  font-size: 1.75em;
+  line-height: 1.25em;
 }
 
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
@@ -28,16 +30,16 @@ body {
   opacity: 0.5;
 }
 
-nav li {
+nav ul.nav li a.nav {
+  color: #fff;
   list-style: none;
   display: inline-block;
-  margin: 0 0.5em 0 0;
+  margin: 0 0 0 0.5em;
 }
 
 nav li a.selected {
   color: #23527c;
 }
-
 
 .topic-name {
   background-color: #fff;
@@ -67,7 +69,7 @@ nav li a.selected {
 .site-footer {
   font-family: Lato, sans-serif;
   padding: 2em;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: #fff;
   background: hsl(198, 95%, 38%);
   text-align: center;
