@@ -1,8 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Col, Row, Grid, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 const CountyPage = (props) => (
   <Query
@@ -35,13 +33,18 @@ const CountyPage = (props) => (
     }}
   >
       {({ loading, error, data }) => {
+        // TODO: "about home in whatever county" makes no sense
         if (loading) return <div> Loading </div>;
         if (error) {
           console.log(error);
           return <div className="page-text"> Error :( </div>;
         }
+        let header;
+        if (data.page.taxonomy !== 'Home') {
+          header = `About ${data.page.taxonomy} in ${data.page.location} County`
+        }
         return <div className="page-text" >
-          <h1>About {data.page.taxonomy} in {data.page.location} County</h1>
+          {header && <h1>{header}</h1>}
           <div dangerouslySetInnerHTML={{__html: data.page.common_content}}></div>
           {(data.page.local_services.length > 0 || data.page.localized_services.length > 0)
             && (<div>

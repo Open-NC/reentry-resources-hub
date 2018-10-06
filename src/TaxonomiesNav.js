@@ -18,7 +18,7 @@ const TaxonomiesNav = ({ location }) => (
   >
       {({ loading, error, data }) => {
         if (loading) {
-          return <Navbar/>
+          return null;
         }
         if (error) {
           console.log(error);
@@ -26,7 +26,7 @@ const TaxonomiesNav = ({ location }) => (
         }
         const splitPath = location.pathname.split('/')
         if (splitPath[splitPath.length - 1] === '') {
-          return <Navbar/>
+          return null;
         }
         return <Navbar.Collapse>
           <Nav pullRight>
@@ -42,7 +42,7 @@ const TaxonomiesNav = ({ location }) => (
             </li>
           ))}
           </Nav>
-        </Navbar.Collapse>
+        < /Navbar.Collapse>
       }}
   </Query>
 )

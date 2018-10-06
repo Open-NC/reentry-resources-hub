@@ -20,6 +20,7 @@ const client = new ApolloClient({
 class App extends Component {
   constructor(props) {
     super(props)
+    console.log(this.props)
   }
   render() {
     return (
@@ -27,10 +28,7 @@ class App extends Component {
         <Router basename="/reentry-resources-hub">
           <div className="App">
             <header className="site-header">
-              <Navbar
-                collapseOnSelect
-                className="header-background-image"
-              >
+              <Navbar collapseOnSelect>
                 <Navbar.Header>
                   <Navbar.Brand>
                     <Link to="/">
@@ -38,8 +36,8 @@ class App extends Component {
                     </Link>
                   </Navbar.Brand>
                   <Navbar.Toggle />
-                  <TaxonomiesNav />
                 </Navbar.Header>
+                <TaxonomiesNav />
               </Navbar>
             </header>
             <main className="content-body">
