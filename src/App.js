@@ -28,17 +28,7 @@ class App extends Component {
         <Router basename="/reentry-resources-hub">
           <div className="App">
             <header className="site-header">
-              <Navbar collapseOnSelect>
-                <Navbar.Header>
-                  <Navbar.Brand>
-                    <Link to="/">
-                      NC Reentry Resources Hub
-                    </Link>
-                  </Navbar.Brand>
-                  <Navbar.Toggle />
-                </Navbar.Header>
-                <TaxonomiesNav />
-              </Navbar>
+              <TaxonomiesNav/>
             </header>
             <main className="content-body">
               <Switch>
