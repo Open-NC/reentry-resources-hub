@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import { withRouter } from 'react-router'
 import gql from 'graphql-tag';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 // If the current URL does not have a county, return an empty Navbar
 // If the current URL is a county, return the taxonomies as links with that county filled in
@@ -26,15 +26,16 @@ const TaxonomiesNav = ({ location }) => (
         }
         const splitPath = location.pathname.split('/');
         const navLinks = data.taxonomies.map(taxonomy => (
-          <li key={taxonomy.name}>
-            <NavLink
-              to={`/${splitPath[1]}/${taxonomy.name}`}
-              className="nav navbar-nav navbar-right"
-              activeClassName="selected"
-            >
-              {taxonomy.name}
-            </NavLink>
-          </li>
+          <NavItem
+            componentClass={NavLink}
+            key={taxonomy.name}
+            to={`/${splitPath[1]}/${taxonomy.name}`}
+            href={`/${splitPath[1]}/${taxonomy.name}`}
+            className="nav navbar-nav navbar-right"
+            activeClassName="selected"
+          >
+            {taxonomy.name}
+          </NavItem>
         ))
         const isHome = splitPath[splitPath.length - 1] === '';
 

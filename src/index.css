@@ -30,15 +30,21 @@ header.site-header, nav.navbar, .navbar-header {
   opacity: 0.5;
 }
 
-nav ul.nav li a.nav {
+.navbar-default .navbar-nav > li > a {
   color: #fff;
   list-style: none;
   display: inline-block;
   margin: 0 0 0 0.5em;
 }
 
-nav li a.selected {
-  color: #23527c;
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.navbar-default .navbar-nav > li > a.selected {
+  background-color: #fff;
+  color: inherit;
 }
 
 .topic-name {

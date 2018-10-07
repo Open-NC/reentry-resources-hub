@@ -5,9 +5,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Link,
 } from 'react-router-dom'
-import { Navbar } from 'react-bootstrap';
 import TaxonomiesNav from './TaxonomiesNav';
 import CountiesIndex from './CountiesIndex';
 import CountyPage from './CountyPage';
@@ -18,10 +16,6 @@ const client = new ApolloClient({
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    console.log(this.props)
-  }
   render() {
     return (
       <ApolloProvider client={client}>

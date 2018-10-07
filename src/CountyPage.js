@@ -39,9 +39,9 @@ const CountyPage = (props) => (
           console.log(error);
           return <div className="page-text"> Error :( </div>;
         }
-        let header;
-        if (data.page.taxonomy !== 'Home') {
-          header = `About ${data.page.taxonomy} in ${data.page.location} County`
+        let header = `${data.page.taxonomy} in ${data.page.location} County`
+        if (data.page.taxonomy === 'Home') {
+          header = `${data.page.location} County`;
         }
         return <div className="page-text" >
           {header && <h1>{header}</h1>}
@@ -67,9 +67,6 @@ const CountyPage = (props) => (
               ))}
             </ul>
           </div>)}
-
-          <ul>
-          </ul>
         </div>
       }}
   </Query>

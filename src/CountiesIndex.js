@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Col, Row, Grid, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Col, Row, Grid } from 'react-bootstrap';
 
 const CountiesIndex = () => (
   <Query
@@ -27,6 +27,10 @@ const CountiesIndex = () => (
             if(a.alternate_name > b.alternate_name) return 1;
             return 0;
           })
+        const dedupedFirstLetters = sortedLocations
+          .map(location => location.alternate_name.slice(0, 1))
+          .filter((letter, index, array) => array.indexOf(letter) === index)
+        // TODO: IS IT BETTER TO HAVE A LIST OF LETTERS TO CLICK???
         const dataGroupLength = sortedLocations.length / 4;
         const dataGroups = [
           sortedLocations.slice(0, dataGroupLength),
@@ -36,9 +40,10 @@ const CountiesIndex = () => (
         ]
 
         return (<Grid>
+          <p>Select your county to find local resources</p>
           <Row>
           {dataGroups.map((group, groupIndex) => (
-            <Col xs={12} sm={12} md={3} key={groupIndex}>
+            <Col xs={12} sm={3} md={3} key={groupIndex}>
               <div className="county-list">
                 {group.map(county => (
                   <Link
