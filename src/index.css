@@ -1,5 +1,6 @@
 body {
   font-family: 'Open Sans', sans-serif;
+  overflow-y: none;
 }
 
 header.site-header, nav.navbar, .navbar-header {
@@ -7,15 +8,26 @@ header.site-header, nav.navbar, .navbar-header {
   font-family: Lato, sans-serif;
 }
 
+.navbar-header {
+  width: 100%;
+}
+
 .navbar-default .navbar-brand {
   color: #fff;
-  font-size: 1.75em;
-  line-height: 1.25em;
+  font-size: 2em;
+  line-height: 1.15em;
 }
 
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
   text-decoration: underline;
   color: #fff;
+}
+
+.navbar-nav {
+  overflow: none;
+  /* margin: 0; */
+  /* width: 100%; */
+  font-size: 1.15em;
 }
 
 .navbar-default .navbar-toggle .icon-bar {
@@ -33,60 +45,22 @@ header.site-header, nav.navbar, .navbar-header {
 .navbar-default .navbar-nav > li > a {
   color: #fff;
   list-style: none;
-  display: inline-block;
-  margin: 0 0 0 0.5em;
 }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-    color: #fff;
-    text-decoration: underline;
+  color: #fff;
+  text-decoration: underline;
 }
 
 .navbar-default .navbar-nav > li > a.selected {
   background-color: #fff;
+  border-radius: 10px 10px 0px 0px;
   color: inherit;
-}
-
-.topic-name {
-  background-color: #fff;
-  z-index: 2;
-  padding-left: 10%;
-}
-
-.topic-header-row {
-  background-color: #fff;
-  z-index: 2;
 }
 
 .content-body {
   font-size: 2rem;
   line-height: 2.0em;
-}
-
-/*.content-body ul {
-  list-style-type: none;
-}*/
-
-.google-search {
-  float: right;
-  width: 20%;
-}
-
-.site-footer {
-  font-family: Lato, sans-serif;
-  padding: 2em;
-  font-size: 1.5rem;
-  color: #fff;
-  background: hsl(198, 95%, 38%);
-  text-align: center;
-}
-
-.county-modal-list {
-  text-align: center;
-}
-
-.modal-title {
-  text-align: center;
 }
 
 .county-item {
@@ -108,19 +82,24 @@ header.site-header, nav.navbar, .navbar-header {
   padding: 2vh 12.5vw 2vh 12.5vw;
 }
 
-.input-search {
+.site-footer {
+  font-family: Lato, sans-serif;
+  padding: 2em;
+  font-size: 1.25rem;
+  color: #fff;
+  background: hsl(198, 95%, 38%);
   text-align: center;
-  width: 100%;
-  padding: 3px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  background-color: #eaeaea;
-  border-color: #888686;
 }
 
-/* Make google search box appear correct*/
-input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus, .gsc-search-button
-{
-  box-sizing: content-box;
-  line-height: normal;
+.site-footer p {
+  padding: 0 15vw 0 15vw;
+}
+
+.site-footer p a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.site-footer p a:focus, .site-footer p a:hover {
+  opacity: 0.8;
 }

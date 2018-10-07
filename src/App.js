@@ -31,9 +31,10 @@ class App extends Component {
               </Switch>
             </main>
             <footer className="site-footer">
-              <p>© 2016 All Rights Reserved.</p>
+              <p>© 2018 All Rights Reserved.</p>
               <p>Legal Disclaimer: The site DOES NOT provide any legal advice, only information. Users of this web site should consult with their own lawyer for legal advice.</p>
               <p>Content provided by this web site and any linked sites is not necessarily an endorsement and the administrators of this site do not assume any responsibility for the interpretation or application of any information originating from such sites.</p>
+              <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSecfqydBgi7T3yH1qXCGZAykRfwof_pBhxRtYbEMXG82C_zZg/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">Contact</a> the creator of this site</p>
             </footer>
           </div>
           </Router>

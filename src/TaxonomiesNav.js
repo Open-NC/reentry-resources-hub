@@ -50,9 +50,9 @@ const TaxonomiesNav = ({ location }) => (
           </Navbar.Header>
           {!isHome && (
             <Navbar.Collapse>
-            <Nav pullRight>
-              {navLinks}
-            </Nav>
+              <Nav pullRight>
+                {navLinks}
+              </Nav>
             </Navbar.Collapse>
           )}
         </Navbar>)
