@@ -27,6 +27,7 @@ const CountiesIndex = () => (
             if(a.alternate_name > b.alternate_name) return 1;
             return 0;
           })
+        // eslint-disable-next-line
         const dedupedFirstLetters = sortedLocations
           .map(location => location.alternate_name.slice(0, 1))
           .filter((letter, index, array) => array.indexOf(letter) === index)
