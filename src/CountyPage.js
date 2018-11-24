@@ -33,7 +33,6 @@ const CountyPage = (props) => (
     }}
   >
       {({ loading, error, data }) => {
-        // TODO: "about home in whatever county" makes no sense
         if (loading) return <div> Loading </div>;
         if (error) {
           console.log(error);
@@ -43,6 +42,7 @@ const CountyPage = (props) => (
         let header_local = `${data.page.taxonomy} in ${data.page.location} County`
         if (data.page.taxonomy === 'Home') {
           header_common = `${data.page.location} County`;
+          header_local = null;
         }
         return <div className="page-text" >
           {header_common && <h1>{header_common}</h1>}
