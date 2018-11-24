@@ -39,15 +39,15 @@ const CountyPage = (props) => (
           console.log(error);
           return <div className="page-text"> Error :( </div>;
         }
-        let header1 = `${data.page.taxonomy}`
-        let header2 = `${data.page.taxonomy} in ${data.page.location} County`
+        let header_common = `${data.page.taxonomy}`
+        let header_local = `${data.page.taxonomy} in ${data.page.location} County`
         if (data.page.taxonomy === 'Home') {
-          header1 = `${data.page.location} County`;
+          header_common = `${data.page.location} County`;
         }
         return <div className="page-text" >
-          {header1 && <h1>{header1}</h1>}
+          {header_common && <h1>{header_common}</h1>}
           <div dangerouslySetInnerHTML={{__html: data.page.common_content}}></div>
-          {header2 && <h2>{header2}</h2>}
+          {header_local && data.page.local_content && <h2>{header_local}</h2>}
           <div dangerouslySetInnerHTML={{__html: data.page.local_content}}></div>
           {(data.page.local_services.length > 0 || data.page.localized_services.length > 0)
             && (<div>
