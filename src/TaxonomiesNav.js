@@ -25,16 +25,51 @@ const TaxonomiesNav = ({ location }) => (
           return <div className="page-text"> Error :( </div>;
         }
         const splitPath = location.pathname.split('/');
-        const navLinks = data.taxonomies.map(taxonomy => (
+        const taxonomiesOrder = [
+          {
+            apiName: 'housing',
+            displayName: 'Housing',
+          },
+          {
+            apiName: 'jobs',
+            displayName: 'Jobs',
+          },
+          {
+            apiName: 'benefits',
+            displayName: 'Public Benefits',
+          },
+          {
+            apiName: 'health',
+            displayName: 'Health Care',
+          },
+          {
+            apiName: 'education',
+            displayName: 'Education',
+          },
+          {
+            apiName: 'legal',
+            displayName: 'Legal',
+          },
+          {
+            apiName: 'support',
+            displayName: 'Support Programs',
+          },
+          {
+            apiName: 'other',
+            displayName: 'Other Resources',
+          },
+        ].reverse()
+        console.log(data)
+        const navLinks = taxonomiesOrder.map(taxonomy => (
           <NavItem
             componentClass={NavLink}
-            key={taxonomy.name}
-            to={`/${splitPath[1]}/${taxonomy.name}`}
-            href={`/${splitPath[1]}/${taxonomy.name}`}
+            key={taxonomy.apiName}
+            to={`/${splitPath[1]}/${taxonomy.apiName}`}
+            href={`/${splitPath[1]}/${taxonomy.apiName}`}
             className="nav navbar-nav navbar-right"
             activeClassName="selected"
           >
-            {taxonomy.name}
+            {taxonomy.displayName}
           </NavItem>
         ))
         const isHome = splitPath[splitPath.length - 1] === '';
