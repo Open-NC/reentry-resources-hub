@@ -12,7 +12,7 @@ import CountyPage from './CountyPage';
 
 const client = new ApolloClient({
   // TODO: ACTUAL URL
-  uri: "http://localhost:4000/graphql"
+  uri: `${process.env.REACT_APP_DB_HOST}:${process.env.REACT_APP_DB_PORT}/graphql"
 });
 
 class App extends Component {
